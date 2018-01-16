@@ -8,27 +8,27 @@ import java.util.List;
  * @version 0.0.1
  * @since 0.0.1
  */
-public abstract class Mapper<T1, T2> {
-    public abstract T2 map(T1 value);
+public abstract class Transform<T1, T2> {
+    public abstract T2 transform(T1 value);
 
-    public abstract T1 reverseMap(T2 value);
+    public abstract T1 reverseTransform(T2 value);
 
-    public List<T2> map(List<T1> values) {
+    public List<T2> transform(List<T1> values) {
         if(null == values || values.isEmpty()) return null;
 
         List<T2> returnValues = new ArrayList<>(values.size());
         for (T1 value : values) {
-            returnValues.add(map(value));
+            returnValues.add(transform(value));
         }
         return returnValues;
     }
 
-    public List<T1> reverseMap(List<T2> values) {
+    public List<T1> reverseTransform(List<T2> values) {
         if(null == values || values.isEmpty()) return null;
 
         List<T1> returnValues = new ArrayList<>(values.size());
         for (T2 value : values) {
-            returnValues.add(reverseMap(value));
+            returnValues.add(reverseTransform(value));
         }
         return returnValues;
     }
