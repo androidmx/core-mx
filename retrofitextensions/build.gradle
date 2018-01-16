@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion parent.ext.COMPILE_SDK_VERSION
+
+    defaultConfig {
+        minSdkVersion parent.ext.MIN_SDK_VERSION
+        targetSdkVersion parent.ext.TARGET_SDK_VERSION
+        versionCode 1
+        versionName "0.0.1"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation parent.ext.libraries.appcompat
+
+    testImplementation parent.ext.testing.junit
+    testImplementation parent.ext.testing.runner
+    testImplementation parent.ext.testing.espresso
+
+    implementation parent.ext.libraries.retrofit
+    implementation parent.ext.libraries.okhttp
+
+}
