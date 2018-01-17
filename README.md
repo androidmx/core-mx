@@ -357,6 +357,7 @@ protected Presenter createPresenter() {
 
 Se agregaron los siguientes métodos para agrupar y estandarizar las inicializaciones de objetos y 
 referencias de Views y a continuación se explica su uso: 
+
 * `onRestoreExtras(Bundle arguments)`: Se utiliza para extraer los datos existentes en el `Bundle` al 
 crear una nueva instancia de un Activity o un Fragment, este objeto se verifica en el evento 
 `onCreate` del `BaseActivity` y `BaseFragment`, si en la verificación el `Bundle` es `null` no se 
