@@ -1,1 +1,1 @@
-include ':app', ':rxmvp', ':retrofitextensions', ':spextensions', ':recyclerextensions'
+include ':app', ':rxmvp', ':retrofitextensions', ':spextensions', ':recyclerextensions', ':permissions'
