@@ -219,10 +219,40 @@ ServiceClientFactory.createService(service client, class type);
 Consiste en una extensión de `RecyclerView.Adapter` y `RecyclerView.ViewHolder` para simplificar su uso y reducir la generación de código
 
 ### View Holder Adapter ###
-`mx.gigigo.core.recyclerextensions.ViewHolderAdapter`
+Cada ViewHolder de RecyclerView deberá extender de `mx.gigigo.core.recyclerextensions.ViewHolderAdapter`
 #### Uso ####
 ``` java
+public class CustomViewHolder
+        extends ViewHolderAdapter<data model> {
 
+    TextView textViewName;
+
+    public ListUsersViewHolder(View itemView) {
+        super(itemView);
+        
+        textViewName = itemView.findViewById(R.id.text_view_name)
+    }
+
+    @Override
+    public void onBindViewHolder(data model item) {
+        super.onBindViewHolder(item);
+
+        textViewName.setText("value");
+    }
+}
+
+....
+
+public class CustomAdapter
+        extends RecyclerAdapter<data model> {
+
+    @Override
+    public ViewHolderAdapter<data model> onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = getView(parent, R.layout.item_user);
+        CustomViewHolder viewHolder = new CustomViewHolder(view);
+        return viewHolder;
+    }
+    
 ```
 
 ### Recycler Adapter ###
