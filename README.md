@@ -4,6 +4,13 @@
 
 Es un conjunto de módulos que incluyen utilerías base que permite a los desarrolladores crear aplicaciones robustas para Android implementando el patrón MVP de forma simple.
 
+### Diagrama general ###
+![Alt_text](assets/coregeneral.png)
+
+### Diagrama de arquitectura ###
+![Alt_text](assets/corearchitecture.png)
+
+### Diagrama ###
 ![Alt text](assets/mvpdiagram.png)
 
 #### Uso ####
