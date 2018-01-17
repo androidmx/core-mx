@@ -1,5 +1,7 @@
 package mx.gigigo.core.recyclerextensions;
 
+import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +20,14 @@ public abstract class RecyclerHeaderFooterAdapter<T, H extends ViewHolderAdapter
     private ViewHolderAdapter<T> headerViewHolder;
     private ViewHolderAdapter<T> footerViewHolder;
 
+    public void setHeaderView(RecyclerView parent, @LayoutRes int resourceId){
+        this.setHeaderView(getView(parent, resourceId));
+    }
+
+    public void setFooterView(RecyclerView parent, @LayoutRes int resourceId){
+        this.setFooterView(getView(parent, resourceId));
+    }
+
     public void setHeaderView(View header){
         if (headerViewHolder == null || header != headerViewHolder.itemView) {
             headerViewHolder = new ViewHolderAdapter<>(header);
@@ -32,14 +42,14 @@ public abstract class RecyclerHeaderFooterAdapter<T, H extends ViewHolderAdapter
         }
     }
 
-    public void removeHeader(){
+    public void removeHeader() {
         if (headerViewHolder != null){
             headerViewHolder = null;
             notifyDataSetChanged();
         }
     }
 
-    public void removeFooter(){
+    public void removeFooter() {
         if (footerViewHolder != null){
             footerViewHolder = null;
             notifyDataSetChanged();
@@ -101,6 +111,18 @@ public abstract class RecyclerHeaderFooterAdapter<T, H extends ViewHolderAdapter
         return dataItemType;
     }
 
+    @Override
+    public void clear() {
+        if (headerViewHolder != null){
+            headerViewHolder = null;
+        }
+
+        if (footerViewHolder != null){
+            footerViewHolder = null;
+        }
+        super.clear();
+    }
+
     public int getDataItemCount() {
         return super.getItemCount();
     }
@@ -126,6 +148,13 @@ public abstract class RecyclerHeaderFooterAdapter<T, H extends ViewHolderAdapter
         }
 
         return onCreateViewHolderHeaderFooter(parent, viewType);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolderAdapter<T> holder, int position) {
+        if (!isEmpty() && !isHeader(position) && !isFooter(position)) {
+            holder.onBindViewHolder(items().get(itemPositionInData(position)));
+        }
     }
 
     public abstract H onCreateViewHolderHeaderFooter(ViewGroup parent, int viewType);
