@@ -142,24 +142,18 @@ SharedPreferencesExtensions
 Almacenar cualquier tipo (primitivos, colecciones, objetos ...)
 ``` java
 SharedPreferencesExtensions
-                .put(key,
-                        class type,
-                        value,
-                        replace if exist // * optional, default true);
+                .put(key, class type, value, replace if exist // * optional, default true);
 ```
 
 Obtener el valor original acorde al tipo (primitivos, colecciones, objetos ...)
 ``` java
 value = SharedPreferencesExtensions
-                    .get(key,
-                            class type,
-                            default value // * optional);
+                    .get(key, class type, default value // * optional);
 ```
 
 Eliminar valores no necesarios
 ``` java
-SharedPreferencesExtensions
-                    .delete(key);
+SharedPreferencesExtensions.delete(key);
 ```
 
 
@@ -325,15 +319,120 @@ adapter.setFooterView(recyclerView, R.layout.template_footer);
 
 ```
 
-
-
+### Eventos de BaseActivity y BaseFragment ###
 
 ``` java
+// region ProjectNameActivity Methods
+
+@Override
+protected int getLayoutId() {
+    return R.layout.layout_id;
+}
+
+@Override
+protected void onRestoreExtras(Bundle arguments) {
+    super.onRestoreExtras(arguments);
+}
+
+@Override
+protected void onInitializeMembers() {
+    ...
+}
+
+@Override
+protected void onInitializeUIComponents() {
+    ...
+}
+
+@Override
+protected Presenter createPresenter() {
+    ...
+}
+
+// endregion ProjectNameActivity Methods
 
 ```
 
-``` java
+##### Uso ####
 
+Se agregaron los siguientes métodos para agrupar y estandarizar las inicializaciones de objetos y 
+referencias de Views y a continuación se explica su uso: 
+* `onRestoreExtras(Bundle arguments)`: Se utiliza para extraer los datos existentes en el `Bundle` al 
+crear una nueva instancia de un Activity o un Fragment, este objeto se verifica en el evento 
+`onCreate` del `BaseActivity` y `BaseFragment`, si en la verificación el `Bundle` es `null` no se 
+invocará este método. Esta llamada ocurre antes del `onInitializeMembers` y `onInitializeUIComponents`.
+* `onInitializeMembers`: Aquí se inicializarán todas las variables y objetos de la clase que no 
+dependan directamente de la existencia de alguna referencia de la vista.
+* `onInitializeUIComponents`: Aquí se inicializarán las referencias de componentes de vistas.
+
+### Estandarización de estructura en Activity y Fragment ###
+``` java
+public class MainActivity
+        extends ProjectNameActivity {
+    
+    // region Constants
+    
+    private static final String PAGE_NUMBER_ARG = "page_number_arg";
+    
+    // endregion Constants
+    
+    // region UI Components
+    
+    @BindView(R.id.viewpager_sections)
+    ViewPager sectionsViewPager;
+    
+    // endregion UI Components
+    
+    // region Members
+    
+    private HomePagerAdapter homePagerAdapter;
+    
+    // endregion Members
+    
+    // region Activity Lifecycle
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ...
+    }
+        
+    // endregion Activity Lifecycle
+    
+    // region ProjectNameActivity Methods
+    
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    ...
+    
+    // endregion ProjectNameActivity Methods
+    
+    // region View Implementation
+    // endregion View Implementation
+    
+    // region ButterKnife View Events
+    
+    @OnClick(R.id.image_view_avatar)
+    public void onAvatarButtonClick() {
+        ...
+    }
+    
+    // endregion ButterKnife View Events
+    
+    // region Public Methods
+    // endregion Public Methods
+    
+    // region Private Methods
+    
+    private List<Fragment> createFragmentPages(int number) {
+        ...
+    }
+    
+    // endregion Private Methods
+}
 ```
 
 ``` java
