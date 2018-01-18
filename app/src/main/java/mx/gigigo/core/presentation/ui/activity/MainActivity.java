@@ -1,7 +1,10 @@
-package mx.gigigo.core;
+package mx.gigigo.core.presentation.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import mx.gigigo.core.R;
+
 
 public class MainActivity extends AppCompatActivity {
 

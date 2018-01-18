@@ -139,7 +139,7 @@ Consiste en una extensión de SharedPreferences propias del SDK para simplificar
 SharedPreferencesExtensions
                 .builder(context)
                 .loggable(BuildConfig.DEBUG)
-                .setName("Name")
+                .setName("name")
                 .setMode(Context.MODE_PRIVATE)
                 .build();
 ```
@@ -185,9 +185,10 @@ LoggingInterceptor loggerInterceptor = new LoggingInterceptor.Builder()
                 .serializeNulls()
                 .create();
 
-        RequestInterceptor requestInterceptor =
-                new RequestInterceptor(new Connectivity(context));
-
+        
+        NetworkRequestInterceptor requestInterceptor =
+                new DefaultNetworkRequestInterceptor(new DefaultNetwork(context));
+                
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(loggerInterceptor)
                 .addInterceptor(requestInterceptor)
@@ -197,11 +198,26 @@ LoggingInterceptor loggerInterceptor = new LoggingInterceptor.Builder()
                 .build();
 
         ServiceClient.builder(client)
-                .loggable(BuildConfig.DEBUG)
                 .addEndpoint(endpoint) // puede agreger multiples endpoints
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
+                
+        ...
+        
+        
+    private class DefaultNetworkRequestInterceptor
+            extends NetworkRequestInterceptor {
+
+        public DefaultNetworkRequestInterceptor(Network network) {
+            super(network);
+        }
+
+        @Override
+        protected Response interceptResponse(Chain chain) throws IOException {
+            return chain.proceed(chain.request());
+        }
+    }
 
 ```
 

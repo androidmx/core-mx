@@ -36,5 +36,5 @@ public abstract class NetworkRequestInterceptor
         }
     }
 
-    protected abstract Response interceptResponse(Chain chain);
+    protected abstract Response interceptResponse(Chain chain) throws IOException;
 }

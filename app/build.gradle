@@ -1,11 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+
+def HOST = "HOST"
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion parent.ext.COMPILE_SDK_VERSION
+
     defaultConfig {
         applicationId "mx.gigigo.core"
-        minSdkVersion 19
-        targetSdkVersion 26
+        minSdkVersion parent.ext.MIN_SDK_VERSION
+        targetSdkVersion parent.ext.TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,9 +24,44 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation parent.ext.libraries.annotations
+
+    implementation parent.ext.libraries.design
+    implementation parent.ext.libraries.appcompat
+    implementation parent.ext.libraries.recyclerview
+    implementation parent.ext.libraries.supportv4
+    implementation parent.ext.libraries.constraintlayout
+
+    implementation parent.ext.libraries.gsonconverter
+    implementation parent.ext.libraries.retrofit
+    implementation parent.ext.libraries.okhttp
+
+    implementation parent.ext.libraries.rxandroid
+    implementation parent.ext.libraries.rxjava
+    implementation parent.ext.libraries.rxjavaadapter
+    implementation (parent.ext.libraries.logginginterceptor) {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    implementation parent.ext.libraries.butterknife
+    annotationProcessor parent.ext.libraries.butterknifecompiler
+
+    implementation parent.ext.libraries.glide
+
+    testImplementation parent.ext.testing.junit
+    testImplementation(parent.ext.testing.espresso) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    testImplementation parent.ext.testing.runner
+    testImplementation parent.ext.testing.mockito
+
+    androidTestCompile parent.ext.testing.junit
+
+
+    implementation parent.ext.modules.rxmvp
+    implementation parent.ext.modules.retrofitextensions
+    implementation parent.ext.modules.spextensions
+    implementation parent.ext.modules.recyclerextensions
+    implementation parent.ext.modules.permissions
 }
