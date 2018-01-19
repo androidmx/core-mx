@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
+ * @author AG - January 15, 2018
  * @author JG - January 15, 2018
  * @version 0.0.1
  * @since 0.0.1
