@@ -5,18 +5,25 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.graphics.SurfaceTexture;
+import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.util.Size;
+import android.view.Surface;
 import android.view.TextureView;
 import android.widget.TextView;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import mx.gigigo.core.BuildConfig;
 
@@ -31,16 +38,19 @@ public class CameraUtils implements TextureView.SurfaceTextureListener{
     private ICameraListener listener;
     private Size previewSize;
     private String cameraId;
-    private boolean checkPermissions;
     private HandlerThread handlerThread;
     private Handler handler;
     private CameraDevice cameraDevice;
+    private CameraCaptureSession cameraCaptureSession;
+    private TextureView textureView;
+    private CaptureRequest captureRequest;
 
 //    CameraCharacteristics.LENS_FACING_BACK;
-    public CameraUtils(Context context, int cameraFancing, ICameraListener listener, boolean checkPermissions){
+    public CameraUtils(Context context, int cameraFancing, ICameraListener listener, TextureView textureView){
         this.context = context;
        setCameraFancing(cameraFancing);
         this.listener = listener;
+        this.textureView = textureView;
     }
 
 
@@ -115,7 +125,7 @@ public class CameraUtils implements TextureView.SurfaceTextureListener{
         try {
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    //cameraManager.openCamera(this.cameraId, this, handler);
+                    cameraManager.openCamera(this.cameraId, stateCallback, handler);
                 }
             }else{
 
@@ -131,25 +141,92 @@ public class CameraUtils implements TextureView.SurfaceTextureListener{
         handler = new Handler(handlerThread.getLooper());
     }
 
-//    @Override
-//    public void onOpened(@NonNull CameraDevice cameraDevice) {
-//        this.cameraDevice = cameraDevice;
-//        createPreviewSession();
-//    }
-//
-//    @Override
-//    public void onDisconnected(@NonNull CameraDevice cameraDevice) {
-//        this.cameraDevice.close();
-//        this.cameraDevice = null;
-//    }
-//
-//    @Override
-//    public void onError(@NonNull CameraDevice cameraDevice, int i) {
-//        this.cameraDevice.close();
-//        this.cameraDevice = null;
-//    }
+
+    private CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
+        @Override
+        public void onOpened(@NonNull CameraDevice cameraDevice) {
+            CameraUtils.this.cameraDevice = cameraDevice;
+            createPreviewSession();
+
+        }
+
+        @Override
+        public void onDisconnected(@NonNull CameraDevice cameraDevice) {
+            CameraUtils.this.cameraDevice.close();
+            CameraUtils.this.cameraDevice = null;
+        }
+
+        @Override
+        public void onError(@NonNull CameraDevice cameraDevice, int i) {
+            CameraUtils.this.cameraDevice.close();
+            CameraUtils.this.cameraDevice = null;
+        }
+    };
+
+    //Better place to setting this methos is onstop
+    private void closeCamera(){
+        if(cameraCaptureSession != null){
+            cameraCaptureSession.close();
+            cameraCaptureSession = null;
+        }
+        if(cameraDevice != null){
+            cameraDevice.close();
+            cameraDevice = null;
+        }
+    }
+
+    public void closeBackgroundThread(){
+        if(handlerThread != null){
+            handlerThread.quitSafely();
+            handlerThread = null;
+        }
+        if(handler != null){
+            handler = null;
+        }
+    }
+
+
 
     public void createPreviewSession(){
+        try{
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                SurfaceTexture surfaceTexture = textureView.getSurfaceTexture();
+                surfaceTexture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
+                Surface surface = new Surface(surfaceTexture);
+                final CaptureRequest.Builder captureRequestBuild = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+                captureRequestBuild.addTarget(surface);
+
+                cameraDevice.createCaptureSession(Collections.singletonList(surface), new CameraCaptureSession.StateCallback() {
+                    @Override
+                    public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
+                        if (cameraDevice == null) {
+                            return;
+                        }
+
+                        try {
+                            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                                captureRequest = captureRequestBuild.build();
+                                CameraUtils.this.cameraCaptureSession = cameraCaptureSession;
+                                CameraUtils.this.cameraCaptureSession.setRepeatingRequest(captureRequest, null, handler);
+                            }else{
+                                //api 19
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+
+                    }
+                }, handler);
+            } else {
+                //Api 19
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
