@@ -15,4 +15,6 @@ public interface ListUsersRepository
         extends Repository {
 
     Observable<List<User>> getListUser(int page, int perPage);
+
+    Observable<User> getUserDetail(int user_id);
 }

@@ -19,7 +19,8 @@ public class UserEntityToUserTransform
 
         User model = new User();
         model.setId(value.getId());
-        model.setName(value.getFirstName() + " " + value.getLastName());
+        model.setName(value.getFirstName());
+        model.setLastName(value.getLastName());
         model.setAvatar(value.getAvatar());
 
         return model;

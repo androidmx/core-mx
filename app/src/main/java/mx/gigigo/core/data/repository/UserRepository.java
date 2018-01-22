@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.entity.ListUsersResponse;
+import mx.gigigo.core.data.entity.base.UserResponse;
 import mx.gigigo.core.data.repository.mapper.UserEntityToUserTransform;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
@@ -99,4 +100,22 @@ public class UserRepository
 
         return response;
     }
+
+    @Override
+    public Observable<User> getUserDetail(int user_id) {
+        Observable<UserResponse> response = api.getDetailUser(user_id);
+        return response.map(new Function<UserResponse, User>() {
+            @Override
+            public User apply(UserResponse userEntity) throws Exception {
+                return userMapper.transform(userEntity.getUser());
+            }
+        }).onErrorReturn(new Function<Throwable, User>() {
+            @Override
+            public User apply(Throwable throwable) throws Exception {
+                return null;
+            }
+        });
+    }
+
+
 }

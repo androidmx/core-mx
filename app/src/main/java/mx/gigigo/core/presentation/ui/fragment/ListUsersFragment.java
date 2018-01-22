@@ -1,5 +1,6 @@
 package mx.gigigo.core.presentation.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,12 +19,14 @@ import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.mapper.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
+import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
 import mx.gigigo.core.presentation.model.UserViewModel;
 import mx.gigigo.core.presentation.model.mapper.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.ListUsersPresenter;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
 import mx.gigigo.core.presentation.ui.adapter.ListUsersAdapter;
 import mx.gigigo.core.recyclerextensions.EndlessScrollListener;
+import mx.gigigo.core.recyclerextensions.ViewHolderAdapter;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
 import mx.gigigo.core.spextensions.SharedPreferencesExtensions;
@@ -34,6 +37,7 @@ import mx.gigigo.core.spextensions.SharedPreferencesExtensions;
 public class ListUsersFragment
         extends MvpBindingFragment<ListUsersView, ListUsersPresenter>
         implements ListUsersView {
+    public static String USER = "user";
 
     private static final int PAGE = 1;
     private static final int PER_PAGE = 10;
@@ -56,7 +60,7 @@ public class ListUsersFragment
 
     @Override
     protected void onInitializeMembers() {
-        adapter = new ListUsersAdapter();
+        adapter = new ListUsersAdapter(onItemClickListener);
 
         refreshLayoutListUsers.setColorSchemeResources(R.color.colorPrimary,
                 R.color.colorAccent);
@@ -96,6 +100,9 @@ public class ListUsersFragment
             @Override
             public void onShow() { }
         });
+
+
+
     }
 
     //endregion
@@ -110,13 +117,13 @@ public class ListUsersFragment
     @Override
     public void onFetchPeopleSuccess(List<UserViewModel> userViewModels) {
         String init = SharedPreferencesExtensions
-                    .get("INIT",
-                            String.class);
+                .get("INIT",
+                        String.class);
 
         boolean init2 = SharedPreferencesExtensions
-                    .get("INIT2",
-                            Boolean.class,
-                            false);
+                .get("INIT2",
+                        Boolean.class,
+                        false);
 
 
         boolean saved = SharedPreferencesExtensions.put("LISTA", List.class, userViewModels);
@@ -186,6 +193,15 @@ public class ListUsersFragment
                 isRefreshing = true;
                 presenter.getUsers(PAGE, PER_PAGE);
             }
+        }
+    };
+
+    private final ViewHolderAdapter.OnItemClickListener<UserViewModel> onItemClickListener = new ViewHolderAdapter.OnItemClickListener<UserViewModel>() {
+        @Override
+        public void onItemClick(UserViewModel item) {
+            Intent intent = new Intent(getActivity(), DetailUserActivity.class );
+            intent.putExtra(USER, item);
+            startActivity(intent);
         }
     };
 }

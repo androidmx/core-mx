@@ -4,7 +4,12 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import mx.gigigo.core.data.entity.ListUsersResponse;
+import mx.gigigo.core.data.entity.UserEntity;
+import mx.gigigo.core.data.entity.base.UserResponse;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -15,4 +20,12 @@ import retrofit2.http.QueryMap;
 public interface RestApi {
     @GET("/api/users")
     Observable<ListUsersResponse> getListUsers(@QueryMap(encoded = true) Map<String, String> options);
+
+    //get detail user
+    @GET("/api/users/{id_user}")
+    Observable<UserResponse> getDetailUser(@Path("id_user") int id_user);
+
+    //update user
+    @PUT("/api/users/{id_user}")
+    Observable<UserResponse> updateInfoUser(@Query("user") UserEntity userEntity);
 }

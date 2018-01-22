@@ -1,13 +1,16 @@
 package mx.gigigo.core.presentation.model;
 
+import java.io.Serializable;
+
 /**
  * @author JG - January 04, 2018
  * @version 0.0.1
  * @since 0.0.1
  */
-public class UserViewModel {
+public class UserViewModel implements Serializable{
     private Integer id;
     private String name;
+    private String lastName;
     private String avatar;
 
     public Integer getId() {
@@ -36,5 +39,13 @@ public class UserViewModel {
 
     public boolean hasAvatar() {
         return null != avatar && !avatar.isEmpty();
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

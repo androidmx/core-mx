@@ -19,6 +19,7 @@ public class UserToUserViewModel
         UserViewModel model = new UserViewModel();
         model.setId(value.getId());
         model.setName(value.getName());
+        model.setLastName(value.getLastName());
         model.setAvatar(value.getAvatar());
 
         return model;

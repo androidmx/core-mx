@@ -8,6 +8,7 @@ package mx.gigigo.core.domain.model;
 public class User {
     private Integer id;
     private String name;
+    private String lastName;
     private String avatar;
 
     public Integer getId() {
@@ -32,5 +33,13 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
