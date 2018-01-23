@@ -7,10 +7,11 @@ import java.util.List;
 
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
-import mx.gigigo.core.presentation.model.mapper.UserToUserViewModel;
+import mx.gigigo.core.presentation.viewmodel.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
 import mx.gigigo.core.rxmvp.BasePresenter;
-import mx.gigigo.core.rxmvp.UseCaseObserver;
+import mx.gigigo.core.rxmvp.ObservableCaseObserver;
+import mx.gigigo.core.rxmvp.SingleCaseObserver;
 
 /**
  * @author JG - December 13, 2017
@@ -31,7 +32,9 @@ public class ListUsersPresenter
 
     public void getUsers(int page, int perPage) {
         GetListUsersUseCase.Params params = GetListUsersUseCase.Params.forPage(page, perPage);
-        getListUsersUseCase.execute(new UserListObserver(), params);
+        // TODO: 1/23/2018  remover comentarios en las las clases relacionadas
+        //getListUsersUseCase.execute(new ObservableUserListObserver(), params);
+        getListUsersUseCase.execute(new SingleUserListObserver(), params);
     }
 
 
@@ -42,8 +45,8 @@ public class ListUsersPresenter
         getListUsersUseCase.dispose();
     }
 
-    private final class UserListObserver
-            extends UseCaseObserver<List<User>> {
+    private final class ObservableUserListObserver
+            extends ObservableCaseObserver<List<User>> {
 
         @Override
         public void onComplete() {
@@ -63,6 +66,31 @@ public class ListUsersPresenter
         @Override
         public void onNext(List<User> users) {
             super.onNext(users);
+
+            if(!isViewAttached()) return;
+
+            if(null != users && !users.isEmpty()) {
+                getView().onFetchPeopleSuccess(userViewModelMapper.transform(users));
+            } else {
+                getView().onEmptyResult();
+            }
+        }
+    }
+
+    private final class SingleUserListObserver
+            extends SingleCaseObserver<List<User>> {
+
+        @Override
+        public void onError(Throwable e) {
+            if(!isViewAttached()) return;
+
+            getView().showProgress(false);
+            getView().showError(e);
+        }
+
+        @Override
+        public void onSuccess(List<User> users) {
+            super.onSuccess(users);
 
             if(!isViewAttached()) return;
 

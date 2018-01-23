@@ -1,8 +1,8 @@
-package mx.gigigo.core.presentation.model.mapper;
+package mx.gigigo.core.presentation.viewmodel.transform;
 
 
 import mx.gigigo.core.domain.model.User;
-import mx.gigigo.core.presentation.model.UserViewModel;
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.rxmvp.Transform;
 
 /**

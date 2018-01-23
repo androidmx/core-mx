@@ -38,8 +38,8 @@ public abstract class BaseActivity
             onRestoreExtras(getIntent().getExtras());
         }
 
-        onInitializeUIComponents();
         onInitializeMembers();
+        onInitializeUIComponents();
     }
 
     @Override

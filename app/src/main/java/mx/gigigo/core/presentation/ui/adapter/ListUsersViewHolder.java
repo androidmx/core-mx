@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mx.gigigo.core.R;
-import mx.gigigo.core.presentation.model.UserViewModel;
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.recyclerextensions.ViewHolderAdapter;
 
 /**

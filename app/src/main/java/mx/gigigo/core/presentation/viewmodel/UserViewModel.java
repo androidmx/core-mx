@@ -1,4 +1,4 @@
-package mx.gigigo.core.presentation.model;
+package mx.gigigo.core.presentation.viewmodel;
 
 import java.io.Serializable;
 

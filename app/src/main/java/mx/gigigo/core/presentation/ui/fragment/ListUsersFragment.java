@@ -17,11 +17,13 @@ import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.R;
 import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.repository.UserRepository;
-import mx.gigigo.core.data.repository.mapper.UserEntityToUserTransform;
+import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
 import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
-import mx.gigigo.core.presentation.model.UserViewModel;
-import mx.gigigo.core.presentation.model.mapper.UserToUserViewModel;
+
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
+import mx.gigigo.core.presentation.viewmodel.transform.UserToUserViewModel;
+
 import mx.gigigo.core.presentation.presenter.ListUsersPresenter;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
 import mx.gigigo.core.presentation.ui.adapter.ListUsersAdapter;

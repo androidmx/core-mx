@@ -7,7 +7,7 @@ import io.reactivex.observers.DisposableObserver;
  * @version 0.0.1
  * @since 0.0.1
  */
-public class UseCaseObserver<T>
+public class ObservableCaseObserver<T>
         extends DisposableObserver<T> {
 
     @Override

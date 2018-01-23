@@ -24,7 +24,7 @@ public class SharedPreferencesExtensions {
     }
 
     public static <T> boolean put(String key, Class<T> type, T value) {
-        return SharedPreferencesExtensions.put(key, type, value, false);
+        return SharedPreferencesExtensions.put(key, type, value, true);
     }
 
     public static <T> boolean put(String key, Class<T> type, T value, boolean replaceIfExist) {

@@ -5,8 +5,11 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
+import mx.gigigo.core.rxmvp.ObservableUseCase;
+import mx.gigigo.core.rxmvp.SingleUseCase;
 import mx.gigigo.core.rxmvp.UseCase;
 
 /**
@@ -15,7 +18,8 @@ import mx.gigigo.core.rxmvp.UseCase;
  * @since 0.0.1
  */
 public class GetListUsersUseCase
-        extends UseCase<List<User>, GetListUsersUseCase.Params> {
+        //extends ObservableUseCase<List<User>, GetListUsersUseCase.Params> {
+        extends SingleUseCase<List<User>, GetListUsersUseCase.Params> {
 
     private final ListUsersRepository repository;
 
@@ -27,7 +31,7 @@ public class GetListUsersUseCase
     }
 
     @Override
-    protected Observable<List<User>> createObservableUseCase(Params parameters) {
+    protected Single<List<User>> createObservableUseCase(Params parameters) {
         return repository.getListUser(parameters.page, parameters.perPage);
     }
 

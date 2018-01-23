@@ -1,4 +1,4 @@
-package mx.gigigo.core.data.repository.mapper;
+package mx.gigigo.core.data.repository.transform;
 
 
 import mx.gigigo.core.data.entity.UserEntity;
