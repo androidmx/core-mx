@@ -2,7 +2,7 @@ package mx.gigigo.core.presentation.presenter.view;
 
 import java.util.List;
 
-import mx.gigigo.core.presentation.model.UserViewModel;
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.rxmvp.View;
 
 /**

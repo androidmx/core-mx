@@ -1,4 +1,4 @@
-package mx.gigigo.core.presentation.ui;
+package mx.gigigo.core.presentation;
 
 import android.app.Application;
 import android.content.Context;

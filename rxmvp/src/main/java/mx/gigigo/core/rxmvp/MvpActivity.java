@@ -4,25 +4,25 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 /**
- * @author JG - December 13, 2017
+ * @author JG - December 19, 2017
  * @version 0.0.1
  * @since 0.0.1
  */
-public abstract class MvpFragment<V extends View, P extends Presenter<V>>
-        extends BaseFragment {
+public abstract class MvpActivity<V extends mx.gigigo.core.rxmvp.View, P extends Presenter<V>>
+        extends BaseActivity {
 
     protected P presenter;
     protected abstract P createPresenter();
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         if(null == presenter) presenter = createPresenter();
 
         if(null == presenter) throw new NullPointerException("The presenter must not be null.");
 
         if(!(this instanceof View))
-            throw new MvpFragmentNotImplementedException();
+            throw new MvpActivityNotImplementedException();
 
         presenter.attachView((V) this);
 
@@ -36,10 +36,10 @@ public abstract class MvpFragment<V extends View, P extends Presenter<V>>
         if(null != presenter) presenter.detachView();
     }
 
-    public static class MvpFragmentNotImplementedException
+    public static class MvpActivityNotImplementedException
             extends RuntimeException {
-        public MvpFragmentNotImplementedException() {
-            super("The MvpFragment must implement View. This is required by the presenter.");
+        public MvpActivityNotImplementedException() {
+            super("The MvpActivity must implement View. This is required by the presenter.");
         }
     }
 }

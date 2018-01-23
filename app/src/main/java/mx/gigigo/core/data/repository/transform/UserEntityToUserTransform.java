@@ -1,8 +1,8 @@
-package mx.gigigo.core.presentation.model.mapper;
+package mx.gigigo.core.data.repository.transform;
 
 
+import mx.gigigo.core.data.entity.UserEntity;
 import mx.gigigo.core.domain.model.User;
-import mx.gigigo.core.presentation.model.UserViewModel;
 import mx.gigigo.core.rxmvp.Transform;
 
 /**
@@ -10,22 +10,23 @@ import mx.gigigo.core.rxmvp.Transform;
  * @version 0.0.1
  * @since 0.0.1
  */
-public class UserToUserViewModel
-        extends Transform<User, UserViewModel> {
+public class UserEntityToUserTransform
+        extends Transform<UserEntity, User> {
+
     @Override
-    public UserViewModel transform(User value) {
+    public User transform(UserEntity value) {
         if(null ==  value) return null;
 
-        UserViewModel model = new UserViewModel();
+        User model = new User();
         model.setId(value.getId());
-        model.setName(value.getName());
+        model.setName(value.getFirstName() + " " + value.getLastName());
         model.setAvatar(value.getAvatar());
 
         return model;
     }
 
     @Override
-    public User reverseTransform(UserViewModel value) {
+    public UserEntity reverseTransform(User value) {
         throw new UnsupportedOperationException();
     }
 }

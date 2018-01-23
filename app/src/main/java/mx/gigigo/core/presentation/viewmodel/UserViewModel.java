@@ -1,4 +1,4 @@
-package mx.gigigo.core.presentation.model;
+package mx.gigigo.core.presentation.viewmodel;
 
 /**
  * @author JG - January 04, 2018
