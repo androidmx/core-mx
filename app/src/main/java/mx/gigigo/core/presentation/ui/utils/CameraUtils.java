@@ -52,6 +52,7 @@ public class CameraUtils{
        setCameraFancing(cameraFancing);
         this.listener = listener;
         this.textureView = textureView;
+        initCamera();
     }
 
 
@@ -65,6 +66,14 @@ public class CameraUtils{
 
     public void initCamera(){
         cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+    }
+
+    public TextureView getTextureView() {
+        return textureView;
+    }
+
+    public void setTextureView(TextureView textureView) {
+        this.textureView = textureView;
     }
 
     public int getCameraFancing() {
@@ -109,15 +118,12 @@ public class CameraUtils{
     public void setupCamera(){
         try{
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                for (String cameraId : cameraManager.getCameraIdList()) {
-                    CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId);
-                    if(cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) == cameraFancing){
-                        StreamConfigurationMap streamConfigurationMap =
-                                cameraCharacteristics.get(cameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                        previewSize = streamConfigurationMap.getOutputSizes(SurfaceTexture.class)[0];
-                        this.cameraId = cameraId;
-                    }
-                }
+                String cameraId = cameraManager.getCameraIdList()[0];
+                CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId);
+                StreamConfigurationMap streamConfigurationMap =
+                        cameraCharacteristics.get(cameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                previewSize = streamConfigurationMap.getOutputSizes(SurfaceTexture.class)[0];
+                this.cameraId = cameraId;
             }else{
 
             }
@@ -131,8 +137,8 @@ public class CameraUtils{
     public void openCamera(){
         try {
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    cameraManager.openCamera(this.cameraId, stateCallback, handler);
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    cameraManager.openCamera(this.cameraId, stateCallback, null);
                 }
             }else{
 
@@ -222,6 +228,9 @@ public class CameraUtils{
     public void createPreviewSession(){
         try{
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                if(!textureView.isAvailable()){
+                   return;
+                }
                 SurfaceTexture surfaceTexture = textureView.getSurfaceTexture();
                 surfaceTexture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
                 Surface surface = new Surface(surfaceTexture);

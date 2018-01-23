@@ -19,7 +19,7 @@ import mx.gigigo.core.presentation.ui.utils.CameraUtils;
 import mx.gigigo.core.rxmvp.BaseActivity;
 
 public class CameraActivity extends BaseActivity implements CameraUtils.ICameraListener{
-    @BindView(R.id.texture_view)
+
     TextureView textureView;
 
     private CameraUtils cameraUtils;
@@ -32,6 +32,8 @@ public class CameraActivity extends BaseActivity implements CameraUtils.ICameraL
 
     @Override
     protected void onInitializeUIComponents() {
+        textureView = (TextureView) findViewById(R.id.textureview);
+        textureView.setSurfaceTextureListener(surfaceTextureListener);
 
     }
 
@@ -55,48 +57,19 @@ public class CameraActivity extends BaseActivity implements CameraUtils.ICameraL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        textureView = (TextureView) findViewById(R.id.textureview);
+        textureView.setSurfaceTextureListener(surfaceTextureListener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //cameraUtils.initHandleThread();
+        cameraUtils.initHandleThread();
         if(textureView.isAvailable()){
             cameraUtils.setupCamera();
             cameraUtils.openCamera();
         }else{
-            textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-                @Override
-                public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-                    cameraUtils.openCamera();
-                }
-
-                @Override
-                public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
-                }
-
-                @Override
-                public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-                    return false;
-                }
-
-                @Override
-                public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
-                }
-            });
+            textureView.setSurfaceTextureListener(surfaceTextureListener);
         }
     }
 
@@ -115,8 +88,10 @@ public class CameraActivity extends BaseActivity implements CameraUtils.ICameraL
     public TextureView.SurfaceTextureListener surfaceTextureListener =  new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+            cameraUtils.setTextureView(textureView);
             cameraUtils.setupCamera();
             cameraUtils.openCamera();
+
         }
 
         @Override
