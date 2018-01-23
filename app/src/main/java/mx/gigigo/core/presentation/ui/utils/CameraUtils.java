@@ -17,6 +17,7 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
@@ -31,7 +32,7 @@ import mx.gigigo.core.BuildConfig;
  * Created by Gigio on 22/01/18.
  */
 
-public class CameraUtils implements TextureView.SurfaceTextureListener{
+public class CameraUtils{
     private Context context;
     private CameraManager cameraManager;
     private int cameraFancing;
@@ -78,26 +79,32 @@ public class CameraUtils implements TextureView.SurfaceTextureListener{
         }
     }
 
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-        setupCamera();
-        openCamera();
-    }
 
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
 
-    }
+    public TextureView.SurfaceTextureListener surfaceTextureListener =  new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+            setupCamera();
+            openCamera();
+        }
 
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-        return false;
-    }
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+            Log.i(CameraUtils.class.getName(), "onSurface");
+        }
 
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+            Log.i(CameraUtils.class.getName(), "onSurfaceTextureDestroyed");
+            return false;
+        }
 
-    }
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+            Log.i(CameraUtils.class.getName(), "onSurfaceUpdate");
+
+        }
+    };
 
     public void setupCamera(){
         try{
@@ -164,7 +171,7 @@ public class CameraUtils implements TextureView.SurfaceTextureListener{
     };
 
     //Better place to setting this methos is onstop
-    private void closeCamera(){
+    public void closeCamera(){
         if(cameraCaptureSession != null){
             cameraCaptureSession.close();
             cameraCaptureSession = null;
@@ -182,6 +189,31 @@ public class CameraUtils implements TextureView.SurfaceTextureListener{
         }
         if(handler != null){
             handler = null;
+        }
+    }
+
+    //both methods give to ux common take a picture delay few milliseconds
+    private void lock(){
+        try {
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                cameraCaptureSession.capture(captureRequest, null, handler);
+            }else {
+                // versión sdk 19
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void unlock(){
+        try{
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                cameraCaptureSession.setRepeatingRequest(captureRequest, null, handler);
+            }else{
+                //version sdk 19
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

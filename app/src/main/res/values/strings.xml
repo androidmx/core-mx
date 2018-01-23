@@ -19,4 +19,5 @@
     <!-- Permissions on snackbar-->
     <string name="snack_message_camera_persmissions">Habilitar el uso de la cámara</string>
     <string name="snack_label_camera_setting">Habilitar</string>
+    <string name="title_activity_camera">CameraActivity</string>
 </resources>

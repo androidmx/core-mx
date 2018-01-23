@@ -3,6 +3,7 @@ package mx.gigigo.core.presentation.ui.fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.camera2.CameraCharacteristics;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,7 +28,9 @@ import mx.gigigo.core.presentation.model.UserViewModel;
 import mx.gigigo.core.presentation.model.mapper.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.DetailUserPresenter;
 import mx.gigigo.core.presentation.presenter.view.DetailUserView;
+import mx.gigigo.core.presentation.ui.activity.CameraActivity;
 import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
+import mx.gigigo.core.presentation.ui.utils.CameraUtils;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
 import mx.gigigo.core.rxmvp.MvpFragment;
@@ -40,7 +43,8 @@ import mx.gigigo.core.rxmvp.MvpFragment;
  * Use the {@link DetailUserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetailUserFragment extends MvpBindingFragment<DetailUserView, DetailUserPresenter> implements DetailUserView {
+public class DetailUserFragment extends MvpBindingFragment<DetailUserView, DetailUserPresenter>
+        implements DetailUserView {
     public static String USER_ID = "user_id";
 
     @BindView(R.id.image_avatar)
@@ -51,6 +55,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     TextView tvLastName;
     @BindView(R.id.iv_camera)
     ImageView ivCamera;
+
+    private CameraUtils cameraUtils;
 
     private int idUser;
 
@@ -110,7 +116,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @OnClick(R.id.iv_camera)
     public void onClickAction(){
         if(checkPermission()) {
-
+            Intent intent = new Intent(getActivity(), CameraActivity.class);
+            startActivity(intent);
         }else{
             //Request permissions
             ((DetailUserActivity)getActivity()).checkPermissions();

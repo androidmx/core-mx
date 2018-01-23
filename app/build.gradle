@@ -40,11 +40,12 @@ dependencies {
     implementation parent.ext.libraries.rxandroid
     implementation parent.ext.libraries.rxjava
     implementation parent.ext.libraries.rxjavaadapter
-    implementation (parent.ext.libraries.logginginterceptor) {
+    implementation(parent.ext.libraries.logginginterceptor) {
         exclude group: 'org.json', module: 'json'
     }
 
     implementation parent.ext.libraries.butterknife
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     annotationProcessor parent.ext.libraries.butterknifecompiler
 
     implementation parent.ext.libraries.glide
