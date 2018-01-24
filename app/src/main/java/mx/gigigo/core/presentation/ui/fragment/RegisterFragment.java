@@ -29,14 +29,11 @@ import mx.gigigo.core.rxmvp.BaseFragment;
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends MvpBindingFragment<RegisterUserView, RegisterUserPresenter> implements  RegisterUserView{
+public class RegisterFragment extends MvpBindingFragment<RegisterUserView, RegisterUserPresenter>
+        implements  RegisterUserView{
 
 
-    public RegisterFragment() {
-        // Required empty public constructor
-    }
-
-    public static RegisterFragment newInstance(String param1, String param2) {
+    public static RegisterFragment newInstance() {
         RegisterFragment fragment = new RegisterFragment();;
         return fragment;
     }
@@ -44,7 +41,7 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_register;
+        return R.layout.fragment_register;
     }
 
     @Override

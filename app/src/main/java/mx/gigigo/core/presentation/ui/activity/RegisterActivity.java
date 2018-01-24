@@ -5,11 +5,9 @@ import android.os.Bundle;
 
 import mx.gigigo.core.R;
 
-public class RegisterActivity extends AppCompatActivity {
-
+public class RegisterActivity extends CoreBaseActvity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+    protected int getLayoutId() {
+        return R.layout.activity_detail_user;
     }
 }
