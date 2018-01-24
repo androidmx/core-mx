@@ -8,15 +8,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.R;
+import mx.gigigo.core.data.RestApi;
+import mx.gigigo.core.data.repository.UserRepository;
+import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
+import mx.gigigo.core.domain.usecase.RegisterUserCase;
+import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.RegisterUserPresenter;
 import mx.gigigo.core.presentation.presenter.view.RegisterUserView;
+import mx.gigigo.core.retrofitextensions.ServiceClient;
+import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
 import mx.gigigo.core.rxmvp.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RegisterFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -62,6 +70,10 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
 
     @Override
     protected RegisterUserPresenter createPresenter() {
-        return ;
+        RestApi restApi = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
+        UserRepository userRepository = new UserRepository(restApi, new UserEntityToUserTransform());
+        RegisterUserCase registerUserCase = new RegisterUserCase();
+
+        return new RegisterUserPresenter(registerUserCase, new UserToUserViewModel());
     }
 }

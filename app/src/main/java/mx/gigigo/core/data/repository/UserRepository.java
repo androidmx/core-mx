@@ -64,6 +64,11 @@ public class UserRepository
     }
 
     @Override
+    public Single<String> registerUser(String email, String password) {
+        return null;
+    }
+
+    @Override
     public Single<User> getUserDetail(int user_id) {
         Single<UserResponse> response = api.getDetailUser(user_id);
         return response.map(new Function<UserResponse, User>() {
