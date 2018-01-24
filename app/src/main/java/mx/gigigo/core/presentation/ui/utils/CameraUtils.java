@@ -54,7 +54,12 @@ public class CameraUtils{
         this.textureView = textureView;
         initCamera();
     }
-
+    public CameraUtils(Context context, int cameraFancing, TextureView textureView){
+        this.context = context;
+        setCameraFancing(cameraFancing);
+        this.textureView = textureView;
+        initCamera();
+    }
 
     public CameraManager getCameraManager() {
         return cameraManager;
@@ -93,24 +98,25 @@ public class CameraUtils{
     public TextureView.SurfaceTextureListener surfaceTextureListener =  new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+//            textureView.setSurfaceTexture(surfaceTexture);
             setupCamera();
             openCamera();
         }
 
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-            Log.i(CameraUtils.class.getName(), "onSurface");
+           // Log.i(CameraUtils.class.getName(), "onSurface");
         }
 
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-            Log.i(CameraUtils.class.getName(), "onSurfaceTextureDestroyed");
+           // Log.i(CameraUtils.class.getName(), "onSurfaceTextureDestroyed");
             return false;
         }
 
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-            Log.i(CameraUtils.class.getName(), "onSurfaceUpdate");
+           // Log.i(CameraUtils.class.getName(), "onSurfaceUpdate");
 
         }
     };
@@ -199,7 +205,7 @@ public class CameraUtils{
     }
 
     //both methods give to ux common take a picture delay few milliseconds
-    private void lock(){
+    public void lock(){
         try {
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                 cameraCaptureSession.capture(captureRequest, null, handler);
@@ -211,7 +217,7 @@ public class CameraUtils{
         }
     }
 
-    private void unlock(){
+    public void unlock(){
         try{
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                 cameraCaptureSession.setRepeatingRequest(captureRequest, null, handler);

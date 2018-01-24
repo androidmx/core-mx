@@ -22,12 +22,18 @@ public class UserEntityToUserTransform
         model.setName(value.getFirstName());
         model.setLastName(value.getLastName());
         model.setAvatar(value.getAvatar());
-
+        model.setUpdateAt(value.getUpdateAt());
         return model;
     }
 
     @Override
     public UserEntity reverseTransform(User value) {
-        throw new UnsupportedOperationException();
+        if(value == null) return null;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(value.getId());
+        userEntity.setFirstName(value.getName());
+        userEntity.setLastName(value.getLastName());
+        userEntity.setAvatar(value.getAvatar());
+        return userEntity;
     }
 }

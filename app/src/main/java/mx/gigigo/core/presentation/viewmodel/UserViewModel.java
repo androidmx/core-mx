@@ -12,6 +12,7 @@ public class UserViewModel implements Serializable{
     private String name;
     private String lastName;
     private String avatar;
+    private String updateAt;
 
     public Integer getId() {
         return id;
@@ -47,5 +48,13 @@ public class UserViewModel implements Serializable{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
     }
 }

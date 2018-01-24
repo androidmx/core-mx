@@ -16,6 +16,15 @@
     <string name="dialog_label_ok_permission">Ok</string>
     <string name="dialog_label_cancel_permission">No</string>
 
+    <!--Button OnClick use-->
+    <string name="camera_button">Take photo</string>
+
+    <!--Edit info user -->
+    <string name="label_name">Name</string>
+    <string name="label_last_name">Last name</string>
+    <string name="label_save">Save</string>
+    <string name="message_success_update">Los datos han sido actualizados.</string>
+
     <!-- Permissions on snackbar-->
     <string name="snack_message_camera_persmissions">Habilitar el uso de la cámara</string>
     <string name="snack_label_camera_setting">Habilitar</string>

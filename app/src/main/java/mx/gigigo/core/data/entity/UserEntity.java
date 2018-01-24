@@ -23,6 +23,9 @@ public class UserEntity {
     @SerializedName("avatar")
     @Expose
     private String avatar;
+    @SerializedName("updateAt")
+    @Expose
+    private String updateAt;
 
     public Integer getId() {
         return id;
@@ -56,4 +59,11 @@ public class UserEntity {
         this.avatar = avatar;
     }
 
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
+    }
 }

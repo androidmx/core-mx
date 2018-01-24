@@ -4,7 +4,9 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import mx.gigigo.core.data.entity.UserEntity;
 import mx.gigigo.core.domain.model.User;
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.rxmvp.Repository;
 
 /**
@@ -15,7 +17,9 @@ import mx.gigigo.core.rxmvp.Repository;
 public interface ListUsersRepository
         extends Repository {
 
-    Observable<User> getUserDetail(int user_id);
+    Single<User> getUserDetail(int user_id);
+
+    Single<String> updateUser(UserEntity userEntity);
 
     //Observable<List<User>> getListUser(int page, int perPage);
     Single<List<User>> getListUser(int page, int perPage);

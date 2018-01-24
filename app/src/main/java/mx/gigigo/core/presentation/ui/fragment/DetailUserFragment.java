@@ -4,15 +4,22 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraCharacteristics;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,15 +29,17 @@ import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.R;
 import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.repository.UserRepository;
-import mx.gigigo.core.data.repository.mapper.UserEntityToUserTransform;
+import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetDetailUserUseCase;
-import mx.gigigo.core.presentation.model.UserViewModel;
-import mx.gigigo.core.presentation.model.mapper.UserToUserViewModel;
+import mx.gigigo.core.domain.usecase.UpdateUserCase;
 import mx.gigigo.core.presentation.presenter.DetailUserPresenter;
 import mx.gigigo.core.presentation.presenter.view.DetailUserView;
 import mx.gigigo.core.presentation.ui.activity.CameraActivity;
 import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
 import mx.gigigo.core.presentation.ui.utils.CameraUtils;
+import mx.gigigo.core.presentation.ui.utils.ImageGallery;
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
+import mx.gigigo.core.presentation.viewmodel.transform.UserToUserViewModel;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
 import mx.gigigo.core.rxmvp.MvpFragment;
@@ -45,18 +54,26 @@ import mx.gigigo.core.rxmvp.MvpFragment;
  */
 public class DetailUserFragment extends MvpBindingFragment<DetailUserView, DetailUserPresenter>
         implements DetailUserView {
-    public static String USER_ID = "user_id";
+    public final static int CODE_RESULT_CAMERA = 109;
+    public final static String USER_ID = "user_id";
+    public final static String USER = "user";
+    public final static String FILE_IMAGE = "image";
 
     @BindView(R.id.image_avatar)
     ImageView ivAvatar;
     @BindView(R.id.tv_name)
-    TextView tvName;
+    EditText tvName;
     @BindView(R.id.tv_last_name)
-    TextView tvLastName;
+    EditText tvLastName;
     @BindView(R.id.iv_camera)
     ImageView ivCamera;
+    @BindView(R.id.bt_save)
+    Button save;
+    @BindView(R.id.progress)
+    ProgressBar progressBar;
 
-    private CameraUtils cameraUtils;
+    private UserViewModel userViewModel;
+
 
     private int idUser;
 
@@ -75,10 +92,10 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
 
         GetDetailUserUseCase userUseCase = new GetDetailUserUseCase(userRepository, Schedulers.io(),
                 AndroidSchedulers.mainThread());
+        UpdateUserCase updateUserCase = new UpdateUserCase(userRepository, Schedulers.io(),
+                AndroidSchedulers.mainThread());
         UserToUserViewModel userToUserViewModel =  new UserToUserViewModel();
-        DetailUserPresenter presenter = new DetailUserPresenter(userUseCase, userToUserViewModel);
-
-        return presenter;
+        return new DetailUserPresenter(userUseCase, userToUserViewModel, updateUserCase);
     }
 
     @Override
@@ -111,21 +128,37 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
                 .into(ivAvatar);
         tvName.setText(userViewModel.getName());
         tvLastName.setText(userViewModel.getLastName());
+        this.userViewModel = userViewModel;
+
     }
 
-    @OnClick(R.id.iv_camera)
-    public void onClickAction(){
-        if(checkPermission()) {
-            Intent intent = new Intent(getActivity(), CameraActivity.class);
-            startActivity(intent);
+    @OnClick({R.id.iv_camera, R.id.bt_save})
+    public void onClickAction(View view){
+        if(view.getId() == R.id.iv_camera) {
+            if (checkPermission()) {
+                Intent intent = new Intent(getActivity(), CameraActivity.class);
+                intent.putExtra(USER, userViewModel);
+                startActivityForResult(intent, CODE_RESULT_CAMERA);
+            } else {
+                //Request permissions
+                ((DetailUserActivity) getActivity()).checkPermissions();
+            }
         }else{
-            //Request permissions
-            ((DetailUserActivity)getActivity()).checkPermissions();
+            if(userViewModel != null){
+                if(!tvName.getText().toString().isEmpty())
+                    userViewModel.setName(tvName.getText().toString());
+                if(!tvLastName.getText().toString().isEmpty())
+                    userViewModel.setLastName(tvLastName.getText().toString());
+                presenter.getUserUpdate(userViewModel);
+
+            }
         }
     }
 
     @Override
-    public void onSuccessUserUpdate(UserViewModel userViewModel) {
+    public void onSuccessUserUpdate() {
+        Toast.makeText(getContext(), getResources().getString(R.string.message_success_update),Toast.LENGTH_LONG).show();
+        getActivity().finish();
 
     }
 
@@ -136,7 +169,11 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
 
     @Override
     public void showProgress(boolean active) {
-
+        if(active) {
+            progressBar.setVisibility(View.VISIBLE);
+        }else{
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -147,8 +184,15 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
+        if(resultCode == CODE_RESULT_CAMERA){
+            String filePath = data.getExtras().getString(FILE_IMAGE, "");
+            File file = new File(filePath);
+            if(file.exists()) {
+                Glide.with(getContext()).load(Uri.fromFile(file)).into(ivAvatar);
+            }
 
+        }
+    }
 
     public boolean checkPermission(){
         if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -156,5 +200,11 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
         }else{
             return true;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 }

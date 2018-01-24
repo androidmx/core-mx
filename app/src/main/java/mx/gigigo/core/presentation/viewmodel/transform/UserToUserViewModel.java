@@ -21,12 +21,18 @@ public class UserToUserViewModel
         model.setName(value.getName());
         model.setLastName(value.getLastName());
         model.setAvatar(value.getAvatar());
-
+        model.setUpdateAt(value.getUpdateAt());
         return model;
     }
 
     @Override
     public User reverseTransform(UserViewModel value) {
-        throw new UnsupportedOperationException();
+        if(value == null) return null;
+        User user = new User();
+        user.setId(value.getId());
+        user.setName(value.getName());
+        user.setLastName(value.getLastName());
+        user.setAvatar(value.getAvatar());
+        return user;
     }
 }

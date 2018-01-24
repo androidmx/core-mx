@@ -1,7 +1,7 @@
 package mx.gigigo.core.presentation.presenter.view;
 
 
-import mx.gigigo.core.presentation.model.UserViewModel;
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.rxmvp.View;
 
 /**
@@ -10,7 +10,7 @@ import mx.gigigo.core.rxmvp.View;
 
 public interface DetailUserView extends View {
     void onSuccessUserDetail(UserViewModel userViewModel);
-    void onSuccessUserUpdate(UserViewModel userViewModel);
+    void onSuccessUserUpdate();
     void onEmptyResult();
     void showProgress(boolean active);
     void showError(Throwable exception);

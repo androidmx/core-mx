@@ -6,6 +6,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import mx.gigigo.core.data.entity.ListUsersResponse;
 import mx.gigigo.core.data.entity.UserEntity;
+import mx.gigigo.core.data.entity.base.UpdateResponse;
 import mx.gigigo.core.data.entity.base.UserResponse;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
@@ -23,14 +24,13 @@ public interface RestApi {
         //Observable<ListUsersResponse> getListUsers(@QueryMap(encoded = true) Map<String, String> options);
     Single<ListUsersResponse> getListUsers(@QueryMap(encoded = true) Map<String, String> options);
 
-
     //get detail user
     @GET("/api/users/{id_user}")
-    Observable<UserResponse> getDetailUser(@Path("id_user") int id_user);
+    Single<UserResponse> getDetailUser(@Path("id_user") int id_user);
 
     //update user
     @PUT("/api/users/{id_user}")
-    Observable<UserResponse> updateInfoUser(@Query("user") UserEntity userEntity);
-
+    Single<UpdateResponse> updateInfoUser(@Path("id_user") int idUser,
+                                          @Query("user") UserEntity userEntity);
 
 }

@@ -14,9 +14,9 @@ import mx.gigigo.core.R;
 import mx.gigigo.core.permissions.Permissions;
 import mx.gigigo.core.permissions.PermissionsResult;
 import mx.gigigo.core.permissions.ShowRequestPermissionRationale;
-import mx.gigigo.core.presentation.model.UserViewModel;
 import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
 import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
+import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.rxmvp.BaseFragment;
 
 public class DetailUserActivity extends CoreBaseActvity implements PermissionsResult {
@@ -25,7 +25,6 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     private UserViewModel user;
     private Permissions permissionsManager;
     private String[] permissionRequired;
-
 
     @Override
     protected int getLayoutId() {
@@ -40,9 +39,6 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
 
     }
 
-
-
-
     @Override
     protected void onInitializeMembers() {
         permissionsManager = new Permissions.Builder(this)
@@ -51,16 +47,6 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
                 .build();
 
         checkPermissions();
-    }
-
-    @Override
-    protected void onBindView() {
-
-    }
-
-    @Override
-    protected void onUnbindView() {
-
     }
 
     @Override
