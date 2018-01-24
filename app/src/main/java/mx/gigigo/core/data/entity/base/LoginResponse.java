@@ -7,16 +7,16 @@ import com.google.gson.annotations.SerializedName;
  * Created by Gigio on 24/01/18.
  */
 
-public class UpdateResponse {
-    @SerializedName("updatedAt")
+public class LoginResponse {
+    @SerializedName("token")
     @Expose
-    private String updateAt;
+    private String token;
 
     public String getUpdateAt() {
-        return updateAt;
+        return token;
     }
 
-    public void setUpdateAt(String updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdateAt(String token) {
+        this.token = token;
     }
 }

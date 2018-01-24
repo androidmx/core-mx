@@ -29,7 +29,7 @@ import mx.gigigo.core.rxmvp.BaseFragment;
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends MvpBindingFragment<RegisterUserView, RegisterUserPresenter> {
+public class RegisterFragment extends MvpBindingFragment<RegisterUserView, RegisterUserPresenter> implements  RegisterUserView{
 
 
     public RegisterFragment() {
@@ -72,8 +72,28 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     protected RegisterUserPresenter createPresenter() {
         RestApi restApi = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
         UserRepository userRepository = new UserRepository(restApi, new UserEntityToUserTransform());
-        RegisterUserCase registerUserCase = new RegisterUserCase();
+        RegisterUserCase registerUserCase = new RegisterUserCase(userRepository, Schedulers.io(), AndroidSchedulers.mainThread());
 
         return new RegisterUserPresenter(registerUserCase, new UserToUserViewModel());
+    }
+
+    @Override
+    public void onSuccessUserRegister(String token) {
+
+    }
+
+    @Override
+    public void onEmptyResult() {
+
+    }
+
+    @Override
+    public void showProgress(boolean active) {
+
+    }
+
+    @Override
+    public void showError(Throwable exception) {
+
     }
 }

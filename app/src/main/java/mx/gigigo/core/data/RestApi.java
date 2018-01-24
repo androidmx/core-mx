@@ -2,11 +2,10 @@ package mx.gigigo.core.data;
 
 import java.util.Map;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import mx.gigigo.core.data.entity.ListUsersResponse;
 import mx.gigigo.core.data.entity.UserEntity;
-import mx.gigigo.core.data.entity.base.UpdateResponse;
+import mx.gigigo.core.data.entity.base.LoginResponse;
 import mx.gigigo.core.data.entity.base.UserResponse;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -31,8 +30,8 @@ public interface RestApi {
 
     //update user
     @PUT("/api/users/{id_user}")
-    Single<UpdateResponse> updateInfoUser(@Path("id_user") int idUser,
-                                          @Query("user") UserEntity userEntity);
+    Single<UserResponse> updateInfoUser(@Path("id_user") int idUser,
+                                         @Query("user") UserEntity userEntity);
     //RegisterUser
     @POST("/api/register")
     Single<String> registerUser(@Query("user") UserEntity userEntity);
