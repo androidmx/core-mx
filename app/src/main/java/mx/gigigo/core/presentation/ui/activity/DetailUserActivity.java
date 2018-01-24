@@ -14,15 +14,15 @@ import mx.gigigo.core.R;
 import mx.gigigo.core.permissions.Permissions;
 import mx.gigigo.core.permissions.PermissionsResult;
 import mx.gigigo.core.permissions.ShowRequestPermissionRationale;
+import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
 import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.rxmvp.BaseFragment;
 
 public class DetailUserActivity extends CoreBaseActvity implements PermissionsResult {
     public static int PERMISSIONS_REQUEST_CODE = 103;
     public static String USER = "user";
-    private UserViewModel user;
+    private UserModel user;
     private Permissions permissionsManager;
     private String[] permissionRequired;
 
@@ -52,7 +52,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     @Override
     protected void onRestoreExtras(Bundle arguments) {
         super.onRestoreExtras(arguments);
-        user = (UserViewModel) arguments.getSerializable(USER);
+        user = (UserModel) arguments.getSerializable(USER);
     }
 
     @Override

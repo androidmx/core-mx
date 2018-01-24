@@ -19,9 +19,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import mx.gigigo.core.R;
+import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.ui.utils.CameraUtils;
 import mx.gigigo.core.presentation.ui.utils.ImageGallery;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 import mx.gigigo.core.rxmvp.BaseActivity;
 
 public class CameraActivity extends BaseActivity {
@@ -36,7 +36,7 @@ public class CameraActivity extends BaseActivity {
     private CameraUtils cameraUtils;
     private Unbinder unbinder;
     private ImageGallery imageGallery;
-    private UserViewModel userViewModel;
+    private UserModel userViewModel;
 
     @Override
     protected int getLayoutId() {
@@ -80,7 +80,7 @@ public class CameraActivity extends BaseActivity {
     protected void onRestoreExtras(Bundle arguments) {
         super.onRestoreExtras(arguments);
         if(arguments.getSerializable(USER) != null){
-            userViewModel = (UserViewModel) arguments.getSerializable(USER);
+            userViewModel = (UserModel) arguments.getSerializable(USER);
         }
     }
 

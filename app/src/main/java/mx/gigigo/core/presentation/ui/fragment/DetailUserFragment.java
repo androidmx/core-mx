@@ -32,14 +32,12 @@ import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetDetailUserUseCase;
 import mx.gigigo.core.domain.usecase.UpdateUserCase;
+import mx.gigigo.core.presentation.model.UserModel;
+import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.DetailUserPresenter;
 import mx.gigigo.core.presentation.presenter.view.DetailUserView;
 import mx.gigigo.core.presentation.ui.activity.CameraActivity;
 import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
-import mx.gigigo.core.presentation.ui.utils.CameraUtils;
-import mx.gigigo.core.presentation.ui.utils.ImageGallery;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
-import mx.gigigo.core.presentation.viewmodel.transform.UserToUserViewModel;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
 import mx.gigigo.core.rxmvp.MvpFragment;
@@ -72,7 +70,7 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @BindView(R.id.progress)
     ProgressBar progressBar;
 
-    private UserViewModel userViewModel;
+    private UserModel userViewModel;
 
 
     private int idUser;
@@ -123,7 +121,7 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
 
 
     @Override
-    public void onSuccessUserDetail(UserViewModel userViewModel) {
+    public void onSuccessUserDetail(UserModel userViewModel) {
         Glide.with(getContext()).load(userViewModel.getAvatar())
                 .into(ivAvatar);
         tvName.setText(userViewModel.getName());

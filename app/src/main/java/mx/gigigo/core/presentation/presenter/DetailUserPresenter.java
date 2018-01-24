@@ -5,9 +5,9 @@ import io.reactivex.Single;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.usecase.GetDetailUserUseCase;
 import mx.gigigo.core.domain.usecase.UpdateUserCase;
+import mx.gigigo.core.presentation.model.UserModel;
+import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.view.DetailUserView;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
-import mx.gigigo.core.presentation.viewmodel.transform.UserToUserViewModel;
 import mx.gigigo.core.rxmvp.BasePresenter;
 import mx.gigigo.core.rxmvp.SingleCaseObserver;
 import mx.gigigo.core.rxmvp.UseCase;
@@ -35,7 +35,7 @@ public class DetailUserPresenter extends BasePresenter<DetailUserView> {
         userUseCaseDetail.execute(new DetailUserObserver(), user_id);
     }
 
-    public void getUserUpdate(UserViewModel user){
+    public void getUserUpdate(UserModel user){
         updateUserCase.execute(new UserUpdateObserver(), user);
     }
 

@@ -20,8 +20,6 @@ import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
-import mx.gigigo.core.domain.usecase.UpdateUserCase;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
 
 /**
  * @author JG - December 19, 2017
