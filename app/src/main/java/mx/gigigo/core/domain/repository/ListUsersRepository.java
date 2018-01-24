@@ -23,4 +23,6 @@ public interface ListUsersRepository
     //Observable<List<User>> getListUser(int page, int perPage);
     Single<List<User>> getListUser(int page, int perPage);
 
+    Single<String> registerUser(String email, String password);
+
 }

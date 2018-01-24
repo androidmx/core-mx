@@ -9,6 +9,7 @@ import mx.gigigo.core.data.entity.UserEntity;
 import mx.gigigo.core.data.entity.base.UpdateResponse;
 import mx.gigigo.core.data.entity.base.UserResponse;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -32,5 +33,12 @@ public interface RestApi {
     @PUT("/api/users/{id_user}")
     Single<UpdateResponse> updateInfoUser(@Path("id_user") int idUser,
                                           @Query("user") UserEntity userEntity);
+    //RegisterUser
+    @POST("/api/register")
+    Single<String> registerUser(@Query("user") UserEntity userEntity);
+
+    //LoginUser
+    @POST("/api/login")
+    Single<String> loginUser(@Query("user") UserEntity userEntity);
 
 }

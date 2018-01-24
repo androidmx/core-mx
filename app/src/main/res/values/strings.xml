@@ -29,4 +29,12 @@
     <string name="snack_message_camera_persmissions">Habilitar el uso de la cámara</string>
     <string name="snack_label_camera_setting">Habilitar</string>
     <string name="title_activity_camera">CameraActivity</string>
+
+    <!--RegiterActivity-->
+    <string name="register_hint_email">Email</string>
+    <string name="register_hint_password">Password</string>
+
+    <!--Pantalla de login-->
+    <string name="login_label_register">Sing up</string>
+    <string name="login_label_logEmail">Log in</string>
 </resources>
