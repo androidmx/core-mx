@@ -1,11 +1,11 @@
-package mx.gigigo.core.presentation.viewmodel;
+package mx.gigigo.core.presentation.model;
 
 /**
  * @author JG - January 04, 2018
  * @version 0.0.1
  * @since 0.0.1
  */
-public class UserViewModel {
+public class UserModel {
     private Integer id;
     private String name;
     private String avatar;

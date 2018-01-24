@@ -7,7 +7,7 @@ import java.util.List;
 
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
-import mx.gigigo.core.presentation.viewmodel.transform.UserToUserViewModel;
+import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
 import mx.gigigo.core.rxmvp.BasePresenter;
 import mx.gigigo.core.rxmvp.ObservableCaseObserver;

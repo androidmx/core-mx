@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mx.gigigo.core.R;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
+import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.recyclerextensions.ViewHolderAdapter;
 
 /**
@@ -18,7 +18,7 @@ import mx.gigigo.core.recyclerextensions.ViewHolderAdapter;
  * @since 0.0.1
  */
 public class ListUsersViewHolder
-        extends ViewHolderAdapter<UserViewModel> {
+        extends ViewHolderAdapter<UserModel> {
 
     @BindView(R.id.image_view_avatar)
     ImageView imageViewAvatar;
@@ -32,7 +32,7 @@ public class ListUsersViewHolder
     }
 
     @Override
-    public void onBindViewHolder(UserViewModel item) {
+    public void onBindViewHolder(UserModel item) {
         super.onBindViewHolder(item);
 
         textViewName.setText(item.getName());

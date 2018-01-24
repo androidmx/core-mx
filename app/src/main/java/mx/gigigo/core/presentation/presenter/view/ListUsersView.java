@@ -2,7 +2,7 @@ package mx.gigigo.core.presentation.presenter.view;
 
 import java.util.List;
 
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
+import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.rxmvp.View;
 
 /**
@@ -12,7 +12,7 @@ import mx.gigigo.core.rxmvp.View;
  */
 public interface ListUsersView
         extends View {
-    void onFetchPeopleSuccess(List<UserViewModel> userViewModels);
+    void onFetchPeopleSuccess(List<UserModel> userModels);
     void onEmptyResult();
     void showProgress(boolean active);
     void showError(Throwable exception);

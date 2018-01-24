@@ -1,8 +1,8 @@
-package mx.gigigo.core.presentation.viewmodel.transform;
+package mx.gigigo.core.presentation.model.transform;
 
 
 import mx.gigigo.core.domain.model.User;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
+import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.rxmvp.Transform;
 
 /**
@@ -11,12 +11,12 @@ import mx.gigigo.core.rxmvp.Transform;
  * @since 0.0.1
  */
 public class UserToUserViewModel
-        extends Transform<User, UserViewModel> {
+        extends Transform<User, UserModel> {
     @Override
-    public UserViewModel transform(User value) {
+    public UserModel transform(User value) {
         if(null ==  value) return null;
 
-        UserViewModel model = new UserViewModel();
+        UserModel model = new UserModel();
         model.setId(value.getId());
         model.setName(value.getName());
         model.setAvatar(value.getAvatar());
@@ -25,7 +25,7 @@ public class UserToUserViewModel
     }
 
     @Override
-    public User reverseTransform(UserViewModel value) {
+    public User reverseTransform(UserModel value) {
         throw new UnsupportedOperationException();
     }
 }

@@ -18,8 +18,8 @@ import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
-import mx.gigigo.core.presentation.viewmodel.transform.UserToUserViewModel;
+import mx.gigigo.core.presentation.model.UserModel;
+import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.ListUsersPresenter;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
 import mx.gigigo.core.presentation.ui.adapter.ListUsersAdapter;
@@ -108,7 +108,7 @@ public class ListUsersFragment
     }
 
     @Override
-    public void onFetchPeopleSuccess(List<UserViewModel> userViewModels) {
+    public void onFetchPeopleSuccess(List<UserModel> userModels) {
         String init = SharedPreferencesExtensions
                     .get("INIT",
                             String.class);
@@ -119,13 +119,13 @@ public class ListUsersFragment
                             false);
 
 
-        boolean saved = SharedPreferencesExtensions.put("LISTA", List.class, userViewModels);
+        boolean saved = SharedPreferencesExtensions.put("LISTA", List.class, userModels);
 
         if(saved) {
-            List<UserViewModel> userViewModelsRecover = SharedPreferencesExtensions.get("LISTA",
+            List<UserModel> userModelsRecover = SharedPreferencesExtensions.get("LISTA",
                     List.class, null);
 
-            if(userViewModelsRecover != null) {
+            if(userModelsRecover != null) {
 
             }
         }
@@ -135,9 +135,9 @@ public class ListUsersFragment
 
         onRefreshCompleted();
         if(adapter.isEmpty()) {
-            adapter.set(userViewModels);
+            adapter.set(userModels);
         } else {
-            adapter.addRange(userViewModels);
+            adapter.addRange(userModels);
         }
     }
 
