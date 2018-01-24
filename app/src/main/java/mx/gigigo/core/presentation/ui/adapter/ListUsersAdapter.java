@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import mx.gigigo.core.R;
-import mx.gigigo.core.presentation.viewmodel.UserViewModel;
+import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.recyclerextensions.RecyclerHeaderFooterAdapter;
 import mx.gigigo.core.recyclerextensions.ViewHolderAdapter;
 
@@ -14,16 +14,16 @@ import mx.gigigo.core.recyclerextensions.ViewHolderAdapter;
  * @since 0.0.1
  */
 public class ListUsersAdapter
-        extends RecyclerHeaderFooterAdapter<UserViewModel, ViewHolderAdapter<UserViewModel>> {
+        extends RecyclerHeaderFooterAdapter<UserModel, ViewHolderAdapter<UserModel>> {
 
-    private ViewHolderAdapter.OnItemClickListener<UserViewModel> listener;
+    private ViewHolderAdapter.OnItemClickListener<UserModel> listener;
 
-    public ListUsersAdapter(ViewHolderAdapter.OnItemClickListener<UserViewModel> listener){
+    public ListUsersAdapter(ViewHolderAdapter.OnItemClickListener<UserModel> listener){
         this.listener = listener;
     }
 
     @Override
-    public ViewHolderAdapter<UserViewModel> onCreateViewHolderHeaderFooter(ViewGroup parent, int viewType) {
+    public ViewHolderAdapter<UserModel> onCreateViewHolderHeaderFooter(ViewGroup parent, int viewType) {
         View view = getView(parent, R.layout.item_user);
         ListUsersViewHolder viewHolder = new ListUsersViewHolder(view);
         viewHolder.setItemClickListener(listener);

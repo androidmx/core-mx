@@ -1,4 +1,4 @@
-package mx.gigigo.core.presentation.viewmodel;
+package mx.gigigo.core.presentation.model;
 
 import java.io.Serializable;
 
@@ -7,7 +7,8 @@ import java.io.Serializable;
  * @version 0.0.1
  * @since 0.0.1
  */
-public class UserViewModel implements Serializable{
+
+public class UserModel implements Serializable {
     private Integer id;
     private String name;
     private String lastName;
