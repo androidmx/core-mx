@@ -32,6 +32,7 @@ import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetDetailUserUseCase;
 import mx.gigigo.core.domain.usecase.UpdateUserCase;
+import mx.gigigo.core.permissions.Permissions;
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.DetailUserPresenter;
@@ -193,7 +194,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     }
 
     public boolean checkPermission(){
-        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             return false;
         }else{
             return true;

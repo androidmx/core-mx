@@ -65,7 +65,8 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
 
     public void checkPermissions(){
         permissionRequired =new String[]{
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
         permissionsManager.check(permissionRequired, PERMISSIONS_REQUEST_CODE,
                 ShowRequestPermissionRationale.AT_END);
