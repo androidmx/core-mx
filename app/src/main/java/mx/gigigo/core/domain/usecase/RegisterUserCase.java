@@ -14,7 +14,7 @@ import mx.gigigo.core.rxmvp.SingleUseCase;
  * Created by Gigio on 24/01/18.
  */
 
-public class RegisterUserCase  extends SingleUseCase<String, UserModel> {
+public class RegisterUserCase  extends SingleUseCase<String, RegisterUserCase.Params> {
     private ListUsersRepository repository;
 
     public RegisterUserCase(ListUsersRepository repository, Scheduler executedThread, Scheduler uiThread){
@@ -24,9 +24,33 @@ public class RegisterUserCase  extends SingleUseCase<String, UserModel> {
 
 
     @Override
-    protected Single<String> createObservableUseCase(UserModel parameters) {
-        User user = new UserToUserViewModel().reverseTransform(parameters);
-        UserEntity entity = new UserEntityToUserTransform().reverseTransform(user);
-        return repository.registerUser(entity.getEmail(), entity.getPassword());
+    protected Single<String> createObservableUseCase(Params parameters) {
+        return repository.registerUser(parameters.getEmail(), parameters.getPassword());
+    }
+
+
+    public static class Params{
+        private String email;
+        private String password;
+
+        public Params(String email, String password){
+            this.email = email;
+            this.password = password;
+        }
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
     }
 }

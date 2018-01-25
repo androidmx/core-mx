@@ -7,6 +7,8 @@ import mx.gigigo.core.data.entity.ListUsersResponse;
 import mx.gigigo.core.data.entity.UserEntity;
 import mx.gigigo.core.data.entity.base.LoginResponse;
 import mx.gigigo.core.data.entity.base.UserResponse;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -33,8 +35,11 @@ public interface RestApi {
     Single<UserResponse> updateInfoUser(@Path("id_user") int idUser,
                                          @Query("user") UserEntity userEntity);
     //RegisterUser
+    @FormUrlEncoded
     @POST("/api/register")
-    Single<String> registerUser(@Query("user") UserEntity userEntity);
+    Single<LoginResponse> registerUser(@Field(value = "email", encoded = true) String email,
+                                @Field(value = "password", encoded = true) String password);
+
 
     //LoginUser
     @POST("/api/login")

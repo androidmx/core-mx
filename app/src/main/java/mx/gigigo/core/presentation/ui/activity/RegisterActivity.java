@@ -8,6 +8,6 @@ import mx.gigigo.core.R;
 public class RegisterActivity extends CoreBaseActvity {
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_detail_user;
+        return R.layout.activity_register;
     }
 }

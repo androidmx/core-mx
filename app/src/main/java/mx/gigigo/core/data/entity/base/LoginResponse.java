@@ -12,11 +12,11 @@ public class LoginResponse {
     @Expose
     private String token;
 
-    public String getUpdateAt() {
+    public String getToken() {
         return token;
     }
 
-    public void setUpdateAt(String token) {
+    public void setToken(String token) {
         this.token = token;
     }
 }

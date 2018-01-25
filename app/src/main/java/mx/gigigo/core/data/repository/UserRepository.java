@@ -64,7 +64,18 @@ public class UserRepository
 
     @Override
     public Single<String> registerUser(String email, String password) {
-        return null;
+        Single<LoginResponse> response = api.registerUser(email, password);
+        return response.map(new Function<LoginResponse, String>() {
+            @Override
+            public String apply(LoginResponse loginResponse) throws Exception {
+                return loginResponse.getToken();
+            }
+        }).onErrorReturn(new Function<Throwable, String>() {
+            @Override
+            public String apply(Throwable throwable) throws Exception {
+                return null;
+            }
+        });
     }
 
     @Override
