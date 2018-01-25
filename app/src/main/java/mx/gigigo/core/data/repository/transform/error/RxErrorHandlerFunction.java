@@ -19,23 +19,19 @@ import retrofit2.Response;
  * Created by Gigio on 25/01/18.
  */
 
-public class RxErrorHandlerFunction<T, E extends ResponseError, Response>
-        extends  ErrorHandlerFunction
+public class RxErrorHandlerFunction<T, E extends ResponseError>
+        extends  ErrorHandlerFunction<Response>
         implements Function<Throwable, SingleSource<? extends T>> {
-
-
-    public RxErrorHandlerFunction(Class errorClass) {
-        super(errorClass);
-    }
-
-    @Override
-    public ResponseState getResponseState(Object response) throws Exception {
-        return null;
-    }
 
 
     @Override
     public SingleSource<? extends T> apply(Throwable throwable) throws Exception {
+        return null;
+    }
+
+    @Override
+    public ResponseState getResponseState(Response response) throws IOException {
+       
         return null;
     }
 }
