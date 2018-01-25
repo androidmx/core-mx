@@ -16,17 +16,16 @@ public abstract class SingleUseCase<T, P>
         super(executorThread, uiThread);
     }
 
-    public void execute(DisposableSingleObserver<T> disposableObserver, P parameters) {
-        if(null == disposableObserver) {
-            throw new NullPointerException("DisposableSingleObserver must not be null");
+    public void execute(DisposableSingleObserver<T> observer, P parameters) {
+        if(null == observer) {
+            throw new NullPointerException("Observer must not be null");
         }
 
         final Single<T> observable = createObservableUseCase(parameters)
                 .subscribeOn(executorThread)
                 .observeOn(uiThread);
 
-        DisposableSingleObserver observer = observable.subscribeWith(disposableObserver);
-        compositeDisposable.add(observer);
+        compositeDisposable.add(observable.subscribeWith(observer));
     }
 
     protected abstract Single<T> createObservableUseCase(P parameters);

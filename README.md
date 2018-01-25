@@ -30,7 +30,7 @@ Gradle previas a 3.0.0
 
 ```gradle
    dependencies {
-      compile ''
+      compile 'com.github.androidmx:core-mx:develop-SNAPSHOT'
    }
 ```
 
@@ -38,10 +38,19 @@ Gradle 3.0.0+
 
 ```gradle
    dependencies {
-      implementation ''
+      implementation 'com.github.androidmx:core-mx:develop-SNAPSHOT'
    }
 ```
 
+__NOTA:__
+
+Gradle puede almacenar en caché las compilaciones SNAPSHOT. Para asegurar que Gradle siempre elija la versión más reciente de la compilación, debes agregar la siguiente configuración en su archivo `build.gradle` 
+
+```gradle
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+```
 
 ### Rx MVP ###
 Consiste en una implementación del patrón MVP (Model View Presenter) utilizando los principios de clean architecture.
@@ -75,6 +84,7 @@ public interface Presenter<V extends View> {
     void handleError(Throwable exception);
 }
 ```
+
 
 
 Butter Knife for binding views en Activity/Fragment base.
