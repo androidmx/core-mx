@@ -11,6 +11,7 @@ import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 import mx.gigigo.core.rxmvp.ErrorHandlerFunction;
 import mx.gigigo.core.rxmvp.ResponseError;
+import mx.gigigo.core.rxmvp.ResponseState;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
@@ -18,7 +19,7 @@ import retrofit2.Response;
  * Created by Gigio on 25/01/18.
  */
 
-public class RxErrorHandlerFunction<T, E extends ResponseError>
+public class RxErrorHandlerFunction<T, E extends ResponseError, Response>
         extends  ErrorHandlerFunction
         implements Function<Throwable, SingleSource<? extends T>> {
 
@@ -26,6 +27,12 @@ public class RxErrorHandlerFunction<T, E extends ResponseError>
     public RxErrorHandlerFunction(Class errorClass) {
         super(errorClass);
     }
+
+    @Override
+    public ResponseState getResponseState(Object response) throws Exception {
+        return null;
+    }
+
 
     @Override
     public SingleSource<? extends T> apply(Throwable throwable) throws Exception {

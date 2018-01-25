@@ -1,4 +1,4 @@
-package mx.gigigo.core.data.repository.transform.error;
+package mx.gigigo.core.rxmvp;
 
 /**
  * @author Omar Bacilio - January 11, 2018
