@@ -1,6 +1,7 @@
 package mx.gigigo.core.presentation.ui.fragment;
 
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.widget.EditText;
@@ -31,6 +32,10 @@ import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
 public class RegisterFragment extends MvpBindingFragment<RegisterUserView, RegisterUserPresenter>
         implements  RegisterUserView{
     public static final int MAX_PASSWORD_LENGTH = 8;
+    public static final String TYPE = "type";
+    public static final int TYPE_LOGIN = 1;
+    public static final int TYPE_REGISTER = 2;
+
     @BindView(R.id.et_email)
     EditText etEmail;
     @BindView(R.id.et_password)
@@ -40,19 +45,37 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     @BindView(R.id.edit2)
     TextInputLayout textInputLayoutPassword;
 
-    public static RegisterFragment newInstance() {
-        return new RegisterFragment();
+    private int type;
+
+    public static RegisterFragment newInstance(int type) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(TYPE, type);
+        RegisterFragment registerFragment = new RegisterFragment();
+        registerFragment.setArguments(bundle);
+        return registerFragment;
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_register;
     }
+
+
     @Override
     protected void onInitializeUIComponents() {
     }
     @Override
     protected void onInitializeMembers() {
+    }
+
+
+    @Override
+    protected void onRestoreExtras(Bundle arguments) {
+        super.onRestoreExtras(arguments);
+        type = arguments.getInt(TYPE);
+
+        if(type == TY)
+
     }
 
     @OnClick(R.id.bt_signup)
