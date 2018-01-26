@@ -15,7 +15,7 @@ import mx.gigigo.core.rxmvp.SingleUseCase;
  * Created by Gigio on 24/01/18.
  */
 
-public class UpdateUserCase extends SingleUseCase<String, UserModel> {
+public class UpdateUserCase extends SingleUseCase<User, UserModel> {
     private ListUsersRepository repository;
     public UpdateUserCase(ListUsersRepository repository,
                           Scheduler excecutedThread,
@@ -25,7 +25,7 @@ public class UpdateUserCase extends SingleUseCase<String, UserModel> {
     }
 
     @Override
-    protected Single<String> createObservableUseCase(UserModel parameters) {
+    protected Single<User> createObservableUseCase(UserModel parameters) {
         User user = new UserToUserViewModel().reverseTransform(parameters);
         UserEntity userEntity = new UserEntityToUserTransform().reverseTransform(user);
         return repository.updateUser(userEntity);

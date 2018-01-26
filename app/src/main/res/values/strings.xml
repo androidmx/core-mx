@@ -25,8 +25,24 @@
     <string name="label_save">Save</string>
     <string name="message_success_update">Los datos han sido actualizados.</string>
 
+
     <!-- Permissions on snackbar-->
     <string name="snack_message_camera_persmissions">Habilitar el uso de la cámara y almacenamiento.</string>
     <string name="snack_label_camera_setting">Habilitar</string>
     <string name="title_activity_camera">CameraActivity</string>
+
+    <!--RegiterActivity-->
+    <string name="register_hint_email">Email</string>
+    <string name="register_hint_password">Password</string>
+    <string name="register_message_success">El registro se ha realizado satisfactoriamente</string>
+
+    <!--Register fragment-->
+    <string name="message_empty_email">Email requerido</string>
+    <string name="message_invalid_email">El formato del  email no  valido</string>
+    <string name="message_empty_password">Contraseña requerida</string>
+    <string name="message_length_password">La contraseña no tiene una longitud valida</string>
+
+    <!--Pantalla de login-->
+    <string name="login_label_register">Sing up</string>
+    <string name="login_label_logEmail">Log in</string>
 </resources>

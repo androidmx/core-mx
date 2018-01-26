@@ -18,9 +18,11 @@ public interface ListUsersRepository
 
     Single<User> getUserDetail(int user_id);
 
-    Single<String> updateUser(UserEntity userEntity);
+    Single<User> updateUser(UserEntity userEntity);
 
     //Observable<List<User>> getListUser(int page, int perPage);
     Single<List<User>> getListUser(int page, int perPage);
+
+    Single<String> registerUser(String email, String password);
 
 }

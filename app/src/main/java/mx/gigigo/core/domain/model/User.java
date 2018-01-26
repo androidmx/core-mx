@@ -7,6 +7,7 @@ package mx.gigigo.core.domain.model;
  */
 public class User {
     private Integer id;
+    private String email;
     private String name;
     private String lastName;
     private String avatar;
@@ -51,4 +52,13 @@ public class User {
     public void setUpdateAt(String updateAt) {
         this.updateAt = updateAt;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

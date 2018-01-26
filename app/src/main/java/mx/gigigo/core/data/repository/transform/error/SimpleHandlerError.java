@@ -13,13 +13,14 @@ public class SimpleHandlerError implements ResponseError{
     @SerializedName("error")
     private String error;
 
+
     @Override
     public String getError() {
-        return null;
+        return error;
     }
 
     @Override
     public boolean hasErrorMessage() {
-        return false;
+        return error != null && !error.isEmpty();
     }
 }
