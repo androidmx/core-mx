@@ -33,6 +33,7 @@ public class UserToUserViewModel
         user.setName(value.getName());
         user.setLastName(value.getLastName());
         user.setAvatar(value.getAvatar());
+        user.setEmail(value.getEmail());
         return user;
     }
 

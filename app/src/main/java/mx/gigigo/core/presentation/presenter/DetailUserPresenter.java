@@ -39,9 +39,9 @@ public class DetailUserPresenter extends BasePresenter<DetailUserView> {
         updateUserCase.execute(new UserUpdateObserver(), user);
     }
 
-    private final class UserUpdateObserver extends SingleCaseObserver<String>{
+    private final class UserUpdateObserver extends SingleCaseObserver<User>{
         @Override
-        public void onSuccess(String s) {
+        public void onSuccess(User s) {
             if(!isViewAttached()) return;
             getView().showProgress(false);
             getView().onSuccessUserUpdate();
