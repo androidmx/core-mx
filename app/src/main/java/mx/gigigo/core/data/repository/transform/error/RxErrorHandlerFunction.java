@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 import mx.gigigo.core.rxmvp.ErrorHandlerFunction;
@@ -23,15 +24,40 @@ public class RxErrorHandlerFunction<T, E extends ResponseError>
         extends  ErrorHandlerFunction<Response>
         implements Function<Throwable, SingleSource<? extends T>> {
 
+    private final Class<E> errorClass;
 
+    public RxErrorHandlerFunction(Class<E> errorClass){
+        this.errorClass = errorClass;
+    }
     @Override
     public SingleSource<? extends T> apply(Throwable throwable) throws Exception {
-        return null;
+        if(throwable instanceof HttpException){
+            HttpException httpException = (HttpException) throwable;
+            if(httpException != null && httpException.response() != null){
+                Response response = httpException.response();
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
+                    return Single.error(new UnauthorizedException());
+                }
+                return Single.error(getResponseState(response));
+            }
+        }
+        return Single.error(throwable);
     }
 
     @Override
     public ResponseState getResponseState(Response response) throws IOException {
-       
-        return null;
+        Gson gson = new Gson();
+        String  errorMessage;
+
+        String jsonError = response.errorBody().string();
+        ResponseError responseError = gson.fromJson(jsonError, errorClass);
+
+        if(responseError != null && responseError.hasErrorMessage()){
+            errorMessage = responseError.getError();
+        }else{
+            errorMessage = HttpErrorHandling.fromInt(response.code()).toString();
+        }
+
+        return  new ResponseState(errorMessage, response.code() );
     }
 }
