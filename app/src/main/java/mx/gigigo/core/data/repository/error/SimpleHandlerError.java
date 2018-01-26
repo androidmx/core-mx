@@ -1,4 +1,4 @@
-package mx.gigigo.core.data.repository.transform.error;
+package mx.gigigo.core.data.repository.error;
 
 import com.google.gson.annotations.SerializedName;
 

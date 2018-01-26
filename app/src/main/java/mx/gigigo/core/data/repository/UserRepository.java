@@ -1,14 +1,11 @@
 package mx.gigigo.core.data.repository;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.entity.ListUsersResponse;
@@ -18,11 +15,10 @@ import mx.gigigo.core.data.entity.base.UserResponse;
 
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 
-import mx.gigigo.core.data.repository.transform.error.RxErrorHandlerFunction;
-import mx.gigigo.core.data.repository.transform.error.SimpleHandlerError;
+import mx.gigigo.core.data.repository.error.RxErrorHandlerFunction;
+import mx.gigigo.core.data.repository.error.SimpleHandlerError;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
-import mx.gigigo.core.rxmvp.ErrorHandlerFunction;
 
 /**
  * @author JG - December 19, 2017

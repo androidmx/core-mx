@@ -28,9 +28,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @version 0.0.1
  * @since 0.0.1
  */
-public class RootApp
-        extends Application {
+public class RootApp extends Application {
 
+    private static Context context;
+
+    public static Context getAppContext(){
+        return RootApp.context;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,6 +47,7 @@ public class RootApp
                 .build();
 
         initializeServiceClient();
+        context = getApplicationContext();
     }
 
     private void initializeServiceClient() {

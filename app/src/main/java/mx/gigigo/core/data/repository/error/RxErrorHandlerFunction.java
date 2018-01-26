@@ -1,15 +1,14 @@
-package mx.gigigo.core.data.repository.transform.error;
+package mx.gigigo.core.data.repository.error;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
+import mx.gigigo.core.presentation.RootApp;
 import mx.gigigo.core.rxmvp.ErrorHandlerFunction;
 import mx.gigigo.core.rxmvp.ResponseError;
 import mx.gigigo.core.rxmvp.ResponseState;
@@ -52,11 +51,11 @@ public class RxErrorHandlerFunction<T, E extends ResponseError>
         String jsonError = response.errorBody().string();
         ResponseError responseError = gson.fromJson(jsonError, errorClass);
 
-        if(responseError != null && responseError.hasErrorMessage()){
-            errorMessage = responseError.getError();
-        }else{
-            errorMessage = HttpErrorHandling.fromInt(response.code()).toString();
-        }
+//        if(responseError != null && responseError.hasErrorMessage()){
+//            errorMessage = responseError.getError();
+//        }else{
+            errorMessage = new HttpErrorHandler(RootApp.getAppContext()).getErrorByHttpCode(response.code()).toString();
+//        }
 
         return  new ResponseState(errorMessage, response.code() );
     }
