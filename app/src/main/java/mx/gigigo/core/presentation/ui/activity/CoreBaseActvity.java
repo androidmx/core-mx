@@ -17,8 +17,9 @@ import mx.gigigo.core.rxmvp.BaseActivity;
 
 public class CoreBaseActvity extends BaseActivity {
     private Unbinder unbinder;
-    private FragmentManager fragmentManager;
+    public FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected int getLayoutId() {
@@ -49,6 +50,11 @@ public class CoreBaseActvity extends BaseActivity {
     public void initFragment(){
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
+    }
+
+    public void addFragment(int container, Fragment fragment, String tag){
+        fragmentTransaction.add(container, fragment, tag);
+        fragmentTransaction.commit();
     }
 
     public void addFragment(int container, Fragment fragment){

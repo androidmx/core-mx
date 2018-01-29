@@ -73,6 +73,8 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
         if(type == TYPE_LOGIN){
             bt_done.setText(R.string.login_label_button);
         }
+        etEmail.setText("email@mc.c");
+        etPassword.setText("pass");
     }
     @Override
     protected void onInitializeMembers() {
@@ -82,7 +84,6 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     @Override
     protected void onRestoreExtras(Bundle arguments) {
         super.onRestoreExtras(arguments);
-
         type = arguments.getInt(TYPE);
     }
 

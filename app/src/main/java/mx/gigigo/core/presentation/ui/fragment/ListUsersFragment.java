@@ -1,6 +1,8 @@
 package mx.gigigo.core.presentation.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -58,6 +60,18 @@ public class ListUsersFragment
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_list_users;
+    }
+
+
+    public static ListUsersFragment newInstance(){
+        ListUsersFragment fragment = new ListUsersFragment();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

@@ -20,7 +20,8 @@
         <activity android:name=".presentation.ui.activity.MainActivity" />
         <activity android:name=".presentation.ui.activity.ListUsersActivity">
         </activity>
-        <activity android:name=".presentation.ui.activity.DetailUserActivity" />
+        <activity android:name=".presentation.ui.activity.DetailUserActivity"
+            android:configChanges=""/>
         <activity
             android:name=".presentation.ui.activity.CameraActivity"
             android:label="@string/title_activity_camera"
