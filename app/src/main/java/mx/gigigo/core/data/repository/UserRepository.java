@@ -114,7 +114,7 @@ public class UserRepository
             public String apply(LoginResponse loginResponse) throws Exception {
                 return loginResponse.getToken();
             }
-        }).onErrorReturn(new RxErrorHandlerFunction(SimpleHandlerError.class));
+        }).onErrorResumeNext(new RxErrorHandlerFunction(SimpleHandlerError.class));
     }
 
 

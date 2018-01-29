@@ -24,13 +24,13 @@ public class RegisterUserPresenter extends BasePresenter<RegisterUserView> {
     }
 
     public void registerUser(String email, String password){
-        RegisterUserCase.Params params = new RegisterUserCase.Params("", password);
+        RegisterUserCase.Params params = new RegisterUserCase.Params(email, password);
         registerUserCase.execute(new RegisterObserver(), params);
     }
 
     public void loginUser(String email, String password){
         LoginUserCase.Params params = new LoginUserCase.Params(email, password);
-        loginUserCase.execute(new RegisterObserver(), params);
+        loginUserCase.execute(new LoginObserver(), params);
     }
 
 

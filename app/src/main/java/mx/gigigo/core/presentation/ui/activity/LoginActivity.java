@@ -39,9 +39,13 @@ public class LoginActivity extends CoreBaseActvity {
        if(view.getId() == R.id.tv_login_email){
            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
            intent.putExtra(TYPE, TYPE_LOGIN);
+           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
            startActivity(intent);
        }else{
            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
            startActivity(intent);
        }
     }

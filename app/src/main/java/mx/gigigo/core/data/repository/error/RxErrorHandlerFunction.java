@@ -51,11 +51,11 @@ public class RxErrorHandlerFunction<T, E extends ResponseError>
         String jsonError = response.errorBody().string();
         ResponseError responseError = gson.fromJson(jsonError, errorClass);
 
-//        if(responseError != null && responseError.hasErrorMessage()){
-//            errorMessage = responseError.getError();
-//        }else{
+        if(responseError != null && responseError.hasErrorMessage()){
+            errorMessage = responseError.getError();
+        }else{
             errorMessage = new HttpErrorHandler(RootApp.getAppContext()).getErrorByHttpCode(response.code()).toString();
-//        }
+        }
 
         return  new ResponseState(errorMessage, response.code() );
     }

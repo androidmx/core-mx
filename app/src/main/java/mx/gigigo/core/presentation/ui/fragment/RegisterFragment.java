@@ -11,12 +11,14 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.R;
 import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
+import mx.gigigo.core.domain.usecase.LoginUserCase;
 import mx.gigigo.core.domain.usecase.RegisterUserCase;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.RegisterUserPresenter;
@@ -80,6 +82,7 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     @Override
     protected void onRestoreExtras(Bundle arguments) {
         super.onRestoreExtras(arguments);
+
         type = arguments.getInt(TYPE);
     }
 
@@ -119,13 +122,17 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
         RestApi restApi = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
         UserRepository userRepository = new UserRepository(restApi, new UserEntityToUserTransform());
         RegisterUserCase registerUserCase = new RegisterUserCase(userRepository, Schedulers.io(), AndroidSchedulers.mainThread());
-        return new RegisterUserPresenter(registerUserCase);
+        LoginUserCase loginUserCase = new LoginUserCase(userRepository, Schedulers.io(), AndroidSchedulers.mainThread());
+        return new RegisterUserPresenter(registerUserCase, loginUserCase);
     }
 
     @Override
     public void onSuccessUserRegister(String token) {
         Toast.makeText(getContext(), getResources().getString(R.string.register_message_success), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(getActivity(), ListUsersActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         getActivity().startActivity(intent);
         getActivity().finish();
 
@@ -134,6 +141,9 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     @Override
     public void onSuccessUserLogin(String token) {
         Intent intent = new Intent(getActivity(), ListUsersActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         getActivity().startActivity(intent);
         getActivity().finish();
     }

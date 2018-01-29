@@ -202,9 +202,4 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
 }
