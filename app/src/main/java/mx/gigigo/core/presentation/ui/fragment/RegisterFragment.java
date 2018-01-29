@@ -1,9 +1,11 @@
 package mx.gigigo.core.presentation.ui.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import mx.gigigo.core.domain.usecase.RegisterUserCase;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.RegisterUserPresenter;
 import mx.gigigo.core.presentation.presenter.view.RegisterUserView;
+import mx.gigigo.core.presentation.ui.activity.ListUsersActivity;
 import mx.gigigo.core.presentation.ui.utils.ValidationsUtils;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
@@ -44,6 +47,8 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     TextInputLayout textInputLayoutEmail;
     @BindView(R.id.edit2)
     TextInputLayout textInputLayoutPassword;
+    @BindView(R.id.bt_signup)
+    Button bt_done;
 
     private int type;
 
@@ -63,6 +68,9 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
 
     @Override
     protected void onInitializeUIComponents() {
+        if(type == TYPE_LOGIN){
+            bt_done.setText(R.string.login_label_button);
+        }
     }
     @Override
     protected void onInitializeMembers() {
@@ -73,9 +81,6 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     protected void onRestoreExtras(Bundle arguments) {
         super.onRestoreExtras(arguments);
         type = arguments.getInt(TYPE);
-
-        if(type == TY)
-
     }
 
     @OnClick(R.id.bt_signup)
@@ -116,6 +121,8 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     @Override
     public void onSuccessUserRegister(String token) {
         Toast.makeText(getContext(), getResources().getString(R.string.register_message_success), Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity(), ListUsersActivity.class);
+        getActivity().startActivity(intent);
         getActivity().finish();
 
     }

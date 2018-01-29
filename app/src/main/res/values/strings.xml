@@ -45,4 +45,7 @@
     <!--Pantalla de login-->
     <string name="login_label_register">Sing up</string>
     <string name="login_label_logEmail">Log in</string>
+
+    <!--Login email -->
+    <string name="login_label_button">Log in</string>
 </resources>

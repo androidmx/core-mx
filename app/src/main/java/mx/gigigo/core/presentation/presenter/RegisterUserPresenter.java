@@ -21,6 +21,11 @@ public class RegisterUserPresenter extends BasePresenter<RegisterUserView> {
         registerUserCase.execute(new RegisterObserver(), params);
     }
 
+    public void loginUser(String email, String password){
+
+    }
+
+
     private final class RegisterObserver extends SingleCaseObserver<String>{
         @Override
         public void onSuccess(String s) {
