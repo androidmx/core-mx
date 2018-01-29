@@ -106,8 +106,12 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
             textInputLayoutPassword.setError("");
         }
 
-        if(!haveErrors)
-            presenter.registerUser(etEmail.getText().toString(), etPassword.getText().toString());
+        if(!haveErrors) {
+            if(type == TYPE_LOGIN)
+                presenter.loginUser(etEmail.getText().toString(), etPassword.getText().toString());
+            else
+                presenter.registerUser(etEmail.getText().toString(), etPassword.getText().toString());
+        }
     }
 
     @Override
@@ -125,6 +129,13 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
         getActivity().startActivity(intent);
         getActivity().finish();
 
+    }
+
+    @Override
+    public void onSuccessUserLogin(String token) {
+        Intent intent = new Intent(getActivity(), ListUsersActivity.class);
+        getActivity().startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package mx.gigigo.core.presentation.presenter;
 
+import mx.gigigo.core.domain.usecase.LoginUserCase;
 import mx.gigigo.core.domain.usecase.RegisterUserCase;
 import mx.gigigo.core.presentation.presenter.view.RegisterUserView;
 import mx.gigigo.core.rxmvp.BasePresenter;
@@ -11,9 +12,15 @@ import mx.gigigo.core.rxmvp.SingleCaseObserver;
 
 public class RegisterUserPresenter extends BasePresenter<RegisterUserView> {
     private RegisterUserCase registerUserCase;
+    private LoginUserCase loginUserCase;
 
     public RegisterUserPresenter(RegisterUserCase registerUserCase){
         this.registerUserCase = registerUserCase;
+    }
+
+    public RegisterUserPresenter(RegisterUserCase registerUserCase, LoginUserCase loginUserCase){
+        this.registerUserCase = registerUserCase;
+        this.loginUserCase = loginUserCase;
     }
 
     public void registerUser(String email, String password){
@@ -22,7 +29,8 @@ public class RegisterUserPresenter extends BasePresenter<RegisterUserView> {
     }
 
     public void loginUser(String email, String password){
-
+        LoginUserCase.Params params = new LoginUserCase.Params(email, password);
+        loginUserCase.execute(new RegisterObserver(), params);
     }
 
 
@@ -45,5 +53,28 @@ public class RegisterUserPresenter extends BasePresenter<RegisterUserView> {
             getView().showError(e);
         }
     }
+
+    private final class LoginObserver extends SingleCaseObserver<String>{
+
+        @Override
+        public void onSuccess(String message) {
+            if(!isViewAttached()) return;
+            getView().showProgress(false);
+            if(message.isEmpty()){
+                getView().onEmptyResult();
+            }else{
+                getView().onSuccessUserLogin(message);
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            if(!isViewAttached()) return;
+            getView().showProgress(false);
+            getView().showError(e);
+        }
+    }
+
+
 
 }
