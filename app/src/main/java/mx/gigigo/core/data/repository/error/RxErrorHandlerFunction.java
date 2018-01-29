@@ -1,5 +1,7 @@
 package mx.gigigo.core.data.repository.error;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -16,23 +18,27 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 /**
- * Created by Gigio on 25/01/18.
+ * @author VT - January 25, 2018.
+ * @version 0.0.1
+ * @since 0.0.1
  */
-
 public class RxErrorHandlerFunction<T, E extends ResponseError>
         extends  ErrorHandlerFunction<Response>
         implements Function<Throwable, SingleSource<? extends T>> {
 
     private final Class<E> errorClass;
+    private final Context context;
 
-    public RxErrorHandlerFunction(Class<E> errorClass){
+    public RxErrorHandlerFunction(Context context, Class<E> errorClass){
+        this.context = context;
         this.errorClass = errorClass;
     }
+
     @Override
     public SingleSource<? extends T> apply(Throwable throwable) throws Exception {
         if(throwable instanceof HttpException){
             HttpException httpException = (HttpException) throwable;
-            if(httpException != null && httpException.response() != null){
+            if(httpException.response() != null){
                 Response response = httpException.response();
                 if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
                     return Single.error(new UnauthorizedException());
@@ -45,18 +51,28 @@ public class RxErrorHandlerFunction<T, E extends ResponseError>
 
     @Override
     public ResponseState getResponseState(Response response) throws IOException {
+        if(null == response)
+            throw new NullPointerException("Response must not be null");
+
         Gson gson = new Gson();
-        String  errorMessage;
+        String errorMessage = null;
 
-        String jsonError = response.errorBody().string();
-        ResponseError responseError = gson.fromJson(jsonError, errorClass);
+        /*if(null != response.errorBody() *//*&& null != response.errorBody().string()*//*) {
+            String jsonError = response.errorBody().string();
+            ResponseError responseError = gson.fromJson(jsonError, errorClass);
 
-//        if(responseError != null && responseError.hasErrorMessage()){
-//            errorMessage = responseError.getError();
-//        }else{
-            errorMessage = new HttpErrorHandler(RootApp.getAppContext()).getErrorByHttpCode(response.code()).toString();
-//        }
+            if(responseError != null && responseError.hasErrorMessage()){
+                errorMessage = responseError.getError();
+            }
+        }*/
 
-        return  new ResponseState(errorMessage, response.code() );
+        if(null == errorMessage) {
+            errorMessage = new HttpErrorHandler(context).getErrorByHttpCode(response.code());
+        }
+
+        return  new ResponseState(errorMessage, response.code());
     }
+
+
+
 }

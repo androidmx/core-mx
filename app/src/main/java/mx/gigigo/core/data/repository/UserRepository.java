@@ -1,5 +1,7 @@
 package mx.gigigo.core.data.repository;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +32,12 @@ public class UserRepository
 
     private final RestApi api;
     private final UserEntityToUserTransform userMapper;
+    private final Context context;
 
-    public UserRepository(RestApi api,
+    public UserRepository(Context context,
+                          RestApi api,
                           UserEntityToUserTransform userMapper) {
+        this.context = context;
         this.api = api;
         this.userMapper = userMapper;
     }
@@ -70,7 +75,9 @@ public class UserRepository
             public String apply(LoginResponse loginResponse) throws Exception {
                 return loginResponse.getToken();
             }
-        }).onErrorResumeNext(new RxErrorHandlerFunction(SimpleHandlerError.class));
+        }).onErrorResumeNext(new
+                RxErrorHandlerFunction<String, SimpleHandlerError>(context,
+                SimpleHandlerError.class));
     }
 
     @Override
