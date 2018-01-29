@@ -139,6 +139,6 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
 
     @Override
     public void showError(Throwable exception) {
-
+        Toast.makeText(getActivity(), "" + exception.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

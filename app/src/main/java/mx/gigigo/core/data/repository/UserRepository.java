@@ -1,7 +1,5 @@
 package mx.gigigo.core.data.repository;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +15,8 @@ import mx.gigigo.core.data.entity.base.UserResponse;
 
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 
+import mx.gigigo.core.data.repository.error.RxErrorHandlerFunction;
+import mx.gigigo.core.data.repository.error.SimpleHandlerError;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
 
@@ -70,12 +70,7 @@ public class UserRepository
             public String apply(LoginResponse loginResponse) throws Exception {
                 return loginResponse.getToken();
             }
-        }).onErrorReturn(new Function<Throwable, String>() {
-            @Override
-            public String apply(Throwable throwable) throws Exception {
-                return null;
-            }
-        });
+        }).onErrorResumeNext(new RxErrorHandlerFunction(SimpleHandlerError.class));
     }
 
     @Override
@@ -102,6 +97,7 @@ public class UserRepository
             public User apply(UserResponse response) throws Exception {
                 return userMapper.transform(response.getUser());
             }
+
         }).onErrorReturn(new Function<Throwable, User>() {
             @Override
             public User apply(Throwable throwable) throws Exception {
