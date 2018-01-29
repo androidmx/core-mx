@@ -25,6 +25,8 @@ ext{
     final BUTTERKNIFE_VERSION = '8.4.0'
     final GLIDE_VERSION = '3.8.0'
 
+    final ZHUINDEN_VERSION = '1.8.2'
+
     //Packages
     final JUNIT_PACKAGE = 'junit'
     final RUNNER_PACKAGE = 'com.android.support.test'
@@ -40,6 +42,7 @@ ext{
     final BUTTERKNIFE_PACKAGE = 'com.jakewharton'
     final GLIDE_PACKAGE = 'com.github.bumptech.glide'
 
+    final ZHUINDEN_PACKAGE = 'com.github.Zhuinden'
     //Libraries
     libraries = [
             annotations : buildDependency(SUPPORT_PACKAGE, 'support-annotations', SUPPORT_VERSION),
@@ -62,6 +65,8 @@ ext{
             butterknifecompiler : buildDependency(BUTTERKNIFE_PACKAGE, 'butterknife-compiler', BUTTERKNIFE_VERSION),
 
             glide : buildDependency(GLIDE_PACKAGE, 'glide', GLIDE_VERSION),
+            zhuinden : buildDependency(ZHUINDEN_PACKAGE, 'simple-stack', ZHUINDEN_VERSION)
+
     ]
 
     //Testing

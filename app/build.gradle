@@ -49,6 +49,7 @@ dependencies {
     annotationProcessor parent.ext.libraries.butterknifecompiler
 
     implementation parent.ext.libraries.glide
+    implementation parent.ext.libraries.zhuinden
 
     testImplementation parent.ext.testing.junit
     testImplementation(parent.ext.testing.espresso) {

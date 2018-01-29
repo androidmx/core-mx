@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.zhuinden.simplestack.BackstackDelegate;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mx.gigigo.core.R;
@@ -19,6 +21,8 @@ public class CoreBaseActvity extends BaseActivity {
     private Unbinder unbinder;
     public FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    BackstackDelegate backstackDelegate;
+    FragmentStateChanger fragmentStateChanger;
 
 
     @Override
