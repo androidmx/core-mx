@@ -2,7 +2,7 @@ package mx.gigigo.core.data.repository.error;
 
 import android.content.Context;
 
-import mx.gigigo.core.retrofitextensions.IHttpErrorHandling;
+import mx.gigigo.core.retrofitextensions.HttpErrorHandling;
 
 /**
  * @author VT - January 26, 2018.
@@ -10,10 +10,11 @@ import mx.gigigo.core.retrofitextensions.IHttpErrorHandling;
  * @since 0.0.1
  */
 public class HttpErrorHandler
-        extends IHttpErrorHandling {
+        extends HttpErrorHandling {
 
     public HttpErrorHandler(Context context) {
         super(context);
     }
+
 
 }
