@@ -20,11 +20,13 @@ import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
 import mx.gigigo.core.rxmvp.BaseFragment;
 
 public class DetailUserActivity extends CoreBaseActvity implements PermissionsResult {
-    public static int PERMISSIONS_REQUEST_CODE = 103;
+    public static int PERMISSIONS_REQUEST_CAMERA = 103;
+    public static int PERMISSIONS_REQUEST_READ = 105;
     public static String USER = "user";
     private UserModel user;
-    private Permissions permissionsManager;
+    private Permissions permissionsCustom;
     private String[] permissionRequired;
+    private String[] permissionsRead;
 
     @Override
     protected int getLayoutId() {
@@ -41,7 +43,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
 
     @Override
     protected void onInitializeMembers() {
-        permissionsManager = new Permissions.Builder(this)
+        permissionsCustom = new Permissions.Builder(this)
                 .setPermissionsResult(this)
                 .setDialogTitle(getResources().getString(R.string.dialog_title_permission))
                 .build();
@@ -58,8 +60,8 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(permissionsManager != null){
-            permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(permissions != null){
+            permissionsCustom.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -68,9 +70,19 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
-        permissionsManager.check(permissionRequired, PERMISSIONS_REQUEST_CODE,
+        permissionsCustom.check(permissionRequired, PERMISSIONS_REQUEST_CAMERA,
                 ShowRequestPermissionRationale.AT_END);
 
+    }
+
+    public void checkPermissionsLocale(){
+
+        permissionsRead = new String[]{
+                Manifest.permission.READ_CONTACTS
+        };
+
+        permissionsCustom.check(permissionsRead, PERMISSIONS_REQUEST_READ,
+                ShowRequestPermissionRationale.AT_END);
     }
 
     @Override

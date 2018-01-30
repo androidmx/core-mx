@@ -1,6 +1,7 @@
 package mx.gigigo.core.presentation.ui.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraCharacteristics;
@@ -104,6 +105,7 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
 
     @Override
     protected void onInitializeUIComponents() {
+        ((DetailUserActivity) getActivity()).checkPermissions();
     }
 
     @Override
@@ -134,13 +136,14 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @OnClick({R.id.iv_camera, R.id.bt_save})
     public void onClickAction(View view){
         if(view.getId() == R.id.iv_camera) {
-            if (checkPermission()) {
+            if (checkPermission() && checkPermission2()) {
                 Intent intent = new Intent(getActivity(), CameraActivity.class);
                 intent.putExtra(USER, userViewModel);
                 startActivityForResult(intent, CODE_RESULT_CAMERA);
             } else {
                 //Request permissions
-                ((DetailUserActivity) getActivity()).checkPermissions();
+
+                ((DetailUserActivity)getActivity()).checkPermissionsLocale();
             }
         }else{
             if(userViewModel != null){
@@ -196,6 +199,15 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     public boolean checkPermission(){
         if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+    public boolean checkPermission2(){
+        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
             return false;
         }else{
             return true;
