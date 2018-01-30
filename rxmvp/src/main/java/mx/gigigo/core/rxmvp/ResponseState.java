@@ -28,6 +28,6 @@ public class ResponseState
     }
 
     public String getEntryMessage() {
-        return String.format("Error %1$d - %2$s", getCode(), getMessage());
+        return "Error " + String.valueOf(getCode()) + " - " + getMessage();
     }
 }
