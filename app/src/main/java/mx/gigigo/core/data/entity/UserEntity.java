@@ -10,10 +10,17 @@ import com.google.gson.annotations.SerializedName;
  * @since 0.0.1
  */
 public class UserEntity {
-
     @SerializedName("id")
     @Expose
     private Integer id;
+
+    @SerializedName("email")
+    @Expose
+    private String email;
+
+    @SerializedName("password")
+    @Expose
+    private String password;
     @SerializedName("first_name")
     @Expose
     private String firstName;
@@ -23,7 +30,7 @@ public class UserEntity {
     @SerializedName("avatar")
     @Expose
     private String avatar;
-    @SerializedName("updateAt")
+    @SerializedName("updatedAt")
     @Expose
     private String updateAt;
 
@@ -65,5 +72,21 @@ public class UserEntity {
 
     public void setUpdateAt(String updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

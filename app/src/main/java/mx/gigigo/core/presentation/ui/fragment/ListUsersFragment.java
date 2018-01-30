@@ -155,7 +155,9 @@ public class ListUsersFragment
     @Override
     protected ListUsersPresenter createPresenter() {
         RestApi api = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
-        UserRepository repository = new UserRepository(api, new UserEntityToUserTransform());
+        UserRepository repository = new UserRepository(getContext(),
+                api,
+                new UserEntityToUserTransform());
 
         GetListUsersUseCase getListUsersUseCase = new GetListUsersUseCase(repository,
                 Schedulers.io(),
