@@ -20,7 +20,6 @@ import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.LoginUserCase;
 import mx.gigigo.core.domain.usecase.RegisterUserCase;
-import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.RegisterUserPresenter;
 import mx.gigigo.core.presentation.presenter.view.RegisterUserView;
 import mx.gigigo.core.presentation.ui.activity.ListUsersActivity;
@@ -121,7 +120,10 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     @Override
     protected RegisterUserPresenter createPresenter() {
         RestApi restApi = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
-        UserRepository userRepository = new UserRepository(restApi, new UserEntityToUserTransform());
+        UserRepository userRepository = new UserRepository(getContext(),
+                restApi,
+                new UserEntityToUserTransform()
+        );
         RegisterUserCase registerUserCase = new RegisterUserCase(userRepository, Schedulers.io(), AndroidSchedulers.mainThread());
         LoginUserCase loginUserCase = new LoginUserCase(userRepository, Schedulers.io(), AndroidSchedulers.mainThread());
         return new RegisterUserPresenter(registerUserCase, loginUserCase);
