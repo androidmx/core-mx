@@ -167,32 +167,32 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
 
     private void showRequestPermissionRationaleAlert() {
         String bodyMessage = "";
-        if(message != null && !message.isEmpty()){
+        if (message != null && !message.isEmpty()) {
             bodyMessage = message;
-        }else if(!dialogExplanationTitle.isEmpty()){
+        } else if (!dialogExplanationTitle.isEmpty()) {
             bodyMessage = dialogExplanationMessage;
-        }else{
-            bodyMessage =  context.getString(R.string.permissions_dialog_message_default, "string", context.getPackageName());
+        } else {
+            bodyMessage = context.getString(R.string.permissions_dialog_message_default, "string", context.getPackageName());
         }
 
 
         AlertDialog alertDialog = new AlertDialog.Builder(context)
-            .setTitle(!dialogExplanationTitle.isEmpty() ? dialogExplanationTitle :
-                    context.getString(R.string.permissions_dialog_title_default, "string", context.getPackageName()))
-            .setMessage(bodyMessage)
-            .setPositiveButton(!dialogExplanationOkButtonText.isEmpty() ?
-                    dialogExplanationOkButtonText :
-                    context.getString(R.string.permissions_dialog_positive_button, "string", context.getPackageName()),
-                    new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        requestPermissions();
-                    }
-                })
-            .setNegativeButton(!dialogExplanationCancelButtonText.isEmpty() ?
-                    dialogExplanationCancelButtonText :
-                    context.getString(R.string.permissions_dialog_negative_button, "string", context.getPackageName()),
-                    new DialogInterface.OnClickListener() {
+                .setTitle(!dialogExplanationTitle.isEmpty() ? dialogExplanationTitle :
+                        context.getString(R.string.permissions_dialog_title_default, "string", context.getPackageName()))
+                .setMessage(bodyMessage)
+                .setPositiveButton(!dialogExplanationOkButtonText.isEmpty() ?
+                                dialogExplanationOkButtonText :
+                                context.getString(R.string.permissions_dialog_positive_button, "string", context.getPackageName()),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                requestPermissions();
+                            }
+                        })
+                .setNegativeButton(!dialogExplanationCancelButtonText.isEmpty() ?
+                                dialogExplanationCancelButtonText :
+                                context.getString(R.string.permissions_dialog_negative_button, "string", context.getPackageName()),
+                        new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (permissionsResult != null)
@@ -202,7 +202,6 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
                 .create();
         alertDialog.show();
     }
-
 
 
     private Activity getActivity() {
