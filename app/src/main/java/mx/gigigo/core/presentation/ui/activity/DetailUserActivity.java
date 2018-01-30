@@ -50,7 +50,6 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     protected void onInitializeMembers() {
         permissionsCustom = new Permissions.Builder(this)
                 .setPermissionsResult(this)
-                .setDialogTitle(getResources().getString(R.string.dialog_title_permission))
                 .build();
 
         checkPermissions();
@@ -77,7 +76,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
         };
         permissionsCustom.check(permissionRequired, PERMISSIONS_REQUEST_CAMERA,
                 ShowRequestPermissionRationale.AT_END,
-                permissionsCustom.showRequestPermissionRationaleAlertCustom("title custom", "", "", ""));
+                "");
 
     }
 
@@ -88,7 +87,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
         };
 
         permissionsCustom.check(permissionsRead, PERMISSIONS_REQUEST_READ,
-                ShowRequestPermissionRationale.AT_END, null);
+                ShowRequestPermissionRationale.AT_END, "Read permsions");
     }
 
     @Override

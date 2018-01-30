@@ -32,7 +32,7 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
     private String dialogExplanationMessage = "";
     private String dialogExplanationOkButtonText = "";
     private String dialogExplanationCancelButtonText = "";
-    private AlertDialog alertDialog;
+    private String message;
 
     public Permissions(Builder builder) {
         this.context = builder.context;
@@ -49,7 +49,7 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
 
     public void check(@NonNull String[] permissions,
                       int requestCode,
-                      ShowRequestPermissionRationale showRequestPermissionRationale, AlertDialog alertDialog ) {
+                      ShowRequestPermissionRationale showRequestPermissionRationale, String message) {
 
         if (permissions == null || permissions.length == 0) {
             if (permissionsResult != null) {
@@ -58,17 +58,18 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
 
             return;
         }
-
-        validatePermissions(permissions, requestCode, showRequestPermissionRationale, alertDialog);
+        this.message = message;
+        validatePermissions(permissions, requestCode, showRequestPermissionRationale, message);
     }
 
-    public void check(@NonNull String[] permissions, int requestCode, AlertDialog alertDialog) {
-        this.check(permissions, requestCode, ShowRequestPermissionRationale.NONE, alertDialog);
+    public void check(@NonNull String[] permissions, int requestCode, String message) {
+        this.check(permissions, requestCode, ShowRequestPermissionRationale.NONE, message);
     }
 
     private void validatePermissions(String[] permissions,
                                      int requestCode,
-                                     ShowRequestPermissionRationale showRequestPermissionRationale, AlertDialog alertDialog) {
+                                     ShowRequestPermissionRationale showRequestPermissionRationale,
+                                     String message) {
         this.requestCode = requestCode;
         this.requestedPermissions = permissions;
         this.showRequestPermissionRationale = showRequestPermissionRationale;
@@ -88,11 +89,7 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
             if (requestPermissionRationale != null)
                 requestPermissionRationale.showRequestPermissionRationale(requestCode, this);
             else
-                if(alertDialog == null)
-                    showRequestPermissionRationaleAlert();
-                else
-                    alertDialog.show();
-
+                showRequestPermissionRationaleAlert();
         } else {
             requestPermissions();
         }
@@ -149,6 +146,7 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
                     requestPermissionRationale.showRequestPermissionRationale(requestCode, this);
                 else
                     showRequestPermissionRationaleAlert();
+
             } else {
                 permissionsResult.onPermissionsDenied(requestCode);
             }
@@ -168,24 +166,33 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
     }
 
     private void showRequestPermissionRationaleAlert() {
+        String bodyMessage = "";
+        if(message != null || !message.isEmpty()){
+            bodyMessage = message;
+        }else if(!dialogExplanationTitle.isEmpty()){
+            bodyMessage = dialogExplanationMessage;
+        }else{
+            bodyMessage =  context.getString(R.string.permissions_dialog_message_default, "string", context.getPackageName());
+        }
+
+
         AlertDialog alertDialog = new AlertDialog.Builder(context)
-                .setTitle(!dialogExplanationTitle.isEmpty() ? dialogExplanationTitle :
-                        context.getString(R.string.permissions_dialog_title_default, "string", context.getPackageName()))
-                .setMessage(!dialogExplanationMessage.isEmpty() ? dialogExplanationMessage :
-                        context.getString(R.string.permissions_dialog_message_default, "string", context.getPackageName()))
-                .setPositiveButton(!dialogExplanationOkButtonText.isEmpty() ?
-                        dialogExplanationOkButtonText :
-                        context.getString(R.string.permissions_dialog_positive_button, "string", context.getPackageName()),
-                        new DialogInterface.OnClickListener() {
+            .setTitle(!dialogExplanationTitle.isEmpty() ? dialogExplanationTitle :
+                    context.getString(R.string.permissions_dialog_title_default, "string", context.getPackageName()))
+            .setMessage(bodyMessage)
+            .setPositiveButton(!dialogExplanationOkButtonText.isEmpty() ?
+                    dialogExplanationOkButtonText :
+                    context.getString(R.string.permissions_dialog_positive_button, "string", context.getPackageName()),
+                    new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         requestPermissions();
                     }
                 })
-                .setNegativeButton(!dialogExplanationCancelButtonText.isEmpty() ?
-                                dialogExplanationCancelButtonText :
-                                context.getString(R.string.permissions_dialog_negative_button, "string", context.getPackageName()),
-                        new DialogInterface.OnClickListener() {
+            .setNegativeButton(!dialogExplanationCancelButtonText.isEmpty() ?
+                    dialogExplanationCancelButtonText :
+                    context.getString(R.string.permissions_dialog_negative_button, "string", context.getPackageName()),
+                    new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (permissionsResult != null)
@@ -196,32 +203,7 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
         alertDialog.show();
     }
 
-    public AlertDialog showRequestPermissionRationaleAlertCustom(String title, String message, String positiveButton, String negativeButton) {
-        AlertDialog alertDialog = new AlertDialog.Builder(context)
-                .setTitle(title != null && !title.isEmpty() ? title :
-                        context.getString(R.string.permissions_dialog_title_default, "string", context.getPackageName()))
-                .setMessage(message != null && !message.isEmpty() ? message:
-                        context.getString(R.string.permissions_dialog_message_default, "string", context.getPackageName()))
-                .setPositiveButton(positiveButton != null && !positiveButton.isEmpty() ? positiveButton:
-                                context.getString(R.string.permissions_dialog_positive_button, "string", context.getPackageName()),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                requestPermissions();
-                            }
-                        })
-                .setNegativeButton(negativeButton != null && !negativeButton.isEmpty() ? negativeButton:
-                                context.getString(R.string.permissions_dialog_negative_button, "string", context.getPackageName()),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if (permissionsResult != null)
-                                    permissionsResult.onPermissionsDenied(requestCode);
-                            }
-                        })
-                .create();
-        return alertDialog;
-    }
+
 
     private Activity getActivity() {
         return isFragment ? fragment.getActivity() : (Activity) context;
