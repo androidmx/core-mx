@@ -167,7 +167,7 @@ public class Permissions implements RequestPermissionRationale.UserResponse {
 
     private void showRequestPermissionRationaleAlert() {
         String bodyMessage = "";
-        if(message != null || !message.isEmpty()){
+        if(message != null && !message.isEmpty()){
             bodyMessage = message;
         }else if(!dialogExplanationTitle.isEmpty()){
             bodyMessage = dialogExplanationMessage;
