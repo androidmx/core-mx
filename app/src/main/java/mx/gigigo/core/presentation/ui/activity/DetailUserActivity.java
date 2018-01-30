@@ -17,14 +17,13 @@ import mx.gigigo.core.permissions.ShowRequestPermissionRationale;
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
 import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
-import mx.gigigo.core.rxmvp.BaseFragment;
 
 public class DetailUserActivity extends CoreBaseActvity implements PermissionsResult {
-    public static int PERMISSIONS_REQUEST_CODE = 103;
-    public static String USER = "user";
+    private final static int PERMISSIONS_REQUEST_CODE = 103;
+    private final static String USER = "user";
+    private final static String TAG_FRAGMENT = "detail";
     private UserModel user;
     private Permissions permissionsManager;
-    private String[] permissionRequired;
 
     @Override
     protected int getLayoutId() {
@@ -34,8 +33,12 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     @Override
     protected void onInitializeUIComponents() {
         initFragment();
-        MvpBindingFragment fragment = DetailUserFragment.newInstance(user.getId());
-        addFragment(R.id.container, fragment);
+        MvpBindingFragment fragment = (MvpBindingFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT);
+
+        if(fragment == null) {
+            fragment = DetailUserFragment.newInstance(user.getId());
+            addFragment(R.id.container, fragment, TAG_FRAGMENT);
+        }
 
     }
 
@@ -64,7 +67,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     }
 
     public void checkPermissions(){
-        permissionRequired =new String[]{
+        String[] permissionRequired = new String[]{
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
@@ -90,7 +93,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     }
 
 
-    public void setSnackBarForSettings(){
+    private void setSnackBarForSettings(){
         Snackbar.make(findViewById(android.R.id.content),
                 getResources().getString(R.string.snack_message_camera_persmissions),
                 Snackbar.LENGTH_INDEFINITE).setAction(getResources().getString(R.string.snack_label_camera_setting)
@@ -102,7 +105,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
                 }).show();
     }
 
-    public void setIntentForSettingPermissions(){
+    private void setIntentForSettingPermissions(){
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.addCategory(Intent.CATEGORY_DEFAULT);

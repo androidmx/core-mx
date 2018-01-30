@@ -25,4 +25,6 @@ public interface ListUsersRepository
 
     Single<String> registerUser(String email, String password);
 
+    Single<String> loginUser(String email, String password);
+
 }

@@ -113,5 +113,17 @@ public class UserRepository
         });
     }
 
+    @Override
+    public Single<String> loginUser(String email, String password){
+        Single<LoginResponse> response = api.loginUser(email, password);
+        return response.map(new Function<LoginResponse, String>() {
+            @Override
+            public String apply(LoginResponse loginResponse) throws Exception {
+                return loginResponse.getToken();
+            }
+        }).onErrorResumeNext(new RxErrorHandlerFunction(SimpleHandlerError.class));
+    }
+
+
 
 }

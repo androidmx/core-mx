@@ -66,8 +66,10 @@ public class RxErrorHandlerFunction<T, E extends ResponseError>
             }
         }*/
 
+
         if(null == errorMessage) {
             errorMessage = new HttpErrorHandler(context).getErrorByHttpCode(response.code());
+
         }
 
         return  new ResponseState(errorMessage, response.code());
