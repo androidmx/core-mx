@@ -10,7 +10,7 @@ Es un conjunto de módulos que incluyen utilerías base que permite a los desarr
 ### Diagrama de arquitectura ###
 ![Alt_text](assets/corearchitecture.png)
 
-### Diagrama ###
+### Diagrama MVP ###
 ![Alt text](assets/mvpdiagram.png)
 
 #### Uso ####
@@ -44,7 +44,7 @@ Gradle 3.0.0+
 
 __NOTA:__
 
-Gradle puede almacenar en caché las compilaciones SNAPSHOT. Para asegurar que Gradle siempre elija la versión más reciente de la compilación, debes agregar la siguiente configuración en su archivo `build.gradle` 
+Gradle puede almacenar en caché las compilaciones SNAPSHOT. Para asegurar que Gradle siempre elija la versión más reciente de la compilación, debes agregar la siguiente configuración en tu archivo `build.gradle` 
 
 ```gradle
 configurations.all {
@@ -156,16 +156,25 @@ SharedPreferencesExtensions
 
 #### Uso ####
 
-Almacenar cualquier tipo (primitivos, colecciones, objetos ...)
+Para almacenar y recuperar valores se utiliza el Type, por tanto debemos tomar en cuenta lo siguiente: 
 ``` java
-SharedPreferencesExtensions
-                .put(key, class type, value, replace if exist // * optional, default true);
+// Para colecciones utilizar com.google.gson.reflect.TypeToken
+Type typeOfList = new TypeToken<List<T>>(){}.getType();
+
+// Para primitivos, clases 
+Type type = String.class || Boolean.class || CustomClass.class || ... T.class;
 ```
 
-Obtener el valor original acorde al tipo (primitivos, colecciones, objetos ...)
+Almacenar cualquier tipo (primitivos, colecciones, clases ...)
+``` java
+SharedPreferencesExtensions
+                .put(key, type, value, replace if exist /* optional, default true */);
+```
+
+Recuperar el valor original acorde al tipo (primitivos, colecciones, clases ...)
 ``` java
 value = SharedPreferencesExtensions
-                    .get(key, class type, default value // * optional);
+                    .get(key, type, default value /* optional */);
 ```
 
 Eliminar valores no necesarios

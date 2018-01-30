@@ -18,12 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".presentation.ui.activity.MainActivity" />
+
         <activity android:name=".presentation.ui.activity.ListUsersActivity">
         </activity>
         <activity android:name=".presentation.ui.activity.DetailUserActivity" />
-        <activity
-            android:name=".presentation.ui.activity.CameraActivity"
+        <activity android:name=".presentation.ui.activity.CameraActivity"
             android:label="@string/title_activity_camera"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".presentation.ui.activity.RegisterActivity" />

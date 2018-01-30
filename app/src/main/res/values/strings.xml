@@ -46,7 +46,12 @@
     <string name="login_label_register">Sing up</string>
     <string name="login_label_logEmail">Log in</string>
 
+
+    <!--Login email -->
+    <string name="login_label_button">Log in</string>
+
     <!-- error http  override messages-->
     <!--<string name="message_http_400">Bad Request - people app </string>-->
+
 
 </resources>

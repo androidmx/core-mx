@@ -8,6 +8,7 @@ import mx.gigigo.core.rxmvp.View;
 
 public interface RegisterUserView extends View {
     void onSuccessUserRegister(String token);
+    void onSuccessUserLogin(String token);
     void onEmptyResult();
     void showProgress(boolean active);
     void showError(Throwable exception);

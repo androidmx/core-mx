@@ -6,8 +6,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +38,7 @@ public class DefaultStorage
     }
 
     @Override
-    public <T> boolean put(String key, Class<T> type, T value, boolean replaceIfExist) {
+    public <T> boolean put(String key, Type type, T value, boolean replaceIfExist) {
         if(null == value) {
             value = DefaultValues.defaultValue(type);
         }
@@ -68,7 +70,7 @@ public class DefaultStorage
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(String key, Class<T> type, T defaultValue) {
+    public <T> T get(String key, Type type, T defaultValue) {
         if(null == defaultValue) {
             defaultValue = DefaultValues.defaultValue(type);
         }
@@ -109,10 +111,10 @@ public class DefaultStorage
     }
 
     public static class DefaultValues {
-        private static final Map<Class<?>, Object> DEFAULTS;
+        private static final Map<Type, Object> DEFAULTS;
 
         static {
-            Map<Class<?>, Object> map = new HashMap<>();
+            Map<Type, Object> map = new HashMap<>();
             put(map, boolean.class, false);
             put(map, byte.class, (byte) 0);
             put(map, short.class, (short) 0);
@@ -129,16 +131,21 @@ public class DefaultStorage
             put(map, Float.class, 0f);
             put(map, Double.class, 0d);
             put(map, String.class, "");
+            put(map, List.class, null);
             DEFAULTS = Collections.unmodifiableMap(map);
         }
 
-        private static <T> void put(Map<Class<?>, Object> map, Class<T> type, T value) {
+        private static <T> void put(Map<Type, Object> map, Type type, T value) {
             map.put(type, value);
         }
 
         @SuppressWarnings("unchecked")
-        public static <T> T defaultValue(Class<T> type) {
-            return (T) DEFAULTS.get(type);
+        public static <T> T defaultValue(Type type) {
+            try {
+                return (T) DEFAULTS.get(type);
+            } catch (Exception exception) {
+                return null;
+            }
         }
     }
 }

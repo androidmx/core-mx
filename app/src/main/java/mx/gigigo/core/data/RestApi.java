@@ -42,7 +42,9 @@ public interface RestApi {
 
 
     //LoginUser
+    @FormUrlEncoded
     @POST("/api/login")
-    Single<String> loginUser(@Query("user") UserEntity userEntity);
+    Single<LoginResponse> loginUser(@Field(value = "email", encoded = true) String email,
+                        @Field(value = "password" , encoded = true) String password );
 
 }
