@@ -1,23 +1,24 @@
 package mx.gigigo.core.data.repository;
 
-import android.util.Log;
+import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.entity.ListUsersResponse;
 import mx.gigigo.core.data.entity.UserEntity;
-import mx.gigigo.core.data.entity.base.UpdateResponse;
+import mx.gigigo.core.data.entity.base.LoginResponse;
 import mx.gigigo.core.data.entity.base.UserResponse;
 
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 
+import mx.gigigo.core.data.repository.error.RxErrorHandlerFunction;
+import mx.gigigo.core.data.repository.error.SimpleHandlerError;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
 
@@ -31,9 +32,12 @@ public class UserRepository
 
     private final RestApi api;
     private final UserEntityToUserTransform userMapper;
+    private final Context context;
 
-    public UserRepository(RestApi api,
+    public UserRepository(Context context,
+                          RestApi api,
                           UserEntityToUserTransform userMapper) {
+        this.context = context;
         this.api = api;
         this.userMapper = userMapper;
     }
@@ -64,6 +68,19 @@ public class UserRepository
     }
 
     @Override
+    public Single<String> registerUser(String email, String password) {
+        Single<LoginResponse> response = api.registerUser(email, password);
+        return response.map(new Function<LoginResponse, String>() {
+            @Override
+            public String apply(LoginResponse loginResponse) throws Exception {
+                return loginResponse.getToken();
+            }
+        }).onErrorResumeNext(new
+                RxErrorHandlerFunction<String, SimpleHandlerError>(context,
+                SimpleHandlerError.class));
+    }
+
+    @Override
     public Single<User> getUserDetail(int user_id) {
         Single<UserResponse> response = api.getDetailUser(user_id);
         return response.map(new Function<UserResponse, User>() {
@@ -80,17 +97,17 @@ public class UserRepository
     }
 
     @Override
-    public Single<String> updateUser(UserEntity userEntity) {
-        Single<UpdateResponse> response = api.updateInfoUser(userEntity.getId(), userEntity);
-        return response.map(new Function<UpdateResponse, String>() {
+    public Single<User> updateUser(UserEntity userEntity) {
+        Single<UserResponse> response = api.updateInfoUser(userEntity.getId(), userEntity);
+        return response.map(new Function<UserResponse, User>() {
             @Override
-            public String apply(UpdateResponse response) throws Exception {
-                Log.i("" ,  response.getUpdateAt());
-                return response.getUpdateAt();
+            public User apply(UserResponse response) throws Exception {
+                return userMapper.transform(response.getUser());
             }
-        }).onErrorReturn(new Function<Throwable, String>() {
+
+        }).onErrorReturn(new Function<Throwable, User>() {
             @Override
-            public String apply(Throwable throwable) throws Exception {
+            public User apply(Throwable throwable) throws Exception {
                 return null;
             }
         });

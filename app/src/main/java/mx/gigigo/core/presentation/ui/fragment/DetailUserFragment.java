@@ -4,18 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -24,7 +21,6 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.R;
@@ -33,7 +29,6 @@ import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetDetailUserUseCase;
 import mx.gigigo.core.domain.usecase.UpdateUserCase;
-import mx.gigigo.core.permissions.Permissions;
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.DetailUserPresenter;
@@ -42,7 +37,6 @@ import mx.gigigo.core.presentation.ui.activity.CameraActivity;
 import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
-import mx.gigigo.core.rxmvp.MvpFragment;
 
 
 /**
@@ -88,7 +82,9 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @Override
     protected DetailUserPresenter createPresenter() {
         RestApi api = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
-        UserRepository userRepository = new UserRepository(api, new UserEntityToUserTransform());
+        UserRepository userRepository = new UserRepository(getContext(),
+                api,
+                new UserEntityToUserTransform());
 
         GetDetailUserUseCase userUseCase = new GetDetailUserUseCase(userRepository, Schedulers.io(),
                 AndroidSchedulers.mainThread());

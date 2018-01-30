@@ -34,6 +34,7 @@ public class UserEntityToUserTransform
         userEntity.setFirstName(value.getName());
         userEntity.setLastName(value.getLastName());
         userEntity.setAvatar(value.getAvatar());
+        userEntity.setEmail(value.getEmail());
         return userEntity;
     }
 }

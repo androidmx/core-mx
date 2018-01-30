@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import mx.gigigo.core.R;
 import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
 import mx.gigigo.core.rxmvp.BaseActivity;
@@ -14,6 +16,7 @@ import mx.gigigo.core.rxmvp.BaseActivity;
  */
 
 public class CoreBaseActvity extends BaseActivity {
+    private Unbinder unbinder;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -34,12 +37,14 @@ public class CoreBaseActvity extends BaseActivity {
 
     @Override
     protected void onBindView() {
-
+        unbinder = ButterKnife.bind(this);
     }
 
     @Override
     protected void onUnbindView() {
-
+        if(unbinder != null){
+            unbinder.unbind();
+        }
     }
     public void initFragment(){
         fragmentManager = getSupportFragmentManager();
