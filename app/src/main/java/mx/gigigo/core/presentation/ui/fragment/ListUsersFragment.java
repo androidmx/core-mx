@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,6 +42,8 @@ import mx.gigigo.core.spextensions.SharedPreferencesExtensions;
 public class ListUsersFragment
         extends MvpBindingFragment<ListUsersView, ListUsersPresenter>
         implements ListUsersView {
+    public static final String LIST_USERS_KEY = "LISTA_USUARIOS";
+    public static final String USER_KEY = "user_key";
     public static String USER = "user";
 
     private static final int PAGE = 1;
@@ -73,16 +78,6 @@ public class ListUsersFragment
 
     @Override
     protected void onInitializeUIComponents() {
-        SharedPreferencesExtensions
-                .put("INIT",
-                        String.class,
-                        "Inicializado");
-
-        SharedPreferencesExtensions
-                .put("INIT2",
-                        Boolean.class,
-                        true);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL,
                 false);
@@ -118,26 +113,17 @@ public class ListUsersFragment
 
     @Override
     public void onFetchPeopleSuccess(List<UserModel> userModels) {
-        String init = SharedPreferencesExtensions
-                .get("INIT",
-                        String.class);
+        Type typeOfList = new TypeToken<List<UserModel>>(){}.getType();
 
-        boolean init2 = SharedPreferencesExtensions
-                .get("INIT2",
-                        Boolean.class,
-                        false);
+        boolean savedListUser = SharedPreferencesExtensions.put(LIST_USERS_KEY,
+                typeOfList,
+                userModels);
 
+        UserModel userModel = userModels.get(0);
 
-        boolean saved = SharedPreferencesExtensions.put("LISTA", List.class, userModels);
-
-        if(saved) {
-            List<UserModel> userModelsRecover = SharedPreferencesExtensions.get("LISTA",
-                    List.class, null);
-
-            if(userModelsRecover != null) {
-
-            }
-        }
+        boolean savedUser = SharedPreferencesExtensions.put(USER_KEY,
+                UserModel.class,
+                userModel);
 
         adapter.setHeaderView(recyclerViewListUsers, R.layout.template_item);
         adapter.setFooterView(recyclerViewListUsers, R.layout.template_item);

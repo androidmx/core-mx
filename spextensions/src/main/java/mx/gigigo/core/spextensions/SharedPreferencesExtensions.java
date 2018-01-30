@@ -2,6 +2,8 @@ package mx.gigigo.core.spextensions;
 
 import android.content.Context;
 
+import java.lang.reflect.Type;
+
 /**
  * @author JG - January 12, 2018
  * @version 0.0.1
@@ -23,20 +25,20 @@ public class SharedPreferencesExtensions {
         return storage.settingExist(key);
     }
 
-    public static <T> boolean put(String key, Class<T> type, T value) {
+    public static <T> boolean put(String key, Type type, T value) {
         return SharedPreferencesExtensions.put(key, type, value, true);
     }
 
-    public static <T> boolean put(String key, Class<T> type, T value, boolean replaceIfExist) {
+    public static <T> boolean put(String key, Type type, T value, boolean replaceIfExist) {
         return storage.put(key, type, value, replaceIfExist);
     }
 
-    public static <T> T get(String key, Class<T> type) {
-        return SharedPreferencesExtensions.get(key, type,
-                DefaultStorage.DefaultValues.defaultValue(type));
+    public static <T> T get(String key, Type type) {
+        T defaultValue = DefaultStorage.DefaultValues.defaultValue(type);
+        return SharedPreferencesExtensions.get(key, type, defaultValue);
     }
 
-    public static <T> T get(String key, Class<T> type, T defaultValue) {
+    public static <T> T get(String key, Type type, T defaultValue) {
         return storage.get(key, type, defaultValue);
     }
 
