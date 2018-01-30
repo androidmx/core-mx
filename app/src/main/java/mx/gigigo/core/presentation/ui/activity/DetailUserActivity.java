@@ -71,7 +71,8 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
         permissionsCustom.check(permissionRequired, PERMISSIONS_REQUEST_CAMERA,
-                ShowRequestPermissionRationale.AT_END);
+                ShowRequestPermissionRationale.AT_END,
+                permissionsCustom.showRequestPermissionRationaleAlertCustom("title custom", "", "", ""));
 
     }
 
@@ -82,7 +83,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
         };
 
         permissionsCustom.check(permissionsRead, PERMISSIONS_REQUEST_READ,
-                ShowRequestPermissionRationale.AT_END);
+                ShowRequestPermissionRationale.AT_END, null);
     }
 
     @Override
