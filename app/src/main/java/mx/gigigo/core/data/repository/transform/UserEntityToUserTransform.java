@@ -1,9 +1,8 @@
 package mx.gigigo.core.data.repository.transform;
 
-
 import mx.gigigo.core.data.entity.UserEntity;
 import mx.gigigo.core.domain.model.User;
-import mx.gigigo.core.rxmvp.Transform;
+import mx.gigigo.core.rxextensions.Transform;
 
 /**
  * @author JG - January 04, 2018

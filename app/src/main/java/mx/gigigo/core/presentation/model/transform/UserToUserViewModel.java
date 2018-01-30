@@ -3,7 +3,7 @@ package mx.gigigo.core.presentation.model.transform;
 
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.presentation.model.UserModel;
-import mx.gigigo.core.rxmvp.Transform;
+import mx.gigigo.core.rxextensions.Transform;
 
 /**
  * @author JG - January 04, 2018

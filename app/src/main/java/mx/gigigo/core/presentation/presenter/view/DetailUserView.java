@@ -2,7 +2,7 @@ package mx.gigigo.core.presentation.presenter.view;
 
 
 import mx.gigigo.core.presentation.model.UserModel;
-import mx.gigigo.core.rxmvp.View;
+import mx.gigigo.core.mvp.View;
 
 /**
  * Created by Gigio on 17/01/18.

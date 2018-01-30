@@ -1,13 +1,10 @@
 package mx.gigigo.core.domain.usecase;
 
-import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
-import mx.gigigo.core.rxmvp.SingleUseCase;
-import mx.gigigo.core.rxmvp.UseCase;
+import mx.gigigo.core.rxextensions.SingleUseCase;
 
 /**
  * Created by Gigio on 18/01/18.

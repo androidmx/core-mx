@@ -1,16 +1,13 @@
 package mx.gigigo.core.presentation.presenter;
 
-import io.reactivex.Observable;
-import io.reactivex.Single;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.usecase.GetDetailUserUseCase;
 import mx.gigigo.core.domain.usecase.UpdateUserCase;
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.view.DetailUserView;
-import mx.gigigo.core.rxmvp.BasePresenter;
-import mx.gigigo.core.rxmvp.SingleCaseObserver;
-import mx.gigigo.core.rxmvp.UseCase;
+import mx.gigigo.core.mvp.BasePresenter;
+import mx.gigigo.core.rxextensions.SingleCaseObserver;
 
 /**
  * Created by Gigio on 17/01/18.
@@ -39,7 +36,7 @@ public class DetailUserPresenter extends BasePresenter<DetailUserView> {
         updateUserCase.execute(new UserUpdateObserver(), user);
     }
 
-    private final class UserUpdateObserver extends SingleCaseObserver<User>{
+    private final class UserUpdateObserver extends SingleCaseObserver<User> {
         @Override
         public void onSuccess(User s) {
             if(!isViewAttached()) return;

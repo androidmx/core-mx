@@ -74,7 +74,8 @@ ext{
 
     //Modules
     modules = [
-            rxmvp : project(':rxmvp'),
+            mvp : project(':mvp'),
+            rxextensions : project(':rxextensions'),
             retrofitextensions : project(':retrofitextensions'),
             spextensions : project(':spextensions'),
             recyclerextensions : project(':recyclerextensions'),

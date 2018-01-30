@@ -3,7 +3,7 @@ package mx.gigigo.core.presentation.presenter.view;
 import java.util.List;
 
 import mx.gigigo.core.presentation.model.UserModel;
-import mx.gigigo.core.rxmvp.View;
+import mx.gigigo.core.mvp.View;
 
 /**
  * @author JG - December 13, 2017

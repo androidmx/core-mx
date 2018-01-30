@@ -1,17 +1,9 @@
 package mx.gigigo.core.presentation.ui.activity;
 
 import android.content.Intent;
-import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CameraMetadata;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.TextureView;
-import android.view.View;
 import android.widget.Button;
 
 import butterknife.BindView;
@@ -22,7 +14,7 @@ import mx.gigigo.core.R;
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.ui.utils.CameraUtils;
 import mx.gigigo.core.presentation.ui.utils.ImageGallery;
-import mx.gigigo.core.rxmvp.BaseActivity;
+import mx.gigigo.core.mvp.BaseActivity;
 
 public class CameraActivity extends BaseActivity {
     public static String USER = "user";

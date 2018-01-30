@@ -1,16 +1,12 @@
 package mx.gigigo.core.presentation.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import mx.gigigo.core.R;
-import mx.gigigo.core.rxmvp.BaseActivity;
 
 public class LoginActivity extends CoreBaseActvity {
     public static final String TYPE = "type";

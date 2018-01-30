@@ -3,8 +3,8 @@ package mx.gigigo.core.presentation.presenter;
 import mx.gigigo.core.domain.usecase.LoginUserCase;
 import mx.gigigo.core.domain.usecase.RegisterUserCase;
 import mx.gigigo.core.presentation.presenter.view.RegisterUserView;
-import mx.gigigo.core.rxmvp.BasePresenter;
-import mx.gigigo.core.rxmvp.SingleCaseObserver;
+import mx.gigigo.core.mvp.BasePresenter;
+import mx.gigigo.core.rxextensions.SingleCaseObserver;
 
 /**
  * Created by Gigio on 24/01/18.
@@ -34,7 +34,7 @@ public class RegisterUserPresenter extends BasePresenter<RegisterUserView> {
     }
 
 
-    private final class RegisterObserver extends SingleCaseObserver<String>{
+    private final class RegisterObserver extends SingleCaseObserver<String> {
         @Override
         public void onSuccess(String s) {
             if(!isViewAttached()) return;

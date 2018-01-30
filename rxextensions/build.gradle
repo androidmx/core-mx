@@ -1,0 +1,10 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation parent.ext.libraries.rxjava
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

@@ -9,9 +9,9 @@ import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
-import mx.gigigo.core.rxmvp.BasePresenter;
-import mx.gigigo.core.rxmvp.ObservableCaseObserver;
-import mx.gigigo.core.rxmvp.SingleCaseObserver;
+import mx.gigigo.core.mvp.BasePresenter;
+import mx.gigigo.core.rxextensions.ObservableCaseObserver;
+import mx.gigigo.core.rxextensions.SingleCaseObserver;
 
 /**
  * @author JG - December 13, 2017

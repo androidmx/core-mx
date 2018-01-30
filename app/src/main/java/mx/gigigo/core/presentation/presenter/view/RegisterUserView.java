@@ -1,6 +1,6 @@
 package mx.gigigo.core.presentation.presenter.view;
 
-import mx.gigigo.core.rxmvp.View;
+import mx.gigigo.core.mvp.View;
 
 /**
  * Created by Gigio on 24/01/18.
