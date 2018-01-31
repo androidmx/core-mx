@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.androidmx'
+group = parent.ext.GROUP
+version = parent.ext.VERSION
 
 android {
     compileSdkVersion parent.ext.COMPILE_SDK_VERSION
@@ -21,6 +23,9 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -31,4 +36,14 @@ dependencies {
     testImplementation parent.ext.testing.junit
     testImplementation parent.ext.testing.runner
     testImplementation parent.ext.testing.espresso
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
 }

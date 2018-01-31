@@ -1,5 +1,8 @@
 ext{
 
+    GROUP = 'com.github.androidmx.core-mx'
+    VERSION = '0.0.1'
+
     // Android sdk version
     COMPILE_SDK_VERSION = 26
     BUILD_TOOLS_VERSION = "26.1.0"
