@@ -110,14 +110,14 @@ Por defecto contiene unicamente el manejo de 6 códigos de error (de HttpUrlConn
 añadir un nuevo código de error se tendría que 
 hacer uso de alguno de los siguientes métodos:
 
-(value  =  R.string...)
+(key = codigo, value  =  R.string...)
 
 ``` java
 public void put(Integer key, @StringRes Integer value) {
     mapCodes.put(key, getStringFromId(value));   
 }
 ```    
-o (value = cadena)
+o (key = codigo, value = cadena)
 ``` java
 public void put(Integer key, String value) {
     mapCodes.put(key, value);
