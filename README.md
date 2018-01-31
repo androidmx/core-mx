@@ -59,11 +59,11 @@ https://developer.android.com/training/permissions/best-practices.html
 
 
 ### Manejo de errores ###
-Este módulo permite el manejo y control de los errores que puedan retornar como respuesta a un apetición. 
+Este módulo permite el manejo y control de los errores que puedan retornar como respuesta a una petición. 
 
 #### Uso ####
 
-En el módulo rxmvp se toma la interface `ResponseError` para crear la clase que contendra la estructura
+En el módulo **rxmvp** se toma la interface `ResponseError` para crear la clase que contendrá la estructura
 del error que se espera recibir en la respuesta.
  
 Por ejemplo: 
@@ -89,7 +89,7 @@ Por ejemplo:
 
 
 
-Dentro del módulo de retrofitextensions  la clase  `HttpErrorHandling` sirve como clase base para 
+Dentro del módulo de **retrofitextensions**  la clase  `HttpErrorHandling` sirve como clase base para 
 obtener la descripción del error según el código retornado en la respuesta.
 
 Para hacer uso de esta clase se tiene que crear una clase y heredar de  `HttpErrorHandling`, 
@@ -106,31 +106,31 @@ public class HttpErrorHandler extends HttpErrorHandling {
 
 }
 ```
-Por defecto contiene unicamente el manejo de 6 códigos de error (HttpUrlConnection), sí se desea
+Por defecto contiene unicamente el manejo de 6 códigos de error (de HttpUrlConnection), sí se desea
 añadir un nuevo código de error se tendría que 
-hacer uso de alguno de los siguientes métodos
+hacer uso de alguno de los siguientes métodos:
 
-(@StringRes Integer value  =  R.string...)
+(value  =  R.string...)
 
 ``` java
- public void put(Integer key, @StringRes Integer value) {
-        mapCodes.put(key, getStringFromId(value));
-    }
+public void put(Integer key, @StringRes Integer value) {
+    mapCodes.put(key, getStringFromId(value));   
+}
 ```    
 o (value = cadena)
 ``` java
-    public void put(Integer key, String value) {
-        mapCodes.put(key, value);
-    }
+public void put(Integer key, String value) {
+    mapCodes.put(key, value);
+}
 ```
 
-En el proyecto principal en capa de data podemos incluir dentro del directorio repository un directorio adicional 
+En el proyecto principal en capa de data se puede incluir dentro del directorio repository un directorio adicional 
 llamado error, dentro de éste las clases que extienden o implementan las clases relacionadas al manejo de errores y que han 
 sido expuestas en los apartados anteriores.
 
 Por ejemplo:
 
-(metodo usado en la clase repositorio)
+(método usado en la clase repositorio)
 ``` java
 ...
 
