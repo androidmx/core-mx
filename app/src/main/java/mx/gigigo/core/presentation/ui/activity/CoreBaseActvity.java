@@ -8,15 +8,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.zhuinden.simplestack.BackstackDelegate;
-import com.zhuinden.simplestack.HistoryBuilder;
 import com.zhuinden.simplestack.StateChange;
 import com.zhuinden.simplestack.StateChanger;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import mx.gigigo.core.R;
-import mx.gigigo.core.presentation.ui.fragment.BaseKey;
-import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
 import mx.gigigo.core.presentation.ui.fragment.FragmentStateChanger;
 import mx.gigigo.core.rxmvp.BaseActivity;
 

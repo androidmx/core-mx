@@ -70,6 +70,11 @@ public class CameraActivity extends BaseActivity {
     }
 
     @Override
+    protected void onCreateBase(Bundle savedInstanceState) {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         cameraUtils.initHandleThread();

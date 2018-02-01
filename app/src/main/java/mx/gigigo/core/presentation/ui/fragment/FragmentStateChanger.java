@@ -9,6 +9,7 @@ import com.zhuinden.simplestack.StateChange;
 import java.util.List;
 
 import mx.gigigo.core.R;
+import mx.gigigo.core.presentation.application.BaseKey;
 
 /**
  * @version 0.0.1

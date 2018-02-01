@@ -19,6 +19,7 @@ public abstract class BaseFragment
 
     protected Context context;
 
+
     @LayoutRes
     protected abstract int getLayoutId();
     protected abstract void onInitializeUIComponents();

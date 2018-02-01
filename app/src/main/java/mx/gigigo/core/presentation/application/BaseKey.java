@@ -1,9 +1,9 @@
-package mx.gigigo.core.presentation.ui.fragment;
+package mx.gigigo.core.presentation.application;
 
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
 
+import mx.gigigo.core.presentation.application.Key;
 import mx.gigigo.core.rxmvp.BaseFragment;
 
 /**
@@ -12,10 +12,9 @@ import mx.gigigo.core.rxmvp.BaseFragment;
  * @since 0.0.1
  */
 
-public abstract  class BaseKey implements Key{
-    public String getFragmentTag(){
-        return toString();
-    }
+public abstract  class BaseKey implements Parcelable {
+    //associate the fragment with its key
+    private  final static String KEY = "KEY";
 
     public final BaseFragment newFragment(){
         BaseFragment fragment = createFragment();
@@ -23,11 +22,15 @@ public abstract  class BaseKey implements Key{
         if(bundle == null){
             bundle = new Bundle();
         }
-        bundle.putParcelable("KEY", this);
+        bundle.putParcelable(KEY, this);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    protected abstract BaseFragment createFragment();
+
+    public String getFragmentTag(){
+        return toString();
+    }
+    public abstract BaseFragment createFragment();
 
 }

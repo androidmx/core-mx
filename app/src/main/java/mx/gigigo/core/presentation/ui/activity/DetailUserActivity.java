@@ -12,21 +12,32 @@ import android.view.View;
 
 import com.zhuinden.simplestack.BackstackDelegate;
 import com.zhuinden.simplestack.HistoryBuilder;
+import com.zhuinden.simplestack.StateChange;
+import com.zhuinden.simplestack.StateChanger;
 
 import mx.gigigo.core.R;
 import mx.gigigo.core.permissions.Permissions;
 import mx.gigigo.core.permissions.PermissionsResult;
 import mx.gigigo.core.permissions.ShowRequestPermissionRationale;
 import mx.gigigo.core.presentation.model.UserModel;
-import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
+import mx.gigigo.core.presentation.ui.fragment.FragmentStateChanger;
 import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
+import mx.gigigo.core.presentation.ui.fragment.detail.DetailKey;
+import mx.gigigo.core.presentation.ui.fragment.detail.DetailUserFragment;
 
-public class DetailUserActivity extends CoreBaseActvity implements PermissionsResult {
+public class DetailUserActivity extends CoreBaseActvity implements PermissionsResult, StateChanger {
+
+    private static final String TAG = DetailUserActivity.class.getName();
     private final static int PERMISSIONS_REQUEST_CODE = 103;
     private final static String USER = "user";
     private final static String TAG_FRAGMENT = "detail";
     private UserModel user;
     private Permissions permissionsManager;
+
+
+    BackstackDelegate backstackDelegate;
+    FragmentStateChanger fragmentStateChanger;
+
 
     @Override
     protected int getLayoutId() {
@@ -39,7 +50,9 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
         MvpBindingFragment fragment = (MvpBindingFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT);
 
         if(fragment == null) {
-            fragment = DetailUserFragment.newInstance(user.getId());
+            Bundle bundle = new Bundle();
+            bundle.putInt(USER, user.getId());
+            fragment = DetailUserFragment.newInstance(bundle);
             addFragment(R.id.container, fragment, TAG_FRAGMENT);
         }
 
@@ -83,8 +96,10 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     protected void onCreateBase(Bundle savedInstanceState) {
         super.onCreateBase(savedInstanceState);
         backstackDelegate = new BackstackDelegate(null);
-        backstackDelegate.onCreate(savedInstanceState, getLastNonConfigurationInstance(), HistoryBuilder.single());
-
+        backstackDelegate.onCreate(savedInstanceState, getLastNonConfigurationInstance(), HistoryBuilder.single(DetailKey.create()));
+        backstackDelegate.registerForLifecycleCallbacks(this);
+        fragmentStateChanger = new FragmentStateChanger(getSupportFragmentManager(), R.id.container);
+        backstackDelegate.setStateChanger(this);
     }
 
     @Override
@@ -127,5 +142,33 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
         startActivity(intent);
     }
 
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return backstackDelegate.onRetainCustomNonConfigurationInstance();
+    }
 
+    @Override
+    public void onBackPressed() {
+        if(!backstackDelegate.onBackPressed()){
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public Object getSystemService(@NonNull String name) {
+        if(TAG.equals(name)){
+            return this;
+        }
+        return super.getSystemService(name);
+    }
+
+    @Override
+    public void handleStateChange(@NonNull StateChange stateChange, @NonNull Callback completionCallback) {
+        if(stateChange.topNewState().equals(stateChange.topPreviousState())){
+            completionCallback.stateChangeComplete();
+            return;
+        }
+        fragmentStateChanger.handleStateChange(stateChange);
+        completionCallback.stateChangeComplete();
+    }
 }

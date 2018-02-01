@@ -3,6 +3,7 @@ package mx.gigigo.core.presentation.ui.fragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import mx.gigigo.core.presentation.application.BaseKey;
 import mx.gigigo.core.rxmvp.MvpFragment;
 import mx.gigigo.core.rxmvp.Presenter;
 import mx.gigigo.core.rxmvp.View;
@@ -15,6 +16,7 @@ import mx.gigigo.core.rxmvp.View;
 public abstract class MvpBindingFragment<V extends View, P extends Presenter<V>>
         extends MvpFragment<V, P> {
     private final static String KEY = "key";
+
 
     public final <T extends BaseKey> T getKey(){
         return getArguments() != null ? getArguments().<T>getParcelable(KEY) : null;
