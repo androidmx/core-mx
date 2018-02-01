@@ -11,7 +11,9 @@ import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.rxmvp.SingleUseCase;
 
 /**
- * Created by Gigio on 24/01/18.
+ * @autor Gigio on 24/01/18.
+ * @version 0.0.1
+ * @since 0.0.1
  */
 
 public class RegisterUserCase  extends SingleUseCase<String, RegisterUserCase.Params> {

@@ -14,6 +14,12 @@ import mx.gigigo.core.rxmvp.View;
  */
 public abstract class MvpBindingFragment<V extends View, P extends Presenter<V>>
         extends MvpFragment<V, P> {
+    private final static String KEY = "key";
+
+    public final <T extends BaseKey> T getKey(){
+        return getArguments() != null ? getArguments().<T>getParcelable(KEY) : null;
+    }
+
 
     private Unbinder unbinder;
 

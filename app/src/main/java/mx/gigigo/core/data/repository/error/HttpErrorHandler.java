@@ -5,7 +5,9 @@ import android.content.Context;
 import mx.gigigo.core.retrofitextensions.IHttpErrorHandling;
 
 /**
- * Created by Gigio on 26/01/18.
+ * @autor Gigio on 26/01/18.
+ * @version 0.0.1
+ * @since 0.0.1
  */
 
 public class HttpErrorHandler extends IHttpErrorHandling {

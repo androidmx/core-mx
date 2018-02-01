@@ -6,7 +6,9 @@ import mx.gigigo.core.domain.repository.ListUsersRepository;
 import mx.gigigo.core.rxmvp.SingleUseCase;
 
 /**
- * Created by Gigio on 29/01/18.
+ * @autor Gigio on 29/01/18.
+ * @version 0.0.1
+ * @since 0.0.1
  */
 
 public class LoginUserCase extends SingleUseCase<String, LoginUserCase.Params> {

@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import mx.gigigo.core.rxmvp.ResponseError;
 
 /**
- * Created by Gigio on 25/01/18.
+ * @autor Gigio on 25/01/18.
+ * @version 0.0.1
+ * @since 0.0.1
  */
 
 public class SimpleHandlerError implements ResponseError{

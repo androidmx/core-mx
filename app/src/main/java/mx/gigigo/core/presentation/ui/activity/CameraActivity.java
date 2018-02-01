@@ -1,5 +1,6 @@
 package mx.gigigo.core.presentation.ui.activity;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraCharacteristics;
@@ -14,12 +15,15 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 
+import com.zhuinden.simplestack.BackstackDelegate;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import mx.gigigo.core.R;
 import mx.gigigo.core.presentation.model.UserModel;
+import mx.gigigo.core.presentation.ui.fragment.FragmentStateChanger;
 import mx.gigigo.core.presentation.ui.utils.CameraUtils;
 import mx.gigigo.core.presentation.ui.utils.ImageGallery;
 import mx.gigigo.core.rxmvp.BaseActivity;
@@ -38,15 +42,16 @@ public class CameraActivity extends BaseActivity {
     private ImageGallery imageGallery;
     private UserModel userViewModel;
 
+    private BackstackDelegate backstackDelegate;
+    private FragmentStateChanger fragmentStateChanger;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_camera;
     }
 
     @Override
-    protected void onInitializeUIComponents() {
-
-    }
+    protected void onInitializeUIComponents() {}
 
     @Override
     protected void onInitializeMembers() {

@@ -10,6 +10,9 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
+import com.zhuinden.simplestack.BackstackDelegate;
+import com.zhuinden.simplestack.HistoryBuilder;
+
 import mx.gigigo.core.R;
 import mx.gigigo.core.permissions.Permissions;
 import mx.gigigo.core.permissions.PermissionsResult;
@@ -73,6 +76,14 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
         };
         permissionsManager.check(permissionRequired, PERMISSIONS_REQUEST_CODE,
                 ShowRequestPermissionRationale.AT_END);
+
+    }
+
+    @Override
+    protected void onCreateBase(Bundle savedInstanceState) {
+        super.onCreateBase(savedInstanceState);
+        backstackDelegate = new BackstackDelegate(null);
+        backstackDelegate.onCreate(savedInstanceState, getLastNonConfigurationInstance(), HistoryBuilder.single());
 
     }
 

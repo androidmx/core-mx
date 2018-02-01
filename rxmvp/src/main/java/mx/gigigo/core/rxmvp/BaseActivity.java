@@ -25,6 +25,7 @@ public abstract class BaseActivity
     protected abstract void onInitializeMembers();
     protected abstract void onBindView();
     protected abstract void onUnbindView();
+    protected abstract void onCreateBase(Bundle savedInstanceState);
 
     protected void onRestoreExtras(Bundle arguments) { }
 
@@ -40,6 +41,7 @@ public abstract class BaseActivity
 
         onInitializeMembers();
         onInitializeUIComponents();
+        onCreateBase(savedInstanceState);
     }
 
     @Override
