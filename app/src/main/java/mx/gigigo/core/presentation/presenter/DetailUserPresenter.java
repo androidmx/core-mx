@@ -42,8 +42,6 @@ public class DetailUserPresenter extends BasePresenter<DetailUserView> {
             if(!isViewAttached()) return;
             getView().showProgress(false);
             getView().onSuccessUserUpdate();
-
-
         }
 
         @Override

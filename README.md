@@ -51,6 +51,144 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 ```
+### Permissions ###
+Es el módulo que facilita el manejo de la solicitud de permisos al usuario.
+
+Practicas recomendadas para permisos:
+https://developer.android.com/training/permissions/best-practices.html
+
+
+### Manejo de errores ###
+Este módulo permite el manejo y control de los errores que puedan retornar como respuesta a una petición. 
+
+#### Uso ####
+
+En el módulo **rxmvp** se toma la interface `ResponseError` para crear la clase que contendrá la estructura
+del error que se espera recibir en la respuesta.
+ 
+Por ejemplo: 
+
+``` java 
+ public class SimpleHandlerError implements ResponseError {
+ 
+     @SerializedName("error")
+     private String error;
+ 
+ 
+     @Override
+     public String getError() {
+         return error;
+     }
+ 
+     @Override
+     public boolean hasErrorMessage() {
+         return error != null && !error.isEmpty();
+     }
+ }
+```
+
+
+
+Dentro del módulo de **retrofitextensions**  la clase  `HttpErrorHandling` sirve como clase base para 
+obtener la descripción del error según el código retornado en la respuesta.
+
+Para hacer uso de esta clase se tiene que crear una clase y heredar de  `HttpErrorHandling`, 
+además de pasarle el contexto correspondiente.
+
+Por ejemplo:
+
+``` java
+public class HttpErrorHandler extends HttpErrorHandling {
+
+    public HttpErrorHandler(Context context) {
+        super(context);
+    }
+
+}
+```
+Por defecto contiene unicamente el manejo de 6 códigos de error (de HttpUrlConnection), sí se desea
+añadir un nuevo código de error se tendría que 
+hacer uso de alguno de los siguientes métodos:
+
+(key = codigo, value  =  R.string...)
+
+``` java
+public void put(Integer key, @StringRes Integer value) {
+    mapCodes.put(key, getStringFromId(value));   
+}
+```    
+o (key = codigo, value = cadena)
+``` java
+public void put(Integer key, String value) {
+    mapCodes.put(key, value);
+}
+```
+
+En el proyecto principal en capa de data se puede incluir dentro del directorio repository un directorio adicional 
+llamado error, dentro de éste las clases que extienden o implementan las clases relacionadas al manejo de errores y que han 
+sido expuestas en los apartados anteriores.
+
+Por ejemplo:
+
+(método usado en la clase repositorio)
+``` java
+...
+
+@Override
+public Single<String> registerUser(String email, String password) {
+    Single<LoginResponse> response = api.registerUser(email, password);
+    return response.map(new Function<LoginResponse, String>() {
+        ...
+        
+    }).onErrorResumeNext(new
+            RxErrorHandlerFunction<String, SimpleHandlerError>(context,
+            SimpleHandlerError.class));
+}
+
+...
+
+```
+La clase RxErrorHandlerFunction para este ejemplo es la que se encarga de retornar 
+el mensaje en caso de que la respuesta la incluya o bien regresar una descripción preestablecida deacuerdo al código retornado.
+
+``` java
+public class RxErrorHandlerFunction<T, E extends ResponseError>
+        extends  ErrorHandlerFunction<Response>
+        implements Function<Throwable, SingleSource<? extends T>> {
+        
+    private final Class<E> errorClass;    
+        
+    @Override
+    public SingleSource<? extends T> apply(Throwable throwable) throws Exception {
+        ...
+        
+        Response response = httpException.response();
+        if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
+            return Single.error(new UnauthorizedException());
+        }
+        return Single.error(getResponseState(response));
+        
+        ...
+                    
+    }
+    
+    @Override
+    public ResponseState getResponseState(Response response) throws IOException {
+        
+        ...
+        ResponseError responseError = gson.fromJson(jsonError, errorClass);
+        ...
+        
+        if(null == errorMessage) {
+            errorMessage = new HttpErrorHandler(context).getErrorByHttpCode(response.code());
+        
+        }
+        
+        return  new ResponseState(errorMessage, response.code());
+    }
+          
+}
+```
 
 ### Rx MVP ###
 Consiste en una implementación del patrón MVP (Model View Presenter) utilizando los principios de clean architecture.

@@ -56,14 +56,15 @@ public class RxErrorHandlerFunction<T, E extends ResponseError>
         Gson gson = new Gson();
         String errorMessage = null;
 
-        /*if(null != response.errorBody() *//*&& null != response.errorBody().string()*//*) {
+        if(null != response.errorBody() ){
+            //*&& null != response.errorBody().string()*//*) {
             String jsonError = response.errorBody().string();
             ResponseError responseError = gson.fromJson(jsonError, errorClass);
 
             if(responseError != null && responseError.hasErrorMessage()){
                 errorMessage = responseError.getError();
             }
-        }*/
+        }
 
 
         if(null == errorMessage) {

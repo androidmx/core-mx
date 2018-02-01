@@ -6,7 +6,7 @@ import mx.gigigo.core.rxextensions.ResponseError;
 
 
 /**
- * Created by Gigio on 25/01/18.
+ * Created by vt on 25/01/18.
  */
 
 public class SimpleHandlerError implements ResponseError {

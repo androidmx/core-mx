@@ -52,6 +52,7 @@
 
     <!-- error http  override messages-->
     <!--<string name="message_http_400">Bad Request - people app </string>-->
+    <string name="permissions_dialog_title_default"> People title</string>
 
 
 </resources>
