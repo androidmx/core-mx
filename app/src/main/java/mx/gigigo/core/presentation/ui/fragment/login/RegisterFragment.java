@@ -1,4 +1,4 @@
-package mx.gigigo.core.presentation.ui.fragment;
+package mx.gigigo.core.presentation.ui.fragment.login;
 
 
 import android.content.Intent;
@@ -9,9 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.zhuinden.simplestack.Backstack;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.R;
@@ -20,10 +21,11 @@ import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.LoginUserCase;
 import mx.gigigo.core.domain.usecase.RegisterUserCase;
-import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.RegisterUserPresenter;
 import mx.gigigo.core.presentation.presenter.view.RegisterUserView;
 import mx.gigigo.core.presentation.ui.activity.ListUsersActivity;
+import mx.gigigo.core.presentation.ui.activity.RegisterActivity;
+import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
 import mx.gigigo.core.presentation.ui.utils.ValidationsUtils;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
@@ -53,6 +55,7 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     Button bt_done;
 
     private int type;
+    private Backstack backstack;
 
     public static RegisterFragment newInstance(int type) {
         Bundle bundle = new Bundle();
@@ -70,7 +73,10 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
 
     @Override
     protected void onInitializeUIComponents() {
-        if(type == TYPE_LOGIN){
+        backstack = ((RegisterActivity)getActivity()).getBackstackDelegate().getBackstack();
+        RegisterKey key = (RegisterKey) backstack.getInitialKeys().get(0);
+        type = key.type();
+        if(type != 0 && type ==  TYPE_LOGIN){
             bt_done.setText(R.string.login_label_button);
         }
         etEmail.setText("email@mc.c");
@@ -81,11 +87,6 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     }
 
 
-    @Override
-    protected void onRestoreExtras(Bundle arguments) {
-        super.onRestoreExtras(arguments);
-        type = arguments.getInt(TYPE);
-    }
 
     @OnClick(R.id.bt_signup)
     public void onClickActions(){

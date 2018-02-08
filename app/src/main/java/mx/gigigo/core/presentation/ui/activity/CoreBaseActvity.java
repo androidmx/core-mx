@@ -23,12 +23,18 @@ import mx.gigigo.core.rxmvp.BaseActivity;
 public class CoreBaseActvity extends BaseActivity implements StateChanger {
     private Unbinder unbinder;
     public FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
 
 
     BackstackDelegate backstackDelegate;
     FragmentStateChanger fragmentStateChanger;
 
+    public BackstackDelegate getBackstackDelegate() {
+        return backstackDelegate;
+    }
+
+    public void setBackstackDelegate(BackstackDelegate backstackDelegate) {
+        this.backstackDelegate = backstackDelegate;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -59,20 +65,7 @@ public class CoreBaseActvity extends BaseActivity implements StateChanger {
             unbinder.unbind();
         }
     }
-    public void initFragment(){
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-    }
 
-    public void addFragment(int container, Fragment fragment, String tag){
-        fragmentTransaction.add(container, fragment, tag);
-        fragmentTransaction.commit();
-    }
-
-    public void addFragment(int container, Fragment fragment){
-        fragmentTransaction.add(container, fragment);
-        fragmentTransaction.commit();
-    }
 
     @Override
     public void handleStateChange(@NonNull StateChange stateChange, @NonNull Callback completionCallback) {

@@ -34,10 +34,8 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     private UserModel user;
     private Permissions permissionsManager;
 
-
     BackstackDelegate backstackDelegate;
     FragmentStateChanger fragmentStateChanger;
-
 
     @Override
     protected int getLayoutId() {
@@ -46,15 +44,6 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
 
     @Override
     protected void onInitializeUIComponents() {
-    //    initFragment();
-//        MvpBindingFragment fragment = (MvpBindingFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT);
-//
-//        if(fragment == null) {
-//            Bundle bundle = new Bundle();
-//            bundle.putInt(USER, user.getId());
-//            fragment = DetailUserFragment.newInstance(bundle);
-//            addFragment(R.id.container, fragment, TAG_FRAGMENT);
-//        }
 
     }
 

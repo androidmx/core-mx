@@ -1,4 +1,4 @@
-package mx.gigigo.core.presentation.ui.fragment;
+package mx.gigigo.core.presentation.ui.fragment.listuser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,14 +20,13 @@ import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
-
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
-
 import mx.gigigo.core.presentation.presenter.ListUsersPresenter;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
 import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
 import mx.gigigo.core.presentation.ui.adapter.ListUsersAdapter;
+import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
 import mx.gigigo.core.recyclerextensions.EndlessScrollListener;
 import mx.gigigo.core.recyclerextensions.ViewHolderAdapter;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
