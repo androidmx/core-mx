@@ -16,9 +16,10 @@ import mx.gigigo.core.rxmvp.BaseFragment;
  */
 @AutoValue
 public abstract class DetailKey extends BaseKey{
+    public abstract  int userId();
 
-    public static DetailKey create(){
-        return new AutoValue_DetailKey();
+    public static DetailKey create(int userId){
+        return new AutoValue_DetailKey(userId);
     }
 
     @Override

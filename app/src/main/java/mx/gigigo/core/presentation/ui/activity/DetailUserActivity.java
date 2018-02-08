@@ -46,16 +46,24 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
 
     @Override
     protected void onInitializeUIComponents() {
-        initFragment();
-        MvpBindingFragment fragment = (MvpBindingFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT);
+    //    initFragment();
+//        MvpBindingFragment fragment = (MvpBindingFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT);
+//
+//        if(fragment == null) {
+//            Bundle bundle = new Bundle();
+//            bundle.putInt(USER, user.getId());
+//            fragment = DetailUserFragment.newInstance(bundle);
+//            addFragment(R.id.container, fragment, TAG_FRAGMENT);
+//        }
 
-        if(fragment == null) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(USER, user.getId());
-            fragment = DetailUserFragment.newInstance(bundle);
-            addFragment(R.id.container, fragment, TAG_FRAGMENT);
-        }
+    }
 
+    public BackstackDelegate getBackstackDelegate() {
+        return backstackDelegate;
+    }
+
+    public void setBackstackDelegate(BackstackDelegate backstackDelegate) {
+        this.backstackDelegate = backstackDelegate;
     }
 
     @Override
@@ -96,7 +104,7 @@ public class DetailUserActivity extends CoreBaseActvity implements PermissionsRe
     protected void onCreateBase(Bundle savedInstanceState) {
         super.onCreateBase(savedInstanceState);
         backstackDelegate = new BackstackDelegate(null);
-        backstackDelegate.onCreate(savedInstanceState, getLastNonConfigurationInstance(), HistoryBuilder.single(DetailKey.create()));
+        backstackDelegate.onCreate(savedInstanceState, getLastNonConfigurationInstance(), HistoryBuilder.single(DetailKey.create(user.getId())));
         backstackDelegate.registerForLifecycleCallbacks(this);
         fragmentStateChanger = new FragmentStateChanger(getSupportFragmentManager(), R.id.container);
         backstackDelegate.setStateChanger(this);

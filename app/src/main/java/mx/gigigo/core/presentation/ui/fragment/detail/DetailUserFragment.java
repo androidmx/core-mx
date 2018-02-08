@@ -1,6 +1,7 @@
 package mx.gigigo.core.presentation.ui.fragment.detail;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.zhuinden.simplestack.Backstack;
 
 import java.io.File;
 
@@ -68,7 +70,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     ProgressBar progressBar;
 
     private UserModel userViewModel;
-
+    private Context context;
+    private Backstack backstack;
 
     private int idUser;
 
@@ -90,7 +93,7 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
         UpdateUserCase updateUserCase = new UpdateUserCase(userRepository, Schedulers.io(),
                 AndroidSchedulers.mainThread());
         UserToUserViewModel userToUserViewModel =  new UserToUserViewModel();
-        return new DetailUserPresenter(userUseCase, userToUserViewModel, updateUserCase);
+        return new DetailUserPresenter(userUseCase, userToUserViewModel, updateUserCase, backstack , context);
     }
 
     @Override
@@ -101,6 +104,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setRetainInstance(true);
+        this.context = getContext();
+        backstack = ((DetailUserActivity)getActivity()).getBackstackDelegate().getBackstack();
         super.onCreate(savedInstanceState);
     }
 
@@ -111,8 +116,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
 
     @Override
     protected void onInitializeMembers() {
-        presenter.getUserDetail(idUser);
-        DetailKey detailKey = getKey();
+        DetailKey detailKey = (DetailKey) backstack.getInitialKeys().get(0);
+        presenter.getUserDetail(detailKey);
     }
 
     @Override

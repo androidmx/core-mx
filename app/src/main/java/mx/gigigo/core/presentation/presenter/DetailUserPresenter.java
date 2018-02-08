@@ -1,13 +1,20 @@
 package mx.gigigo.core.presentation.presenter;
 
+import android.content.Context;
+
+import com.zhuinden.simplestack.Backstack;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.usecase.GetDetailUserUseCase;
 import mx.gigigo.core.domain.usecase.UpdateUserCase;
+import mx.gigigo.core.presentation.application.BaseKey;
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
 import mx.gigigo.core.presentation.presenter.view.DetailUserView;
+import mx.gigigo.core.presentation.ui.fragment.detail.DetailKey;
+import mx.gigigo.core.presentation.ui.fragment.detail.DetailUserFragment;
 import mx.gigigo.core.rxmvp.BasePresenter;
 import mx.gigigo.core.rxmvp.SingleCaseObserver;
 import mx.gigigo.core.rxmvp.UseCase;
@@ -21,18 +28,24 @@ public class DetailUserPresenter extends BasePresenter<DetailUserView> {
     private GetDetailUserUseCase userUseCaseDetail;
     private UserToUserViewModel userToUserViewModel;
     private UpdateUserCase updateUserCase;
+    Backstack backstack;
+    private Context context;
+    DetailKey detailKey;
 
 
     public DetailUserPresenter(GetDetailUserUseCase userUseCase, UserToUserViewModel userToUserViewModel,
-                               UpdateUserCase updateUserCase){
+                               UpdateUserCase updateUserCase, Backstack backstack, Context context){
         this.userUseCaseDetail = userUseCase;
         this.userToUserViewModel = userToUserViewModel;
         this.updateUserCase = updateUserCase;
+        this.backstack = backstack;
+        this.context = context;
     }
 
 
-    public void getUserDetail(int user_id){
-        userUseCaseDetail.execute(new DetailUserObserver(), user_id);
+    public void getUserDetail(DetailKey key){
+        detailKey =  key;
+        userUseCaseDetail.execute(new DetailUserObserver(), detailKey.userId());
     }
 
     public void getUserUpdate(UserModel user){
