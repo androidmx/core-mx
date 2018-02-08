@@ -54,6 +54,91 @@ configurations.all {
 ### Permissions ###
 Es el módulo que facilita el manejo de la solicitud de permisos al usuario.
 
+__Paso 1.__ Implementa en la Activity o Fragment la interface de **PermisionsResult** estos métodos manejan la respuesta
+ a la solicitud de los permisos, por ejemplo:
+
+``` java 
+public class DetailUserActivity extends CoreBaseActvity implements PermissionsResult {
+    ...
+    @Override
+    public void onPermissionsGranted(int requestCode) {
+        Log.i(DetailUserActivity.class.getName(), "Permissions Granted");
+    }
+    
+    @Override
+    public void onPermissionsDenied(int requestCode) {
+        Log.i(DetailUserActivity.class.getName(), "Permissions denied");
+    }
+    
+    @Override
+    public void onPermissionsDeniedPermanently(int requestCode) {
+        Log.i(DetailUserActivity.class.getName(), "Permissions denied permanent");
+        
+    }
+    ...
+    
+}
+```
+
+
+__Paso 2.__ Inicializa `Permissions`, durante la inicialización se pueden configurar el título, mensaje y
+ texto en las opciones del diálogo,  que se  le muestra
+al usuario para  informarle el porqué de los permisos solicitados,  también se le pasa el contexto correspondiente
+además de la interface implementada para el manejo de la respuesta a la solicitud de los permisos.
+``` java
+ permissionsCustom = new Permissions.Builder(Context context)
+                .setPermissionsResult(PermissionsResult permissionsResult)
+                .setDialogTitle(String value)
+                .setDialogMessage(String value)
+                .setDialogOkButtonText(String value)
+                .setDialogCancelButtonText(String value)
+                .build();
+```
+
+
+
+__Paso 3.__
+Establece el grupo de permisos a usar en la aplicación, por ejemplo:
+``` java 
+    String[] permissionRequired = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+```
+__Paso 4.__ El método que inicia la comprobación y solicitud de los permisos es ``check```
+
+``` java
+    ... 
+
+    permissionsCustom.check(permissionRequired,
+                            PERMISSIONS_REQUEST_CAMERA,
+                            ShowRequestPermissionRationale.AT_END,
+                            "");
+     ...
+```
+En este método se reciben como parámetros;
+el grupo de permisos a solicitar, un request code, 
+un entero que determina en qué 
+momento se muestrará el dialogo explicando al usuario el porqué  de la solicitud de estos 
+permisos y finalmente  se puede o no incluir 
+un mensaje personalizado  para  mostar al usuario en el dialogo antes mencionado. 
+
+
+__Paso 5.__ En el Activity o Fragment agrega el método **onRequestPermissionsResult**
+
+``` java
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(permissions != null){
+            permissionsCustom.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+```
+
+
 Practicas recomendadas para permisos:
 https://developer.android.com/training/permissions/best-practices.html
 
