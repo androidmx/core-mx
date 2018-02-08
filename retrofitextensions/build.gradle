@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = parent.ext.GROUP
+version = parent.ext.VERSION
 
 android {
     compileSdkVersion parent.ext.COMPILE_SDK_VERSION
@@ -19,6 +23,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -33,4 +41,14 @@ dependencies {
     implementation parent.ext.libraries.retrofit
     implementation parent.ext.libraries.okhttp
 
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
 }

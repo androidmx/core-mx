@@ -3,7 +3,7 @@ package mx.gigigo.core.domain.usecase;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
-import mx.gigigo.core.rxmvp.SingleUseCase;
+import mx.gigigo.core.rxextensions.SingleUseCase;
 
 /**
  * Created by Gigio on 29/01/18.

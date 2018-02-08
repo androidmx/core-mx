@@ -7,9 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import mx.gigigo.core.R;
-import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
-import mx.gigigo.core.rxmvp.BaseActivity;
+import mx.gigigo.core.mvp.BaseActivity;
 
 /**
  * Created by Gigio on 18/01/18.

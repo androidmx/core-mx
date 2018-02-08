@@ -3,9 +3,9 @@ package mx.gigigo.core.presentation.ui.fragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import mx.gigigo.core.rxmvp.MvpFragment;
-import mx.gigigo.core.rxmvp.Presenter;
-import mx.gigigo.core.rxmvp.View;
+import mx.gigigo.core.mvp.MvpFragment;
+import mx.gigigo.core.mvp.Presenter;
+import mx.gigigo.core.mvp.View;
 
 /**
  * @author JG - January 05, 2018

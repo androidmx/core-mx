@@ -57,10 +57,11 @@ dependencies {
     testImplementation parent.ext.testing.runner
     testImplementation parent.ext.testing.mockito
 
-    androidTestCompile parent.ext.testing.junit
+    androidTestImplementation parent.ext.testing.junit
 
 
-    implementation parent.ext.modules.rxmvp
+    implementation parent.ext.modules.mvp
+    implementation parent.ext.modules.rxextensions
     implementation parent.ext.modules.retrofitextensions
     implementation parent.ext.modules.spextensions
     implementation parent.ext.modules.recyclerextensions

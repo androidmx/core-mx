@@ -2,7 +2,8 @@ package mx.gigigo.core.data.repository.error;
 
 import com.google.gson.annotations.SerializedName;
 
-import mx.gigigo.core.rxmvp.ResponseError;
+import mx.gigigo.core.rxextensions.ResponseError;
+
 
 /**
  * Created by vt on 25/01/18.

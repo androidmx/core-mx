@@ -10,10 +10,9 @@ import java.net.HttpURLConnection;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
-import mx.gigigo.core.presentation.RootApp;
-import mx.gigigo.core.rxmvp.ErrorHandlerFunction;
-import mx.gigigo.core.rxmvp.ResponseError;
-import mx.gigigo.core.rxmvp.ResponseState;
+import mx.gigigo.core.rxextensions.ErrorHandlerFunction;
+import mx.gigigo.core.rxextensions.ResponseError;
+import mx.gigigo.core.rxextensions.ResponseState;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
@@ -23,7 +22,7 @@ import retrofit2.Response;
  * @since 0.0.1
  */
 public class RxErrorHandlerFunction<T, E extends ResponseError>
-        extends  ErrorHandlerFunction<Response>
+        extends ErrorHandlerFunction<Response>
         implements Function<Throwable, SingleSource<? extends T>> {
 
     private final Class<E> errorClass;

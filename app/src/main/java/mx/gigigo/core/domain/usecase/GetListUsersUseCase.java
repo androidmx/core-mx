@@ -3,14 +3,11 @@ package mx.gigigo.core.domain.usecase;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
-import mx.gigigo.core.rxmvp.ObservableUseCase;
-import mx.gigigo.core.rxmvp.SingleUseCase;
-import mx.gigigo.core.rxmvp.UseCase;
+import mx.gigigo.core.rxextensions.SingleUseCase;
 
 /**
  * @author JG - December 19, 2017
