@@ -16,8 +16,8 @@ public class ViewHolderAdapter<T>
     private T item;
     private Context context;
 
-    private ViewHolderAdapter.OnItemClickListener<T> itemClickListener;
-    private ViewHolderAdapter.OnItemLongClickListener<T> itemLongClickListener;
+    protected ViewHolderAdapter.OnItemClickListener<T> itemClickListener;
+    protected ViewHolderAdapter.OnItemLongClickListener<T> itemLongClickListener;
 
     public ViewHolderAdapter(View itemView) {
         super(itemView);
@@ -46,7 +46,7 @@ public class ViewHolderAdapter<T>
         this.itemClickListener = itemClickListener;
     }
 
-    public void setOnItemLongClickListener(ViewHolderAdapter.OnItemLongClickListener<T> itemLongClickListener) {
+    public void setItemLongClickListener(ViewHolderAdapter.OnItemLongClickListener<T> itemLongClickListener) {
         this.itemLongClickListener = itemLongClickListener;
     }
 
