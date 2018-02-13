@@ -27,6 +27,7 @@ public abstract class BaseActivity
     protected abstract void onUnbindView();
 
     protected void onRestoreExtras(Bundle arguments) { }
+    protected void onRestoreSavedInstance(Bundle outState) { }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +41,10 @@ public abstract class BaseActivity
 
         onInitializeMembers();
         onInitializeUIComponents();
+
+        if (savedInstanceState != null) {
+            onRestoreSavedInstance(savedInstanceState);
+        }
     }
 
     @Override

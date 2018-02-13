@@ -26,7 +26,8 @@ public abstract class BaseFragment
     protected abstract void onBindView(View root);
     protected abstract void onUnbindView();
 
-    protected void onRestoreExtras(Bundle arguments) { }
+    protected void onRestoreArguments(Bundle arguments) { }
+    protected void onRestoreSavedInstance(Bundle outState) { }
 
     @Override
     public void onAttach(Context context) {
@@ -37,9 +38,8 @@ public abstract class BaseFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (null != getArguments()) {
-            onRestoreExtras(getArguments());
+            onRestoreArguments(getArguments());
         }
     }
 
@@ -57,6 +57,14 @@ public abstract class BaseFragment
         super.onViewCreated(view, savedInstanceState);
         onInitializeMembers();
         onInitializeUIComponents();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            onRestoreSavedInstance(savedInstanceState);
+        }
     }
 
     @Override
