@@ -1,4 +1,4 @@
-package mx.gigigo.core.data.repository.error;
+package mx.gigigo.core.domain.repository.error;
 
 import android.content.Context;
 

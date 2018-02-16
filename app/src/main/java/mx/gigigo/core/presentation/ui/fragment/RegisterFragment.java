@@ -81,8 +81,8 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
 
 
     @Override
-    protected void onRestoreExtras(Bundle arguments) {
-        super.onRestoreExtras(arguments);
+    protected void onRestoreArguments(Bundle arguments) {
+        super.onRestoreArguments(arguments);
         type = arguments.getInt(TYPE);
     }
 

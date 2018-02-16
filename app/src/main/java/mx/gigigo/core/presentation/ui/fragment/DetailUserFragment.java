@@ -120,8 +120,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     }
 
     @Override
-    protected void onRestoreExtras(Bundle arguments) {
-        super.onRestoreExtras(arguments);
+    protected void onRestoreArguments(Bundle arguments) {
+        super.onRestoreArguments(arguments);
 
         idUser = arguments.getInt(USER_ID);
 

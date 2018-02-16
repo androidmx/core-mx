@@ -1,6 +1,4 @@
-package mx.gigigo.core.data.repository.error;
-
-import android.util.SparseArray;
+package mx.gigigo.core.domain.repository.error;
 
 import com.google.gson.Gson;
 
@@ -12,7 +10,7 @@ import io.reactivex.SingleSource;
 import mx.gigigo.core.rxextensions.HttpErrorHandling;
 import mx.gigigo.core.rxextensions.ResponseError;
 import mx.gigigo.core.rxextensions.ResponseState;
-import mx.gigigo.core.rxextensions.SingleErrorFunction;
+import mx.gigigo.core.rxextensions.SourceErrorFunction;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
@@ -22,7 +20,7 @@ import retrofit2.Response;
  * @since 0.0.1
  */
 public class SingleErrorHandler<T, E extends ResponseError>
-        extends SingleErrorFunction<T, E> {
+        extends SourceErrorFunction<E, SingleSource<? extends T>> {
 
     public SingleErrorHandler(HttpErrorHandling httpErrorHandling, Class<E> errorClass) {
         super(httpErrorHandling, errorClass);
