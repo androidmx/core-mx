@@ -15,10 +15,11 @@ import mx.gigigo.core.data.entity.UserEntity;
 import mx.gigigo.core.data.entity.base.LoginResponse;
 import mx.gigigo.core.data.entity.base.UserResponse;
 
+import mx.gigigo.core.data.repository.error.HttpErrorHandler;
+import mx.gigigo.core.data.repository.error.SingleErrorHandler;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 
-import mx.gigigo.core.data.repository.error.RxErrorHandlerFunction;
-import mx.gigigo.core.data.repository.error.SimpleHandlerError;
+import mx.gigigo.core.data.repository.error.ServerError;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
 
@@ -76,8 +77,8 @@ public class UserRepository
                 return loginResponse.getToken();
             }
         }).onErrorResumeNext(new
-                RxErrorHandlerFunction<String, SimpleHandlerError>(context,
-                SimpleHandlerError.class));
+                SingleErrorHandler<String, ServerError>(new HttpErrorHandler(this.context),
+                ServerError.class));
     }
 
     @Override
@@ -122,8 +123,8 @@ public class UserRepository
                 return loginResponse.getToken();
             }
         }).onErrorResumeNext(new
-                RxErrorHandlerFunction<String, SimpleHandlerError>(context,
-                SimpleHandlerError.class));    }
+                SingleErrorHandler<String, ServerError>(new HttpErrorHandler(this.context),
+                ServerError.class));    }
 
 
 

@@ -9,7 +9,8 @@ import mx.gigigo.core.rxextensions.ResponseError;
  * Created by vt on 25/01/18.
  */
 
-public class SimpleHandlerError implements ResponseError {
+public class ServerError
+        implements ResponseError {
 
     @SerializedName("error")
     private String error;
