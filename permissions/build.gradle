@@ -5,18 +5,15 @@ group = parent.ext.GROUP
 version = parent.ext.VERSION
 
 android {
-    compileSdkVersion 26
-
-
+    compileSdkVersion parent.ext.COMPILE_SDK_VERSION
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 26
+        minSdkVersion parent.ext.MIN_SDK_VERSION
+        targetSdkVersion parent.ext.TARGET_SDK_VERSION
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -34,10 +31,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation parent.ext.libraries.appcompat
+    
+    testImplementation parent.ext.testing.junit
+    testImplementation parent.ext.testing.runner
+    testImplementation parent.ext.testing.espresso
 }
 
 // build a jar with source files

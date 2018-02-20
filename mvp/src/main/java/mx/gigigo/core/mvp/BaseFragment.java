@@ -21,8 +21,8 @@ public abstract class BaseFragment
 
     @LayoutRes
     protected abstract int getLayoutId();
-    protected abstract void onInitializeUIComponents();
     protected abstract void onInitializeMembers();
+    protected abstract void onInitializeUIComponents();
     protected abstract void onBindView(View root);
     protected abstract void onUnbindView();
 

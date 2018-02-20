@@ -1,11 +1,3 @@
 <resources>
     <string name="app_name">RetrofitExtensions</string>
-    <string name="message_http_default">The specific HTTP request has been interrupted</string>
-    <string name="message_http_400">Bad Request - The server could not understand the request due to invalid syntax.</string>
-    <string name="message_http_401">Unauthorized - Authentication is needed to get requested response.</string>
-    <string name="message_http_403">Forbidden - Client does not have access rights to the content so server is rejecting to give proper response.</string>
-    <string name="message_http_404">Not Found - Server can not find requested resource.</string>
-    <string name="message_http_405">Method Not Allowed - The request method is known by the server but has been disabled and cannot be used.</string>
-    <string name="message_http_502">Bad Gateway - The server was acting as a gateway or proxy and received an invalid response from the upstream server.</string>
-
 </resources>

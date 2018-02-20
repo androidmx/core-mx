@@ -6,7 +6,7 @@ ext{
     // Android sdk version
     COMPILE_SDK_VERSION = 26
     BUILD_TOOLS_VERSION = "26.1.0"
-    MIN_SDK_VERSION  = 19
+    MIN_SDK_VERSION  = 16
     TARGET_SDK_VERSION = 26
 
     //Dependency version
