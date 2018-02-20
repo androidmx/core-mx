@@ -1,0 +1,58 @@
+<resources>
+
+    <string name="app_name">People</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="login_hint_username">username</string>
+    <string name="login_hint_password">password</string>
+    <string name="login_login">Login</string>
+
+    <!--permissions on camera use-->
+    <string name="dialog_title_permission">Importante</string>
+    <string name="dialog_message_permission">Da acceso a la cámara para el correcto uso de..</string>
+    <string name="dialog_label_ok_permission">Ok</string>
+    <string name="dialog_label_cancel_permission">No</string>
+
+    <!--Button OnClick use-->
+    <string name="camera_button">Take photo</string>
+
+    <!--Edit info user -->
+    <string name="label_name">Name</string>
+    <string name="label_last_name">Last name</string>
+    <string name="label_save">Save</string>
+    <string name="message_success_update">Los datos han sido actualizados.</string>
+
+
+    <!-- Permissions on snackbar-->
+    <string name="snack_message_camera_persmissions">Habilitar el uso de la cámara y almacenamiento.</string>
+    <string name="snack_label_camera_setting">Habilitar</string>
+    <string name="title_activity_camera">CameraActivity</string>
+
+    <!--RegiterActivity-->
+    <string name="register_hint_email">Email</string>
+    <string name="register_hint_password">Password</string>
+    <string name="register_message_success">El registro se ha realizado satisfactoriamente</string>
+
+    <!--Register fragment-->
+    <string name="message_empty_email">Email requerido</string>
+    <string name="message_invalid_email">El formato del  email no  valido</string>
+    <string name="message_empty_password">Contraseña requerida</string>
+    <string name="message_length_password">La contraseña no tiene una longitud valida</string>
+
+    <!--Pantalla de login-->
+    <string name="login_label_register">Sing up</string>
+    <string name="login_label_logEmail">Log in</string>
+
+
+    <!--Login email -->
+    <string name="login_label_button">Log in</string>
+
+    <!-- error http  override messages-->
+    <!--<string name="message_http_400">Bad Request - people app </string>-->
+    <string name="permissions_dialog_title_default"> People title</string>
+
+
+</resources>
