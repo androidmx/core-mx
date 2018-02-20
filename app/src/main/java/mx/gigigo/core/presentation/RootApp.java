@@ -33,7 +33,7 @@ public class RootApp extends Application {
     private static Context context;
 
     public static Context getAppContext(){
-        return RootApp.context;
+        return context;
     }
     @Override
     public void onCreate() {

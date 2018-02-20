@@ -1,7 +1,6 @@
 package mx.gigigo.core.presentation.ui.fragment;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -120,8 +119,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     }
 
     @Override
-    protected void onRestoreExtras(Bundle arguments) {
-        super.onRestoreExtras(arguments);
+    protected void onRestoreArguments(Bundle arguments) {
+        super.onRestoreArguments(arguments);
 
         idUser = arguments.getInt(USER_ID);
 

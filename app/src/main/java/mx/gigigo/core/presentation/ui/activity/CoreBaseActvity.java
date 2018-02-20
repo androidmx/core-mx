@@ -14,10 +14,10 @@ import mx.gigigo.core.mvp.BaseActivity;
  */
 
 public class CoreBaseActvity extends BaseActivity {
+
     private Unbinder unbinder;
     public FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-
 
     @Override
     protected int getLayoutId() {
@@ -51,12 +51,12 @@ public class CoreBaseActvity extends BaseActivity {
     }
 
     public void addFragment(int container, Fragment fragment, String tag){
-        fragmentTransaction.add(container, fragment, tag);
+        fragmentTransaction.replace(container, fragment, tag);
         fragmentTransaction.commit();
     }
 
     public void addFragment(int container, Fragment fragment){
-        fragmentTransaction.add(container, fragment);
+        fragmentTransaction.replace(container, fragment);
         fragmentTransaction.commit();
     }
 }

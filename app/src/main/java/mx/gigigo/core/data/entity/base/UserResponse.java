@@ -1,7 +1,5 @@
 package mx.gigigo.core.data.entity.base;
 
-import android.hardware.camera2.params.StreamConfigurationMap;
-
 import com.google.gson.annotations.SerializedName;
 
 import mx.gigigo.core.data.entity.UserEntity;

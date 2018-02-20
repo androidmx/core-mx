@@ -1,6 +1,5 @@
 package mx.gigigo.core.presentation.ui.utils;
 
-import android.view.View;
 import android.widget.EditText;
 
 /**

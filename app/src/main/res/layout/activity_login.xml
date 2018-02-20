@@ -6,27 +6,41 @@
     android:layout_height="match_parent"
     tools:context="mx.gigigo.core.presentation.ui.activity.LoginActivity">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33" />
 
     <TextView
         android:id="@+id/tv_login_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:padding="@dimen/fab_margin"
         android:text="@string/login_label_logEmail"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_register"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="@dimen/fab_margin"/>
-
-
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline" />
 
     <TextView
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/fab_margin"
         android:text="@string/login_label_register"
-        app:layout_constraintTop_toBottomOf="@+id/tv_login_email"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_email"
+        app:layout_constraintBottom_toBottomOf="@id/guideline2"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:padding="@dimen/fab_margin"/>
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66" />
+
 </android.support.constraint.ConstraintLayout>

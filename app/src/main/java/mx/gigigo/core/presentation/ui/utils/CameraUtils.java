@@ -3,7 +3,6 @@ package mx.gigigo.core.presentation.ui.utils;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -15,18 +14,12 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
-import android.widget.TextView;
 
-import java.util.Collection;
 import java.util.Collections;
-
-import mx.gigigo.core.BuildConfig;
 
 /**
  * Created by Gigio on 22/01/18.
