@@ -1,7 +1,5 @@
 package mx.gigigo.core.data.repository;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,14 +12,12 @@ import mx.gigigo.core.data.entity.ListUsersResponse;
 import mx.gigigo.core.data.entity.UserEntity;
 import mx.gigigo.core.data.entity.base.LoginResponse;
 import mx.gigigo.core.data.entity.base.UserResponse;
-
-import mx.gigigo.core.domain.repository.error.HttpErrorHandler;
-import mx.gigigo.core.domain.repository.error.SingleErrorHandler;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
-
-import mx.gigigo.core.domain.repository.error.ServerError;
 import mx.gigigo.core.domain.model.User;
 import mx.gigigo.core.domain.repository.ListUsersRepository;
+import mx.gigigo.core.domain.repository.error.HttpErrorHandler;
+import mx.gigigo.core.domain.repository.error.ServerError;
+import mx.gigigo.core.domain.repository.error.SingleErrorHandler;
 
 /**
  * @author JG - December 19, 2017
@@ -33,12 +29,9 @@ public class UserRepository
 
     private final RestApi api;
     private final UserEntityToUserTransform userMapper;
-    private final Context context;
 
-    public UserRepository(Context context,
-                          RestApi api,
+    public UserRepository(RestApi api,
                           UserEntityToUserTransform userMapper) {
-        this.context = context;
         this.api = api;
         this.userMapper = userMapper;
     }
@@ -54,7 +47,7 @@ public class UserRepository
         return response.map(new Function<ListUsersResponse, List<User>>() {
             @Override
             public List<User> apply(ListUsersResponse listUsersResponse) throws Exception {
-                if(null != listUsersResponse && listUsersResponse.hasData()) {
+                if (null != listUsersResponse && listUsersResponse.hasData()) {
                     return userMapper.transform(listUsersResponse.getData());
                 } else {
                     return new ArrayList<>();
@@ -76,9 +69,8 @@ public class UserRepository
             public String apply(LoginResponse loginResponse) throws Exception {
                 return loginResponse.getToken();
             }
-        }).onErrorResumeNext(new
-                SingleErrorHandler<String, ServerError>(new HttpErrorHandler(this.context),
-                ServerError.class));
+        }).onErrorResumeNext(
+                new SingleErrorHandler<String, ServerError>(new HttpErrorHandler(), ServerError.class));
     }
 
     @Override
@@ -115,17 +107,16 @@ public class UserRepository
     }
 
     @Override
-    public Single<String> loginUser(String email, String password){
+    public Single<String> loginUser(String email, String password) {
         Single<LoginResponse> response = api.loginUser(email, password);
         return response.map(new Function<LoginResponse, String>() {
             @Override
             public String apply(LoginResponse loginResponse) throws Exception {
                 return loginResponse.getToken();
             }
-        }).onErrorResumeNext(new
-                SingleErrorHandler<String, ServerError>(new HttpErrorHandler(this.context),
-                ServerError.class));    }
-
+        }).onErrorResumeNext(new SingleErrorHandler<String, ServerError>(
+                new HttpErrorHandler(), ServerError.class));
+    }
 
 
 }

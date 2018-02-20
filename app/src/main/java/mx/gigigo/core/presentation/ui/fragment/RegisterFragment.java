@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import mx.gigigo.core.R;
@@ -34,7 +33,7 @@ import mx.gigigo.core.retrofitextensions.ServiceClientFactory;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends MvpBindingFragment<RegisterUserView, RegisterUserPresenter>
-        implements  RegisterUserView{
+        implements RegisterUserView {
     public static final int MAX_PASSWORD_LENGTH = 8;
     public static final String TYPE = "type";
     public static final int TYPE_LOGIN = 1;
@@ -69,12 +68,13 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
 
     @Override
     protected void onInitializeUIComponents() {
-        if(type == TYPE_LOGIN){
+        if (type == TYPE_LOGIN) {
             bt_done.setText(R.string.login_label_button);
         }
         etEmail.setText("email@mc.c");
         etPassword.setText("pass");
     }
+
     @Override
     protected void onInitializeMembers() {
     }
@@ -87,30 +87,30 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     }
 
     @OnClick(R.id.bt_signup)
-    public void onClickActions(){
+    public void onClickActions() {
         boolean haveErrors = false;
-        if(ValidationsUtils.isEditTextEmpty(etEmail)){
+        if (ValidationsUtils.isEditTextEmpty(etEmail)) {
             haveErrors = true;
             textInputLayoutEmail.setError(getString(R.string.message_empty_email));
-        }else if(!ValidationsUtils.isValidEmailFormat(etEmail)){
+        } else if (!ValidationsUtils.isValidEmailFormat(etEmail)) {
             haveErrors = true;
             textInputLayoutEmail.setError(getString(R.string.message_invalid_email));
-        }else{
-           textInputLayoutEmail.setError("");
+        } else {
+            textInputLayoutEmail.setError("");
         }
 
-        if(ValidationsUtils.isEditTextEmpty(etPassword)){
+        if (ValidationsUtils.isEditTextEmpty(etPassword)) {
             haveErrors = true;
             textInputLayoutPassword.setError(getString(R.string.message_empty_password));
-        }else if(!ValidationsUtils.isValidLength(etPassword, MAX_PASSWORD_LENGTH)){
+        } else if (!ValidationsUtils.isValidLength(etPassword, MAX_PASSWORD_LENGTH)) {
             haveErrors = true;
             textInputLayoutPassword.setError(getString(R.string.message_length_password));
-        }else{
+        } else {
             textInputLayoutPassword.setError("");
         }
 
-        if(!haveErrors) {
-            if(type == TYPE_LOGIN)
+        if (!haveErrors) {
+            if (type == TYPE_LOGIN)
                 presenter.loginUser(etEmail.getText().toString(), etPassword.getText().toString());
             else
                 presenter.registerUser(etEmail.getText().toString(), etPassword.getText().toString());
@@ -120,9 +120,7 @@ public class RegisterFragment extends MvpBindingFragment<RegisterUserView, Regis
     @Override
     protected RegisterUserPresenter createPresenter() {
         RestApi restApi = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
-        UserRepository userRepository = new UserRepository(getContext(),
-                restApi,
-                new UserEntityToUserTransform()
+        UserRepository userRepository = new UserRepository(restApi, new UserEntityToUserTransform()
         );
         RegisterUserCase registerUserCase = new RegisterUserCase(userRepository, Schedulers.io(), AndroidSchedulers.mainThread());
         LoginUserCase loginUserCase = new LoginUserCase(userRepository, Schedulers.io(), AndroidSchedulers.mainThread());

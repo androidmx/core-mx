@@ -1,7 +1,5 @@
 package mx.gigigo.core.domain.repository.error;
 
-import android.content.Context;
-
 import java.net.HttpURLConnection;
 
 import mx.gigigo.core.rxextensions.HttpErrorHandling;
@@ -14,7 +12,7 @@ import mx.gigigo.core.rxextensions.HttpErrorHandling;
 public class HttpErrorHandler
         extends HttpErrorHandling {
 
-    public HttpErrorHandler(Context context) {
+    public HttpErrorHandler() {
         put(HttpURLConnection.HTTP_CONFLICT, "Conflict");
     }
 

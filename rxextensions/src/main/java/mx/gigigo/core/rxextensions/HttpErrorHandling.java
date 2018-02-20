@@ -46,10 +46,10 @@ public abstract class HttpErrorHandling {
         this.mapCodes = mapCodes;
     }
 
-    public String getErrorByHttpCode(int code){
+    public String getErrorByHttpCode(int code) {
         try {
             return mapCodes.get(code);
-        } catch (Exception e){
+        } catch (Exception e) {
             return HTTP_DEFAULT;
         }
     }

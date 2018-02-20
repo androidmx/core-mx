@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -24,10 +23,8 @@ import mx.gigigo.core.data.RestApi;
 import mx.gigigo.core.data.repository.UserRepository;
 import mx.gigigo.core.data.repository.transform.UserEntityToUserTransform;
 import mx.gigigo.core.domain.usecase.GetListUsersUseCase;
-
 import mx.gigigo.core.presentation.model.UserModel;
 import mx.gigigo.core.presentation.model.transform.UserToUserViewModel;
-
 import mx.gigigo.core.presentation.presenter.ListUsersPresenter;
 import mx.gigigo.core.presentation.presenter.view.ListUsersView;
 import mx.gigigo.core.presentation.ui.activity.DetailUserActivity;
@@ -68,7 +65,7 @@ public class ListUsersFragment
     }
 
 
-    public static ListUsersFragment newInstance(){
+    public static ListUsersFragment newInstance() {
         ListUsersFragment fragment = new ListUsersFragment();
         return fragment;
     }
@@ -106,12 +103,13 @@ public class ListUsersFragment
             }
 
             @Override
-            public void onHide() { }
+            public void onHide() {
+            }
 
             @Override
-            public void onShow() { }
+            public void onShow() {
+            }
         });
-
 
 
     }
@@ -127,7 +125,8 @@ public class ListUsersFragment
 
     @Override
     public void onFetchPeopleSuccess(List<UserModel> userModels) {
-        Type typeOfList = new TypeToken<List<UserModel>>(){}.getType();
+        Type typeOfList = new TypeToken<List<UserModel>>() {
+        }.getType();
 
         boolean savedListUser = SharedPreferencesExtensions.put(LIST_USERS_KEY,
                 typeOfList,
@@ -143,7 +142,7 @@ public class ListUsersFragment
         adapter.setFooterView(recyclerViewListUsers, R.layout.template_item);
 
         onRefreshCompleted();
-        if(adapter.isEmpty()) {
+        if (adapter.isEmpty()) {
             adapter.set(userModels);
         } else {
             adapter.addRange(userModels);
@@ -169,9 +168,7 @@ public class ListUsersFragment
     @Override
     protected ListUsersPresenter createPresenter() {
         RestApi api = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
-        UserRepository repository = new UserRepository(getContext(),
-                api,
-                new UserEntityToUserTransform());
+        UserRepository repository = new UserRepository(api, new UserEntityToUserTransform());
 
         GetListUsersUseCase getListUsersUseCase = new GetListUsersUseCase(repository,
                 Schedulers.io(),
@@ -183,7 +180,7 @@ public class ListUsersFragment
     //endregion
 
     private void onRefreshCompleted() {
-        if(isRefreshing) {
+        if (isRefreshing) {
             isRefreshing = false;
         }
     }
@@ -203,7 +200,7 @@ public class ListUsersFragment
     private final ViewHolderAdapter.OnItemClickListener<UserModel> onItemClickListener = new ViewHolderAdapter.OnItemClickListener<UserModel>() {
         @Override
         public void onItemClick(UserModel item) {
-            Intent intent = new Intent(getActivity(), DetailUserActivity.class );
+            Intent intent = new Intent(getActivity(), DetailUserActivity.class);
             intent.putExtra(USER, item);
             startActivity(intent);
         }

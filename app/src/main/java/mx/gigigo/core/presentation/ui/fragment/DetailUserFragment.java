@@ -1,7 +1,6 @@
 package mx.gigigo.core.presentation.ui.fragment;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -83,15 +82,13 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @Override
     protected DetailUserPresenter createPresenter() {
         RestApi api = ServiceClientFactory.createService(ServiceClient.getDefault(), RestApi.class);
-        UserRepository userRepository = new UserRepository(getContext(),
-                api,
-                new UserEntityToUserTransform());
+        UserRepository userRepository = new UserRepository(api, new UserEntityToUserTransform());
 
         GetDetailUserUseCase userUseCase = new GetDetailUserUseCase(userRepository, Schedulers.io(),
                 AndroidSchedulers.mainThread());
         UpdateUserCase updateUserCase = new UpdateUserCase(userRepository, Schedulers.io(),
                 AndroidSchedulers.mainThread());
-        UserToUserViewModel userToUserViewModel =  new UserToUserViewModel();
+        UserToUserViewModel userToUserViewModel = new UserToUserViewModel();
         return new DetailUserPresenter(userUseCase, userToUserViewModel, updateUserCase);
     }
 
@@ -139,8 +136,8 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     }
 
     @OnClick({R.id.iv_camera, R.id.bt_save})
-    public void onClickAction(View view){
-        if(view.getId() == R.id.iv_camera) {
+    public void onClickAction(View view) {
+        if (view.getId() == R.id.iv_camera) {
             if (checkPermission() && checkPermission2()) {
                 Intent intent = new Intent(getActivity(), CameraActivity.class);
                 intent.putExtra(USER, userViewModel);
@@ -148,13 +145,13 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
             } else {
                 //Request permissions
 
-                ((DetailUserActivity)getActivity()).checkPermissionsLocale();
+                ((DetailUserActivity) getActivity()).checkPermissionsLocale();
             }
-        }else{
-            if(userViewModel != null){
-                if(!tvName.getText().toString().isEmpty())
+        } else {
+            if (userViewModel != null) {
+                if (!tvName.getText().toString().isEmpty())
                     userViewModel.setName(tvName.getText().toString());
-                if(!tvLastName.getText().toString().isEmpty())
+                if (!tvLastName.getText().toString().isEmpty())
                     userViewModel.setLastName(tvLastName.getText().toString());
                 presenter.getUserUpdate(userViewModel);
 
@@ -164,7 +161,7 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
 
     @Override
     public void onSuccessUserUpdate() {
-        Toast.makeText(getContext(), getResources().getString(R.string.message_success_update),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), getResources().getString(R.string.message_success_update), Toast.LENGTH_LONG).show();
         getActivity().finish();
 
     }
@@ -176,9 +173,9 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
 
     @Override
     public void showProgress(boolean active) {
-        if(active) {
+        if (active) {
             progressBar.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             progressBar.setVisibility(View.GONE);
         }
     }
@@ -191,31 +188,30 @@ public class DetailUserFragment extends MvpBindingFragment<DetailUserView, Detai
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == CODE_RESULT_CAMERA){
+        if (resultCode == CODE_RESULT_CAMERA) {
             String filePath = data.getExtras().getString(FILE_IMAGE, "");
             File file = new File(filePath);
-            if(file.exists()) {
+            if (file.exists()) {
                 Glide.with(getContext()).load(Uri.fromFile(file)).into(ivAvatar);
             }
 
         }
     }
 
-    public boolean checkPermission(){
-        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+    public boolean checkPermission() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
 
-
-    public boolean checkPermission2(){
-        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+    public boolean checkPermission2() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
