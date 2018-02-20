@@ -2,7 +2,6 @@ package mx.gigigo.core.presentation.ui.utils;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
-import android.util.Log;
 import android.view.TextureView;
 
 import java.io.File;

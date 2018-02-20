@@ -1,10 +1,6 @@
 package mx.gigigo.core.presentation.ui.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import mx.gigigo.core.R;
-import mx.gigigo.core.presentation.ui.fragment.DetailUserFragment;
 import mx.gigigo.core.presentation.ui.fragment.ListUsersFragment;
 import mx.gigigo.core.presentation.ui.fragment.MvpBindingFragment;
 
