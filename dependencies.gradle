@@ -1,0 +1,98 @@
+ext{
+
+    GROUP = 'com.github.androidmx.core-mx'
+    VERSION = '0.0.1'
+
+    // Android sdk version
+    COMPILE_SDK_VERSION = 26
+    BUILD_TOOLS_VERSION = "26.1.0"
+    MIN_SDK_VERSION  = 16
+    TARGET_SDK_VERSION = 26
+
+    //Dependency version
+    final JUNIT_VERSION = '4.12'
+    final RUNNER_VERSION = '1.0.1'
+    final ESPRESSO_VERSION = '3.0.1'
+    final MOCKITO_VERSION = '2.13.0'
+
+    final SUPPORT_VERSION = '27.0.2'
+    final CONSTRAINT_LAYOUT_VERSION = '1.0.2'
+
+    final GSON_VERSION = '2.3.0'
+    final RETROFIT_VERSION = '2.3.0'
+    final OK_HTTP_VERSION = '3.9.1'
+    final RX_ANDROID_VERSION = '2.0.1'
+    final RX_JAVA_VERSION = '2.1.7'
+    final RX_JAVA_ADAPTER_VERSION = '2.3.0'
+    final LOGGING_INTERCEPTOR_VERSION = '2.0.4'
+    final BUTTERKNIFE_VERSION = '8.4.0'
+    final GLIDE_VERSION = '3.8.0'
+
+    //Packages
+    final JUNIT_PACKAGE = 'junit'
+    final RUNNER_PACKAGE = 'com.android.support.test'
+    final ESPRESSO_PACKAGE = 'com.android.support.test.espresso'
+    final MOCKITO_PACKAGE = 'org.mockito'
+
+    final SUPPORT_PACKAGE = 'com.android.support'
+    final SUPPORT_CONSTRAINT_PACKAGE = 'com.android.support.constraint'
+    final RETROFIT_PACKAGE = 'com.squareup.retrofit2'
+    final RX_PACKAGE = 'io.reactivex.rxjava2'
+    final OK_HTTP_PACKAGE = 'com.squareup.okhttp3'
+    final LOGGING_INTERCEPTOR_PACKAGE  = 'com.github.ihsanbal'
+    final BUTTERKNIFE_PACKAGE = 'com.jakewharton'
+    final GLIDE_PACKAGE = 'com.github.bumptech.glide'
+
+    //Libraries
+    libraries = [
+            annotations : buildDependency(SUPPORT_PACKAGE, 'support-annotations', SUPPORT_VERSION),
+            design : buildDependency(SUPPORT_PACKAGE, 'design', SUPPORT_VERSION),
+            appcompat : buildDependency(SUPPORT_PACKAGE, 'appcompat-v7', SUPPORT_VERSION),
+            recyclerview : buildDependency(SUPPORT_PACKAGE, 'recyclerview-v7', SUPPORT_VERSION),
+            supportv4 : buildDependency(SUPPORT_PACKAGE, 'support-v4', SUPPORT_VERSION),
+            constraintlayout : buildDependency(SUPPORT_CONSTRAINT_PACKAGE, 'constraint-layout', CONSTRAINT_LAYOUT_VERSION),
+
+            gsonconverter : buildDependency(RETROFIT_PACKAGE, 'converter-gson', GSON_VERSION),
+            retrofit : buildDependency(RETROFIT_PACKAGE, 'retrofit', RETROFIT_VERSION),
+            okhttp : buildDependency(OK_HTTP_PACKAGE, 'okhttp', OK_HTTP_VERSION),
+
+            rxandroid : buildDependency(RX_PACKAGE, 'rxandroid', RX_ANDROID_VERSION),
+            rxjava : buildDependency(RX_PACKAGE, 'rxjava', RX_JAVA_VERSION),
+            rxjavaadapter : buildDependency(RETROFIT_PACKAGE, 'adapter-rxjava2', RX_JAVA_ADAPTER_VERSION),
+            logginginterceptor : buildDependency(LOGGING_INTERCEPTOR_PACKAGE, 'LoggingInterceptor', LOGGING_INTERCEPTOR_VERSION),
+
+            butterknife : buildDependency(BUTTERKNIFE_PACKAGE, 'butterknife', BUTTERKNIFE_VERSION),
+            butterknifecompiler : buildDependency(BUTTERKNIFE_PACKAGE, 'butterknife-compiler', BUTTERKNIFE_VERSION),
+
+            glide : buildDependency(GLIDE_PACKAGE, 'glide', GLIDE_VERSION),
+    ]
+
+    //Testing
+    testing = [
+            junit : buildDependency(JUNIT_PACKAGE, 'junit', JUNIT_VERSION),
+            runner : buildDependency(RUNNER_PACKAGE, 'runner', RUNNER_VERSION),
+            espresso : buildDependency(ESPRESSO_PACKAGE, 'espresso-core', ESPRESSO_VERSION),
+            mockito : buildDependency(MOCKITO_PACKAGE, 'mockito-core', MOCKITO_VERSION)
+    ]
+
+    //Modules
+    modules = [
+            mvp : project(':mvp'),
+            rxextensions : project(':rxextensions'),
+            retrofitextensions : project(':retrofitextensions'),
+            spextensions : project(':spextensions'),
+            recyclerextensions : project(':recyclerextensions'),
+            permissions : project(':permissions')
+    ]
+}
+
+/**
+ * Build an implementation dependency
+ * @param pack group id
+ * @param dependency artifact id
+ * @param version version dependency
+ * @return a dependency string
+ */
+static String buildDependency(String pack, String dependency, String version) {
+    return "${pack}:${dependency}:${version}"
+}
