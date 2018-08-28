@@ -7,6 +7,10 @@ version = parent.ext.VERSION
 android {
     compileSdkVersion parent.ext.COMPILE_SDK_VERSION
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         minSdkVersion parent.ext.MIN_SDK_VERSION
         targetSdkVersion parent.ext.TARGET_SDK_VERSION
