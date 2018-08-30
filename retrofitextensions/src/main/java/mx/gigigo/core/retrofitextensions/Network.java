@@ -1,10 +1,9 @@
 package mx.gigigo.core.retrofitextensions;
 
 /**
- * @author JG - December 28, 2017
- * @version 0.0.1
- * @since 0.0.1
+ * Created by isarael.cortes on 8/28/18.
  */
+
 public interface Network {
     boolean isConnected();
     int connectivityType();

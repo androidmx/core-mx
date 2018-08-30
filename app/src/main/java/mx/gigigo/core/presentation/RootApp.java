@@ -9,12 +9,14 @@ import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 import mx.gigigo.core.BuildConfig;
 import mx.gigigo.core.retrofitextensions.DefaultNetwork;
 import mx.gigigo.core.retrofitextensions.Network;
 import mx.gigigo.core.retrofitextensions.NetworkRequestInterceptor;
+import mx.gigigo.core.retrofitextensions.SSLFactory;
 import mx.gigigo.core.retrofitextensions.ServiceClient;
 import mx.gigigo.core.spextensions.SharedPreferencesExtensions;
 import okhttp3.OkHttpClient;
@@ -28,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @version 0.0.1
  * @since 0.0.1
  */
-public class RootApp extends Application {
+public class RootApp extends Application implements SSLFactory.SSLBuildProvider{
 
     private static Context context;
 
@@ -51,48 +53,36 @@ public class RootApp extends Application {
     }
 
     private void initializeServiceClient() {
-        LoggingInterceptor loggerInterceptor = new LoggingInterceptor.Builder()
-                .loggable(BuildConfig.DEBUG)
-                .setLevel(Level.BASIC)
-                .log(Platform.INFO)
-                .request("Request")
-                .response("Response")
-                .build();
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .serializeNulls()
                 .create();
 
-        NetworkRequestInterceptor requestInterceptor =
-                new DefaultNetworkRequestInterceptor(new DefaultNetwork(this));
+        LoggingInterceptor loggerInterceptor = ServiceClient.getLoggingInterceptor(Level.BODY);
 
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = ServiceClient.getOkHttpClientBuilder()
                 .addInterceptor(loggerInterceptor)
-                .addInterceptor(requestInterceptor)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build();
+                .addInterceptor(ServiceClient.getNetworkRequestInterceptor(this));
 
-        ServiceClient.builder(client)
+        //Installa certificados SSL mediante la interfaz SSLFactory.SSLBuildProvider
+        SSLFactory.installCertificades(builder, this);
+
+        ServiceClient.builder(builder.build())
                 .addEndpoint("https://reqres.in")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
-
-    private class DefaultNetworkRequestInterceptor
-            extends NetworkRequestInterceptor {
-
-        public DefaultNetworkRequestInterceptor(Network network) {
-            super(network);
-        }
-
-        @Override
-        protected Response interceptResponse(Chain chain) throws IOException {
-            return chain.proceed(chain.request());
-        }
+    @Override
+    public InputStream getCertificadeInputStream() throws IOException {
+        return getAssets().open("lalaenterprise-s.crt");
     }
+
+    @Override
+    public String getCertificadeEntryName() {
+        return "your.domain.name.staging";
+    }
+
 }

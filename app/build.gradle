@@ -40,7 +40,7 @@ dependencies {
     implementation parent.ext.libraries.rxandroid
     implementation parent.ext.libraries.rxjava
     implementation parent.ext.libraries.rxjavaadapter
-    implementation(parent.ext.libraries.logginginterceptor) {
+    implementation ('com.github.ihsanbal:LoggingInterceptor:2.0.4'){
         exclude group: 'org.json', module: 'json'
     }
 

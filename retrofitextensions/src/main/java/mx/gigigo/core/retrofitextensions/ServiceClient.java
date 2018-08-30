@@ -1,18 +1,23 @@
 package mx.gigigo.core.retrofitextensions;
 
+import android.content.Context;
+
+import com.ihsanbal.logging.Level;
+import com.ihsanbal.logging.LoggingInterceptor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.internal.platform.Platform;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 
 /**
- * @author JG - December 28, 2017
- * @version 0.0.1
- * @since 0.0.1
+ * Created by isarael.cortes on 8/28/18.
  */
+
 public class ServiceClient {
     private final List<String> endpoints;
     private final List<Converter.Factory> converterFactories;
@@ -30,6 +35,42 @@ public class ServiceClient {
                 .readTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(15, TimeUnit.SECONDS)
                 .build();
+    }
+
+    public static OkHttpClient.Builder getOkHttpClientBuilder() {
+        return new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS);
+    }
+
+    public static NetworkRequestInterceptor getNetworkRequestInterceptor(Context context){
+        NetworkRequestInterceptor networkRequestInterceptor =
+                new DefaultNetworkRequestInterceptor(new DefaultNetwork(context));
+        return networkRequestInterceptor;
+    }
+
+    public static LoggingInterceptor getLoggingBasicInterceptor(){
+        return getLoggingInterceptor(Level.BASIC);
+    }
+
+    public static LoggingInterceptor getLoggingHeaderInterceptor(){
+        return getLoggingInterceptor(Level.HEADERS);
+    }
+
+    public static LoggingInterceptor getLoggingBodyInterceptor(){
+        return getLoggingInterceptor(Level.BODY);
+    }
+
+    public static LoggingInterceptor getLoggingInterceptor(Level level){
+        LoggingInterceptor loggerInterceptor = new LoggingInterceptor.Builder()
+                .loggable(BuildConfig.DEBUG)
+                .setLevel(level)
+                .log(Platform.INFO)
+                .request("Request")
+                .response("Response")
+                .build();
+        return loggerInterceptor;
     }
 
     public static ServiceClient getDefault() {

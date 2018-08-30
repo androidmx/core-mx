@@ -40,6 +40,9 @@ dependencies {
 
     implementation parent.ext.libraries.retrofit
     implementation parent.ext.libraries.okhttp
+    implementation ('com.github.ihsanbal:LoggingInterceptor:2.0.4'){
+        exclude group: 'org.json', module: 'json'
+    }
 
 }
 

@@ -6,12 +6,10 @@ import okhttp3.Interceptor;
 import okhttp3.Response;
 
 /**
- * @author JG - December 28, 2017
- * @version 0.0.1
- * @since 0.0.1
+ * Created by isarael.cortes on 8/28/18.
  */
-public abstract class NetworkRequestInterceptor
-        implements Interceptor {
+
+public abstract class NetworkRequestInterceptor implements Interceptor {
 
     private final Network network;
 

@@ -11,12 +11,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 /**
- * @author JG - December 28, 2017
- * @version 0.0.1
- * @since 0.0.1
+ * Created by isarael.cortes on 8/28/18.
  */
-public class DefaultNetwork
-        extends BroadcastReceiver
+
+public class DefaultNetwork extends BroadcastReceiver
         implements Network {
 
     private static final String TAG = DefaultNetwork.class.getSimpleName();

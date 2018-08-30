@@ -5,11 +5,10 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
- * @author JG - December 28, 2017
- * @version 0.0.1
- * @since 0.0.1
+ * Created by isarael.cortes on 8/28/18.
  */
-public class ServiceClientFactory {
+
+public class ServiceClientFactory  {
 
     public static <T> T createService(ServiceClient serviceClient,
                                       Class<T> classType) {
